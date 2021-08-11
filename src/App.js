@@ -28,7 +28,7 @@ function App() {
   }
 
   function postGoal(latestGoal){
-    const url ="backend/postGoals"
+    const url ="postGoals"
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
@@ -40,7 +40,7 @@ function App() {
   }
 
   function deleteGoal(goal, category){
-    const url ="backend/deleteGoals"
+    const url ="deleteGoals"
     console.log(goal, category)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
@@ -56,7 +56,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    fetch("backend/api", {
+    fetch("api", {
       headers : {
         "Content-Type": "applications/json",
         "Accept": "application/json"

@@ -1,8 +1,10 @@
+const https = require('https');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path')
 const app = express();
+require('dotenv').config()
 require('./database');
 app.use(bodyParser.json());
 app.use(cors());
@@ -21,18 +23,13 @@ app.listen(port, () => {
 });
 
 
-// const https = require('https');
 // const express = require("express");
-// const mongoose = require("mongoose");
 // const _ = require("lodash");
 // const bodyParser = require("body-parser");
 // const cors = require('cors');
 // var morgan = require('morgan');
 // const PORT = process.env.port || 5000;
 // // const PORT = process.env.PORT;
-// const axios = require("axios");
-// const path = require('path');
-// require('dotenv').config()
 
 
 // const app = express();

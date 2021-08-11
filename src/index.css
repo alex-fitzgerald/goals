@@ -1,13 +1,91 @@
+*::-webkit-scrollbar {
+  display: none;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align:left;
+  align-items:top;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app {
+  display:flex;
+  flex-wrap:wrap;
+}
+
+.daily,.kwmlGoal{
+  border-radius:5px;
+  border:1px solid rgba(0,0,0,0.2);
+  width:calc(100% - 40px);
+  margin:20px;
+  padding:20px;
+  min-width:300px;
+}
+
+.kwmlGoal {
+  max-width:200px;
+  flex:1;
+}
+
+.daily:hover,.kwmlGoal:hover{
+    box-shadow:0px 0px 15px rgba(0,0,0,0.1);
+}
+
+.daily h1 {
+  text-align:left;
+  font-size:1em;
+}
+
+.daily h2 {
+  font-size:1em;
+  font-weight:300;
+  text-align:left;
+}
+
+.daily p{
+  font-weight:500;
+}
+
+.daily pre {
+  font-family:'Poppins', sans-serif;
+  font-size:12px;
+  font-weight:500;
+}
+
+.header {
+  display:flex;
+  justify-content:space-between
+}
+
+button {
+  font-family:'Poppins', sans-serif;
+  max-height:30px;
+  min-width: 100px;
+}
+
+.poem button {
+  float:right;
+}
+
+.kwmlGoal {
+  flex:1;
+}
+
+.kwmlGoal h1 {
+  font-size:1em;
+}
+
+.kwmlGoal p {
+  border: solid 1px grey;
+  display:inline-block;
+  font-size:9px;
+  padding:10px 20px;
+  border-radius:20px;
 }
