@@ -29,7 +29,7 @@ function App() {
   }
 
   function postGoal(latestGoal){
-    const url ="postGoals"
+    const url = "postGoals"
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
@@ -41,7 +41,7 @@ function App() {
   }
 
   function deleteGoal(goal, category){
-    const url ="deleteGoals"
+    const url = "deleteGoals"
     console.log(goal, category)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
@@ -74,7 +74,7 @@ function App() {
 
 	useEffect(() => {
 		axios
-			.get("/goals")
+			.get("kwmlgoals")
 			.then((kwmlgoals) => setKwmlGoals(kwmlgoals))
 			.catch((err) => console.log(err));
 	}, []);

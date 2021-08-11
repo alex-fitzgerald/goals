@@ -7,13 +7,13 @@ const KwmlGoal = require('./Goal');
 
 // goal1.save()
 
-router.get('/goals', (req, res) => {
+router.get('/', (req, res) => {
     KwmlGoal.find()
         .then(kwmlgoals => res.json(kwmlgoals))
         .catch(err => console.log(err))
 })
 
-router.post('/postGoals', (req, res) => {
+router.post('/', (req, res) => {
     const { goal, category } = req.body;
     const newKwmlGoal = new KwmlGoal({
         goal: goal, 
