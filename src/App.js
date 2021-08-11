@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState, useEffect, setState } from "react";
 import Stoic from "./components/Stoic.jsx";
 import axios from "axios"
 import Poem from "./components/Poem.jsx";
@@ -28,18 +28,34 @@ function App() {
     deleteGoal(goal, category);
   }
 
-  function postGoal(latestGoal){
-    const url = "postGoals"
-    fetch(url , {
-      headers: {'Content-Type': 'application/json' },
-      method: "POST",
-      mode: 'cors',
-      body: JSON.stringify(latestGoal)
-    })
-      .then(response => response.json())
-      .then(data => this.setState({ postId: data.id }));
-  }
+  // function postGoal(latestGoal){
+  //   const url = "postGoals"
+  //   fetch(url , {
+  //     headers: {'Content-Type': 'application/json' },
+  //     method: "POST",
+  //     mode: 'cors',
+  //     body: JSON.stringify(latestGoal)
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => this.setState({ postId: data.id }));
+  // }
 
+  function postGoal(latestGoal){
+		axios
+			.post("/postGoals", {
+				goal: latestGoal.goal,
+				category: latestGoal.category,
+			})
+			.then(function () {
+				alert("Account created successfully");
+				window.location.reload();
+			})
+			.catch(function () {
+				alert("Could not creat account. Please try again");
+			});
+	}
+
+  
   function deleteGoal(goal, category){
     const url = "deleteGoals"
     console.log(goal, category)
@@ -67,17 +83,17 @@ function App() {
       .then(function(data){
         setDailyPoem(JSON.parse(data.poem))
         setRandomStoic(JSON.parse(data.stoic))
-        // setKwmlGoals(JSON.parse(data.kwmlgoals))
+        setKwmlGoals(JSON.parse(data.kwmlgoals))
         console.log(kwmlGoals)
       })
   }, []);
 
-	useEffect(() => {
-		axios
-			.get("backend/kwmlgoals")
-			.then((kwmlgoals) => setKwmlGoals(kwmlgoals))
-			.catch((err) => console.log(err));
-	}, []);
+	// useEffect(() => {
+	// 	axios
+	// 		.get("/getGoals")
+	// 		.then((kwmlgoals) => setKwmlGoals(kwmlgoals))
+	// 		.catch((err) => console.log(err));
+	// }, []);
 
   // React.useEffect(() => {
   //   fetch("goals", {
