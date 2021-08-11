@@ -3,11 +3,11 @@ const router = express.Router()
 
 const KwmlGoal = require('./Goal');
 
-const goal1 = new KwmlGoal({goal: "Testing the schema", category: "Test"});
+// const goal1 = new KwmlGoal({goal: "Testing the schema", category: "Test"});
 
-goal1.save()
+// goal1.save()
 
-router.get('/', (req, res) => {
+router.get('/goals', (req, res) => {
     KwmlGoal.find()
         .then(kwmlgoals => res.json(kwmlgoals))
         .catch(err => console.log(err))

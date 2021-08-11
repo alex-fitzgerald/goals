@@ -71,6 +71,19 @@ function App() {
       })
   }, []);
 
+  React.useEffect(() => {
+    fetch("goals", {
+      headers : {
+        "Content-Type": "applications/json",
+        "Accept": "application/json"
+      }
+    })
+      .then((res) => res.json())
+      .then(function(data){
+        setKwmlGoals(JSON.parse(data.kwmlGoals))
+      })
+  }, []);
+
   return (
     <div className="app">
       <Stoic 
