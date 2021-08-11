@@ -47,7 +47,6 @@ https.get("https://poetrydb.org/random", (res) => {
 })
 
 app.get("/api", (req, res) => {
-    
     res.json({
         message: "Hello from server!",
         stoic: JSON.stringify(dailyStoicism),

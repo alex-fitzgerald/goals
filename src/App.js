@@ -72,7 +72,7 @@ function App() {
   }, []);
 
   React.useEffect(() => {
-    fetch("goals", {
+    fetch("postGoals", {
       headers : {
         "Content-Type": "applications/json",
         "Accept": "application/json"

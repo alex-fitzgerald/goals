@@ -13,7 +13,7 @@ router.get('/goals', (req, res) => {
         .catch(err => console.log(err))
 })
 
-router.post('/postGoal', (req, res) => {
+router.post('/postGoals', (req, res) => {
     const { goal, category } = req.body;
     const newKwmlGoal = new KwmlGoal({
         goal: goal, 
