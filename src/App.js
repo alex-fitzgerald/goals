@@ -28,18 +28,6 @@ function App() {
     deleteGoal(goal, category);
   }
 
-  // function postGoal(latestGoal){
-  //   const url = "postGoals"
-  //   fetch(url , {
-  //     headers: {'Content-Type': 'application/json' },
-  //     method: "POST",
-  //     mode: 'cors',
-  //     body: JSON.stringify(latestGoal)
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => this.setState({ postId: data.id }));
-  // }
-
   function postGoal(latestGoal){
 		axios
 			.post("/postGoals", {
@@ -47,11 +35,10 @@ function App() {
 				category: latestGoal.category,
 			})
 			.then(function () {
-				alert("Account created successfully");
-				window.location.reload();
+				console.log(latestGoal + "added to task list");
 			})
 			.catch(function () {
-				alert("Could not creat account. Please try again");
+				alert("Could not create task. Please try again");
 			});
 	}
 
