@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 
-const KwmlGoal = require('../models/Goal');
+const KwmlGoal = require('./Goal');
 
 router.get('/', (req, res) => {
     KwmlGoal.find()
