@@ -9,8 +9,8 @@ require('./database');
 app.use(bodyParser.json());
 app.use(cors());
 
-const kwmlGoals = require('/api/kwmlGoals');
-app.use('/api/kwmlGoals', kwmlGoals);
+const kwmlGoals = require('/api/kwmlGoals.js');
+app.use('/api/kwmlGoals.js', kwmlGoals);
 
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
