@@ -44,11 +44,12 @@ body {
     sans-serif;
   text-align:left;
   font-size:1em;
+  font-weight:900;
 }
 
 .daily h2 {
-  font-size:.7em;
-  font-weight:500;
+  font-size:1em;
+  font-weight:200;
   text-align:left;
 }
 
@@ -64,13 +65,30 @@ body {
 
 .header {
   display:flex;
-  justify-content:space-between
+  justify-content:space-between;
 }
 
-button {
+button,input,select {
+  border:1px solid rgba(0,0,0,0.2);
+  border-radius:5px;
+  background-color:transparent;
+  color:rgba(0,0,0,0.5);
   font-family:'Poppins', sans-serif;
+  font-size:.6em;
+  font-weight:400;
+  letter-spacing: 1px;
+  display:flex;
+  align-items: center;
+  align-content: center;
+  min-height:30px;
   max-height:30px;
-  min-width: 100px;
+  min-width: 75px;
+  max-width:300px;
+  text-transform:uppercase;
+}
+
+button:hover {
+  background-color:rgba(0,0,0,0.05);
 }
 
 .poem button {
@@ -86,9 +104,52 @@ button {
 }
 
 .kwmlGoal p {
-  border: solid 1px grey;
+  border: solid 1px;
   display:inline-block;
   font-size:9px;
   padding:10px 20px;
   border-radius:20px;
+}
+
+.Life {
+  border-color: #673ab7;
+  color: #673ab7
+}
+
+.Work {
+  border-color: #e91e63;
+  color: #e91e63;
+}
+
+.Soul {
+  border-color: #ffeb3b;
+  color: #ffeb3b;
+}
+
+.Family {
+  border-color: #e91e63;
+  color: #e91e63;
+}
+
+.Life:hover {
+  background-color: #673ab7;
+  color: white;
+
+}
+
+.Work:hover {
+  background-color: #e91e63;
+  color: white;
+
+}
+
+.Soul:hover {
+  background-color: #ffeb3b;
+  color: white;
+
+}
+
+.Family:hover {
+  background-color: #e91e63;
+  color: white;
 }

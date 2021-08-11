@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function CreateArea(props) {
   const [kwmlGoal, setKwmlGoal] = useState({
     goal: "",
-    category: "King"
+    category: "Life"
     });
 
   function handleChange(event){
@@ -22,7 +22,7 @@ function CreateArea(props) {
         alert("Please enter a goal")
         event.preventDefault();
       } else {
-        setKwmlGoal({goal:"", category:"King"})
+        setKwmlGoal({goal:"", category:"Life"})
         event.preventDefault();
       }
     }
@@ -42,10 +42,10 @@ function CreateArea(props) {
         onChange={handleChange}
         rows="1" 
         value={kwmlGoal.category}>
-          <option value="King">King</option>
-          <option value="Warrior">Warrior</option>
-          <option value="Magician">Magician</option>
-          <option value="Lover">Lover</option>
+          <option value="Life">Life</option>
+          <option value="Work">Work</option>
+          <option value="Soul">Soul</option>
+          <option value="Family">Family</option>
         </select> 
         <br />
         <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
