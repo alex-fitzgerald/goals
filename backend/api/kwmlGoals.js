@@ -5,7 +5,7 @@ const KwmlGoal = require('../models/Goal');
 
 router.get('/', (req, res) => {
     KwmlGoal.find()
-        .then(users => res.json(users))
+        .then(kwmlGoals => res.json(kwmlGoals))
         .catch(err => console.log(err))
 })
 
