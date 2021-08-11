@@ -17,15 +17,5 @@ const kwmlGoalSchema = Schema({
 
 // // goal1.save()
 
-const userSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    }
-})
 
-module.exports = mongoose.model("KwmlGoal", kwmlGoalSchema, "kwmlGoals")
+module.exports = mongoose.model("KwmlGoal", kwmlGoalSchema, "kwmlgoals")

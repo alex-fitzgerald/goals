@@ -9,7 +9,7 @@ require('./database');
 app.use(bodyParser.json());
 app.use(cors());
 
-const kwmlGoals = require('/api/kwmlGoals');
+const kwmlGoals = require('./api/kwmlgoals');
 // app.use('./api/kwmlGoals', kwmlGoals);
 
 app.use(express.static(path.join(__dirname, '../build')))
@@ -39,6 +39,7 @@ https.get("https://poetrydb.org/random", (res) => {
     });
     res.on('end', () => {
         const poem = JSON.parse(result);
+        // eslint-disable-next-line no-unused-expressions
         dailyPoem.poemTitle = poem[0].title,
         dailyPoem.poemAuthor = poem[0].author,
         dailyPoem.poemLines = poem[0].lines
