@@ -1,4 +1,5 @@
 const express = require('express');
+const app = express()
 const router = express.Router()
 
 const KwmlGoal = require('./Goal');
@@ -29,4 +30,5 @@ router.post('/', (req, res) => {
         }))
 })
 
+app.use(router)
 module.exports = router 

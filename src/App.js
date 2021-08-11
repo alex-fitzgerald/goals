@@ -74,12 +74,11 @@ function App() {
 
 	useEffect(() => {
 		axios
-			.get("kwmlgoals")
+			.get("backend/kwmlgoals")
 			.then((kwmlgoals) => setKwmlGoals(kwmlgoals))
 			.catch((err) => console.log(err));
 	}, []);
 
-  
   // React.useEffect(() => {
   //   fetch("goals", {
   //     headers : {
