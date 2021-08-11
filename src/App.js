@@ -66,13 +66,13 @@ function App() {
       .then(function(data){
         setDailyPoem(JSON.parse(data.poem))
         setRandomStoic(JSON.parse(data.stoic))
-        setKwmlGoals(JSON.parse(data.kwmlGoals))
+        setKwmlGoals(JSON.parse(data.kwmlgoals))
         console.log(kwmlGoals)
       })
   }, []);
 
   React.useEffect(() => {
-    fetch("postGoals", {
+    fetch("goals", {
       headers : {
         "Content-Type": "applications/json",
         "Accept": "application/json"
