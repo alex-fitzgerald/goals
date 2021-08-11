@@ -9,7 +9,7 @@ require('./database');
 app.use(bodyParser.json());
 app.use(cors());
 
-const kwmlGoals = require('./api/kwmlGoals.js');
+const kwmlGoals = require('./api/kwmlGoals');
 // app.use('./api/kwmlGoals', kwmlGoals);
 
 app.use(express.static(path.join(__dirname, '../build')))
