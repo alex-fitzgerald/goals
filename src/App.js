@@ -1,5 +1,6 @@
-import React,{ useState } from "react";
+import React,{ useState, useEffect } from "react";
 import Stoic from "./components/Stoic.jsx";
+import axios from "axios"
 import Poem from "./components/Poem.jsx";
 import KWMLGoal from "./components/KWMLGoal.jsx";
 import CreateArea from "./components/CreateArea.jsx";
@@ -55,7 +56,7 @@ function App() {
       .then(data => this.setState({ postId: data.id }));
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetch("api", {
       headers : {
         "Content-Type": "applications/json",
@@ -66,23 +67,31 @@ function App() {
       .then(function(data){
         setDailyPoem(JSON.parse(data.poem))
         setRandomStoic(JSON.parse(data.stoic))
-        setKwmlGoals(JSON.parse(data.kwmlgoals))
+        // setKwmlGoals(JSON.parse(data.kwmlgoals))
         console.log(kwmlGoals)
       })
   }, []);
 
-  React.useEffect(() => {
-    fetch("goals", {
-      headers : {
-        "Content-Type": "applications/json",
-        "Accept": "application/json"
-      }
-    })
-      .then((res) => res.json())
-      .then(function(data){
-        setKwmlGoals(JSON.parse(data.kwmlGoals))
-      })
-  }, []);
+	useEffect(() => {
+		axios
+			.get("/goals")
+			.then((kwmlgoals) => setKwmlGoals(kwmlgoals))
+			.catch((err) => console.log(err));
+	}, []);
+
+  
+  // React.useEffect(() => {
+  //   fetch("goals", {
+  //     headers : {
+  //       "Content-Type": "applications/json",
+  //       "Accept": "application/json"
+  //     }
+  //   })
+  //     .then((res) => res.json())
+  //     .then(function(data){
+  //       setKwmlGoals(JSON.parse(data.kwmlGoals))
+  //     })
+  // }, []);
 
   return (
     <div className="app">
