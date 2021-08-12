@@ -3,8 +3,9 @@ import React from 'react'
 function Stoic(props){
     return(
         <div className="daily">
-            <h1>{props.stoicInput.quote}</h1>
-            <h2>{props.stoicInput.author}</h2>
+            <h1>Stoic idea</h1>
+            <h2>{props.stoicInput.quote}</h2>
+            <h3>{props.stoicInput.author}</h3>
         </div>
     )
 }

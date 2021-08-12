@@ -13,9 +13,7 @@ const kwmlGoalSchema = Schema({
   }
 });
 
-// const goal1 = new KwmlGoal({goal: "Testing the schema", category: "Test"});
 
-// // goal1.save()
 
 
 module.exports = mongoose.model("KwmlGoal", kwmlGoalSchema, "kwmlgoals")

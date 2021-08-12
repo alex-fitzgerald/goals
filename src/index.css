@@ -6,26 +6,30 @@
 
 body {
   margin: 0;
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
   text-align:left;
+  background-color:rgba(0,0,0,0.05);
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',sans-serif;
+
   align-items:top;
 }
 
 .app {
   display:flex;
   flex-wrap:wrap;
+  justify-content: center;
 }
 
 .daily,.kwmlGoal{
   border-radius:5px;
-  border:1px solid rgba(0,0,0,0.2);
+  border:none;
+  /* border:1px solid rgba(0,0,0,0.2); */
   width:calc(100% - 40px);
   margin:20px;
   padding:20px;
+  position:relative;
+  background-color:white;
   min-width:300px;
 }
 
@@ -39,27 +43,26 @@ body {
 }
 
 .daily h1 {
-  font-family: "Poppins", -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   text-align:left;
-  font-size:1em;
+  font-size:3em;
   font-weight:900;
 }
 
 .daily h2 {
-  font-size:1em;
-  font-weight:200;
+
+  font-size:1.8em;
+  font-weight:300;
   text-align:left;
 }
 
 .daily p{
   font-weight:500;
+  font-size:1em;
 }
 
 .daily pre {
-  font-family:'Poppins', sans-serif !important;;
-  font-size:1rem;
+  font-family:'Poppins', sans-serif !important;
+  font-size:.8rem;
   font-weight:500;
 }
 
@@ -79,12 +82,18 @@ button,input,select {
   letter-spacing: 1px;
   display:flex;
   align-items: center;
+  justify-content:center;
   align-content: center;
   min-height:30px;
   max-height:30px;
-  min-width: 75px;
+  min-width: 100px;
   max-width:300px;
   text-transform:uppercase;
+}
+
+
+input {
+  width:300px;
 }
 
 button:hover {
@@ -99,8 +108,19 @@ button:hover {
   flex:1;
 }
 
+.footer {
+  display:flex;
+  align-items: center;
+  flex-wrap:wrap;
+}
+
+.footer div{
+  flex:1;
+}
+
 .kwmlGoal h1 {
-  font-size:1em;
+  font-size:1.6em;
+  font-weight:300;
 }
 
 .kwmlGoal p {
@@ -109,6 +129,14 @@ button:hover {
   font-size:9px;
   padding:10px 20px;
   border-radius:20px;
+}
+
+.kwmlGoal button {
+  float:right;
+}
+
+.category {
+  margin:0px;
 }
 
 .Life {
@@ -122,13 +150,13 @@ button:hover {
 }
 
 .Soul {
-  border-color: #ffeb3b;
-  color: #ffeb3b;
+  border-color: #4CAF50;
+  color: #4CAF50;
 }
 
 .Family {
-  border-color: #e91e63;
-  color: #e91e63;
+  border-color: #03A9F4;
+  color: #03A9F4;
 }
 
 .Life:hover {
@@ -144,12 +172,12 @@ button:hover {
 }
 
 .Soul:hover {
-  background-color: #ffeb3b;
+  background-color: #4CAF50;
   color: white;
 
 }
 
 .Family:hover {
-  background-color: #e91e63;
+  background-color: #03A9F4;
   color: white;
 }
