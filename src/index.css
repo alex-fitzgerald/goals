@@ -1,150 +1,162 @@
 *::-webkit-scrollbar {
   display: none;
-  -ms-overflow-style: none; 
-  scrollbar-width: none; 
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
-  text-align:left;
-  background-color:rgba(0,0,0,0.05);
-  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',sans-serif;
-  align-items:top;
+  text-align: left;
+  background-color: rgba(0, 0, 0, 0.05);
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  align-items: top;
 }
 
 h1 {
-color:rgba(0,0,0,0.15);
-font-size:5em;
-margin:0px;
+  color: rgba(0, 0, 0, 0.15);
+  font-size: 5em;
+  margin: 0px;
 }
 
 .app {
-  display:flex;
-  flex-wrap:wrap;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
-.daily,.kwmlGoal{
-  border-radius:5px;
-  border:none;
+.daily,
+.kwmlGoal {
+  border-radius: 5px;
+  border: none;
   /* border:1px solid rgba(0,0,0,0.2); */
-  width:calc(100% - 40px);
-  margin:20px;
-  padding:20px;
-  position:relative;
-  background-color:white;
-  min-width:300px;
-  transition:.3s ease-in-out;
+  width: calc(100% - 40px);
+  margin: 20px;
+  padding: 20px;
+  position: relative;
+  background-color: white;
+  min-width: 300px;
+  transition: .3s ease-in-out;
+}
+
+.daily {
+  position: relative
 }
 
 .kwmlGoal {
-  max-width:200px;
-  flex:1;
-  transition:.3s ease-in-out;
+  max-width: 200px;
+  flex: 1;
+  transition: .3s ease-in-out;
 }
 
-.daily:hover,.kwmlGoal:hover{
-  transition:.3s ease-in-out;
-  box-shadow:0px 0px 15px rgba(0,0,0,0.1);
+.daily:hover,
+.kwmlGoal:hover {
+  transition: .3s ease-in-out;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
 }
 
 .daily h1 {
-  text-align:left;
-  font-weight:900;
+  text-align: left;
+  font-size:6em;
+  font-weight: 900;  
+  position:absolute;
+  color: rgba(0, 0, 0, 0.05);
+  z-index:2;
 }
 
 .daily h2 {
-  font-size:1.6em;
-  font-weight:300;
-  text-align:left;
-  line-height:2;
+  font-size: 1.6em;
+  font-weight: 300;
+  text-align: left;
+  line-height: 2;
 }
 
-.daily p{
-  font-weight:500;
-  font-size:1em;
+.daily p {
+  font-weight: 500;
+  font-size: 1em;
 }
 
 .daily pre {
-  font-family:'Poppins', sans-serif !important;
-  font-size:.8rem;
-  font-weight:500;
+  font-family: 'Poppins', sans-serif !important;
+  font-size: .8rem;
+  font-weight: 500;
 }
 
 .header {
-  display:flex;
-  justify-content:space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
-button,input,select {
-  border:1px solid rgba(0,0,0,0.2);
-  border-radius:5px;
-  background-color:transparent;
-  color:rgba(0,0,0,0.5);
-  font-family:'Poppins', sans-serif;
-  font-size:.6em;
-  font-weight:400;
+button,
+input,
+select {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5);
+  font-family: 'Poppins', sans-serif;
+  font-size: .6em;
+  font-weight: 400;
   letter-spacing: 1px;
-  display:flex;
+  display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   align-content: center;
-  min-height:30px;
-  max-height:30px;
+  min-height: 30px;
+  max-height: 30px;
   min-width: 100px;
-  max-width:300px;
-  text-transform:uppercase;
+  max-width: 300px;
+  text-transform: uppercase;
 }
 
 
 input {
-  width:300px;
+  width: 300px;
 }
 
 button:hover {
-  background-color:rgba(0,0,0,0.05);
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .poem button {
-  float:right;
+  float: right;
 }
 
 .kwmlGoal {
-  flex:1;
+  flex: 1;
 }
 
 .footer {
-  display:flex;
+  display: flex;
   align-items: center;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
 }
 
-.footer div{
-  flex:1;
+.footer div {
+  flex: 1;
 }
 
 .kwmlGoal h1 {
-  font-size:1.6em;
-  font-weight:300;
+  font-size: 1.6em;
+  font-weight: 300;
   color: black;
 }
 
 .kwmlGoal p {
   border: solid 1px;
-  display:inline-block;
-  font-size:9px;
-  padding:10px 20px;
-  border-radius:20px;
+  display: inline-block;
+  font-size: 9px;
+  padding: 10px 20px;
+  border-radius: 20px;
 }
 
 .kwmlGoal button {
-  float:right;
+  float: right;
 }
 
 .category {
-  margin:0px;
+  margin: 0px;
 }
 
 .Life {
