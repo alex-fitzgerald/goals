@@ -58,7 +58,8 @@ h1 {
 
 .daily h1 {
   text-align: left;
-  font-size:6em;
+  font-size:5em;
+  line-height:1;
   font-weight: 900;  
   position:absolute;
   color: rgba(0, 0, 0, 0.05);
