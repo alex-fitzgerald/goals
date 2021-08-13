@@ -44,6 +44,11 @@ h1 {
   position: relative
 }
 
+.daily-wrapper {
+  position:relative;
+  z-index:5;
+}
+
 .kwmlGoal {
   max-width: 200px;
   flex: 1;

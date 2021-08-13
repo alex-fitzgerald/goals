@@ -30,26 +30,28 @@ function CreateArea(props) {
   return ( 
     <div className="daily">
     <h1>Set a goal</h1>
-      <form onSubmit={formSubmit}>
-        <input 
-          onChange={handleChange}
-          name="goal" 
-          placeholder="Goal" 
-          value={kwmlGoal.goal}
-        />
-       <br />
-       <select name="category" placeholder="Category" list="goalCategory" id="goalCategory"
-        onChange={handleChange}
-        rows="1" 
-        value={kwmlGoal.category}>
-          <option value="Life">Life</option>
-          <option value="Work">Work</option>
-          <option value="Soul">Soul</option>
-          <option value="Family">Family</option>
-        </select> 
+      <div class="daily-wrapper">
+        <form onSubmit={formSubmit}>
+          <input 
+            onChange={handleChange}
+            name="goal" 
+            placeholder="Goal" 
+            value={kwmlGoal.goal}
+          />
         <br />
-        <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
-      </form>
+        <select name="category" placeholder="Category" list="goalCategory" id="goalCategory"
+          onChange={handleChange}
+          rows="1" 
+          value={kwmlGoal.category}>
+            <option value="Life">Life</option>
+            <option value="Work">Work</option>
+            <option value="Soul">Soul</option>
+            <option value="Family">Family</option>
+          </select> 
+          <br />
+          <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
+        </form>
+        </div>
     </div>
   );
   }
