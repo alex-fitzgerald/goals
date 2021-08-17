@@ -10,4 +10,5 @@ function Stoic(props){
     )
 }
 
+
 export default Stoic

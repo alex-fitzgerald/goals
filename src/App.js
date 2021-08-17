@@ -10,6 +10,10 @@ function App() {
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
   const [kwmlGoals, setKwmlGoals] = useState([]);
+  const [goalsFiltered, setGoalsFiltered] = useState([]);
+  const [allGoals, setAllGoals] = useState([]);
+  
+  console.log(kwmlGoals)
 
   function addGoal(kwmlGoal){  
     setKwmlGoals(prevKwmlGoals => {
@@ -42,7 +46,6 @@ function App() {
 			});
 	}
 
-  
   function deleteGoal(goal, category){
     const url = "deleteGoals"
     console.log(goal, category)
@@ -59,6 +62,18 @@ function App() {
       .then(data => this.setState({ postId: data.id }));
   }
 
+  function filterGoals(selectedCategory) {
+    if (!goalsFiltered) {
+    let filteredGoals = kwmlGoals.filter(goal => goal.category == selectedCategory);
+    setKwmlGoals(filteredGoals);
+    setGoalsFiltered(true);
+    } else {
+    console.log(allGoals)
+    setKwmlGoals(allGoals);
+    setGoalsFiltered(false);
+    }
+  }
+
   useEffect(() => {
     fetch("api", {
       headers : {
@@ -71,29 +86,10 @@ function App() {
         setDailyPoem(JSON.parse(data.poem))
         setRandomStoic(JSON.parse(data.stoic))
         setKwmlGoals(JSON.parse(data.kwmlgoals))
+        setAllGoals(JSON.parse(data.kwmlgoals))
         console.log(kwmlGoals)
       })
   }, []);
-
-	// useEffect(() => {
-	// 	axios
-	// 		.get("/getGoals")
-	// 		.then((kwmlgoals) => setKwmlGoals(kwmlgoals))
-	// 		.catch((err) => console.log(err));
-	// }, []);
-
-  // React.useEffect(() => {
-  //   fetch("goals", {
-  //     headers : {
-  //       "Content-Type": "applications/json",
-  //       "Accept": "application/json"
-  //     }
-  //   })
-  //     .then((res) => res.json())
-  //     .then(function(data){
-  //       setKwmlGoals(JSON.parse(data.kwmlGoals))
-  //     })
-  // }, []);
 
   return (
     <div className="app">
@@ -113,6 +109,7 @@ function App() {
           goal={kwmlGoal.goal}
           category={kwmlGoal.category} 
           deleteClick={deleteKwmlGoal}
+          filterClick={filterGoals}
           /> ))}
     </div>
   );

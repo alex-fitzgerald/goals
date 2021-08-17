@@ -6,11 +6,15 @@ function KWMLGoal(props) {
     <div className="kwmlGoal">
       <h1>{props.goal}</h1>
       <div className="footer">
-        <div>
-          <p className={"category " + props.category}>{props.category}</p>
+        <div onClick={() => (props.filterClick(props.category))}>
+          <p className={"category " + props.category}>
+            {props.category}
+          </p>
         </div>
         <div>
-         <button onClick={() => (props.deleteClick(props.id, props.goal, props.category))}>
+         <button 
+          onClick={() => (props.deleteClick(props.id, props.goal, props.category))}
+          >
          Delete
          </button>
         </div>
