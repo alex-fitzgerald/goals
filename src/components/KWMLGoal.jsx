@@ -6,7 +6,7 @@ function KWMLGoal(props) {
     <div className="kwmlGoal">
       <h1>{props.goal}</h1>
       <div className="footer">
-        <div onClick={() => (props.filterClick(props.category))}>
+        <div className="kwmlGoalDiv" onClick={() => (props.filterClick(props.category))}>
           <p className={"category " + props.category}>
             {props.category}
           </p>
@@ -15,7 +15,7 @@ function KWMLGoal(props) {
          <button 
           onClick={() => (props.deleteClick(props.id, props.goal, props.category))}
           >
-         Delete
+         Completed
          </button>
         </div>
       </div>

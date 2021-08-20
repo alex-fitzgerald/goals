@@ -3,6 +3,7 @@ import Stoic from "./components/Stoic.jsx";
 import axios from "axios"
 import Poem from "./components/Poem.jsx";
 import KWMLGoal from "./components/KWMLGoal.jsx";
+// import DailyGoals from "./components/DailyGoals.jsx";
 import CreateArea from "./components/CreateArea.jsx";
 
 
@@ -10,7 +11,7 @@ function App() {
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
   const [kwmlGoals, setKwmlGoals] = useState([]);
-  const [goalsFiltered, setGoalsFiltered] = useState([]);
+  const [goalsFiltered, setGoalsFiltered] = useState(false);
   const [allGoals, setAllGoals] = useState([]);
   
   console.log(kwmlGoals)
@@ -64,9 +65,10 @@ function App() {
 
   function filterGoals(selectedCategory) {
     if (!goalsFiltered) {
-    let filteredGoals = kwmlGoals.filter(goal => goal.category == selectedCategory);
+    let filteredGoals = kwmlGoals.filter(goal => goal.category === selectedCategory);
     setKwmlGoals(filteredGoals);
     setGoalsFiltered(true);
+    console.log(kwmlGoals)
     } else {
     console.log(allGoals)
     setKwmlGoals(allGoals);
@@ -102,6 +104,9 @@ function App() {
       <CreateArea 
           onAdd={addGoal}
       />
+      {/* <DailyGoals 
+          kwmlGoals={allGoals}
+      /> */}
       {kwmlGoals.map((kwmlGoal, index) => ( 
         <KWMLGoal 
           key={index}

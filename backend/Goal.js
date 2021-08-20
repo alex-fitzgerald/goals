@@ -10,6 +10,9 @@ const kwmlGoalSchema = Schema({
   },
   category: {
     type: String
+  },
+  scope: {
+   type: String
   }
 });
 

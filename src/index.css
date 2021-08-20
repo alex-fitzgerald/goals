@@ -33,7 +33,7 @@ h1 {
   /* border:1px solid rgba(0,0,0,0.2); */
   width: calc(100% - 40px);
   margin: 20px;
-  padding: 20px;
+  padding: 20px 20px 60px 20px;
   position: relative;
   background-color: white;
   min-width: 300px;
@@ -45,14 +45,14 @@ h1 {
 }
 
 .daily-wrapper {
-  position:relative;
-  z-index:5;
+  position: relative;
+  z-index: 5;
 }
 
 .kwmlGoal {
-  max-width: 200px;
   flex: 1;
   transition: .3s ease-in-out;
+  position: relative;
 }
 
 .daily:hover,
@@ -63,12 +63,12 @@ h1 {
 
 .daily h1 {
   text-align: left;
-  font-size:5em;
-  line-height:1;
-  font-weight: 900;  
-  position:absolute;
+  font-size: 5em;
+  line-height: 1;
+  font-weight: 900;
+  position: absolute;
   color: rgba(0, 0, 0, 0.05);
-  z-index:2;
+  z-index: 2;
 }
 
 .daily h2 {
@@ -94,31 +94,50 @@ h1 {
   justify-content: space-between;
 }
 
-button,
+
 input,
 select {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  border: none;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
   background-color: transparent;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, .8);
   font-family: 'Poppins', sans-serif;
-  font-size: .6em;
+  font-size: 1em;
   font-weight: 400;
   letter-spacing: 1px;
+  padding: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   align-content: center;
   min-height: 30px;
-  max-height: 30px;
-  min-width: 100px;
-  max-width: 300px;
-  text-transform: uppercase;
+  max-height: 50px;
+  width: 100%;
+  text-align: center;
 }
 
-
 input {
-  width: 300px;
+  width: calc(100% - 20px);
+}
+
+button {
+  text-transform: uppercase;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.2);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  min-height: 30px;
+  max-height: 50px;
+  width: 100%;
 }
 
 button:hover {
@@ -129,14 +148,14 @@ button:hover {
   float: right;
 }
 
-.kwmlGoal {
-  flex: 1;
-}
 
 .footer {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  position: absolute;
+  width: calc(100%-40px);
+  bottom: 17px;
 }
 
 .footer div {
@@ -149,61 +168,75 @@ button:hover {
   color: black;
 }
 
-.kwmlGoal p {
-  border: solid 1px;
+.kwmlGoalDiv {
   display: inline-block;
-  font-size: 9px;
-  padding: 10px 20px;
-  border-radius: 20px;
 }
 
-.kwmlGoal button {
+.kwmlGoal p {
+  border: solid 2px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 10px;
+  font-weight:600;
+  padding: 5px 10px;
+  text-align:center;
+  width:100px;
+  text-transform:uppercase;
+}
+
+.kwmlGoal button,.poem button {
   float: right;
+  min-height: 20px;
+  max-height: 30px;
+  min-width: 75px;
+  max-width: 300px;
+  font-size: .6em;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.2);
+  width:100px;
 }
 
 .category {
   margin: 0px;
 }
 
-.Life {
+.King {
   border-color: #673ab7;
   color: #673ab7
 }
 
-.Work {
+.Lover {
   border-color: #e91e63;
   color: #e91e63;
 }
 
-.Soul {
-  border-color: #4CAF50;
-  color: #4CAF50;
+.Warrior {
+  border-color: #FF5722;
+  color: #FF5722;
 }
 
-.Family {
+.Magician {
   border-color: #03A9F4;
   color: #03A9F4;
 }
 
-.Life:hover {
+.King:hover {
   background-color: #673ab7;
   color: white;
-
 }
 
-.Work:hover {
+.Lover:hover {
   background-color: #e91e63;
   color: white;
-
 }
 
-.Soul:hover {
-  background-color: #4CAF50;
+.Warrior:hover {
+  background-color: #FF5722;
   color: white;
-
 }
 
-.Family:hover {
+.Magician:hover {
   background-color: #03A9F4;
   color: white;
 }
