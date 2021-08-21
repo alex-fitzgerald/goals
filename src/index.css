@@ -145,7 +145,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   letter-spacing: 1px;
-  padding: 5px 10px;
+  padding: 8px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -162,6 +162,8 @@ button:hover {
 .dailyGoalsButton {
   width:unset !important;
   margin:auto;
+  border-radius:40px;
+  padding: 10px 20px;
 }
 
 .poem button {
@@ -170,9 +172,6 @@ button:hover {
 
 
 .footer {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
   position: absolute;
   width: calc(100% - 40px);
   bottom: 17px;
@@ -218,10 +217,16 @@ button:hover {
   width:107px;
 }
 
+.kwmlGoal button {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.08);
+  color:white;
+}
+
 .kwmlGoal button:hover {
   color:white;
-  background-color:#4CAF50;
-  border-color:#4CAF50;
+  background-color: rgba(0, 0, 0, 0.12);
+  border-color: rgba(0, 0, 0, 0.12);
 }
 
 .poem button{

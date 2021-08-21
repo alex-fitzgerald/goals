@@ -10,6 +10,7 @@ function KWMLGoal(props) {
           <p className={"category " + props.category}>
             {props.category}
           </p>
+        </div>
         {/* </div> */}
         {/* <div> */}
           <p className={"scope " + props.scope}>
@@ -22,8 +23,7 @@ function KWMLGoal(props) {
           >
           Completed
          </button>
-        </div>
-      </div>
+         </div>
     </div>
   );
 }
