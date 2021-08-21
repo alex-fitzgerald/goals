@@ -29,11 +29,11 @@ function Poem(props){
                  <h1>Today's poem</h1>
                  <div class="daily-wrapper">
                      <h2>{props.poemInput.poemTitle}</h2>
+                     <button onClick={handleClick}>{renderButton}</button>
                  </div>
             </div>
             <h3>{props.poemInput.poemAuthor}</h3>
             {handleLines()}
-                     <button onClick={handleClick}>{renderButton}</button>
         </div>
     )
 }

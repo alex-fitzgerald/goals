@@ -42,11 +42,7 @@ https.get("https://poetrydb.org/random", (res) => {
     })
 })
 
-
-
 const KwmlGoal = require('./Goal');
-
-
 
 app.get('/getGoals', (req, res) => {
     KwmlGoal.find()
@@ -56,34 +52,7 @@ app.get('/getGoals', (req, res) => {
 
   app.get("/api", (req, res) => {
     var currentGoals = []
-    KwmlGoal.updateMany(
-        {"category": "Soul"}, 
-        { "$set": {"category":"Magician" }} )
-        .then(function (res) {
-            console.log(res);
-        })
-        .catch(function (err) {
-            console.error(err);
-        });;
-    KwmlGoal.updateMany(
-        {"category": "Work"}, 
-        { "$set": {"category":"Warrior" }} )
-        .then(function (res) {
-            console.log(res);
-        })
-        .catch(function (err) {
-            console.error(err);
-        });;
-    KwmlGoal.updateMany(
-        {"category": "Family"}, 
-        { "$set": {"category":"Lover" }} )
-        .then(function (res) {
-            console.log(res);
-        })
-        .catch(function (err) {
-            console.error(err);
-        });;
-    
+
 
     KwmlGoal.find({}, function(err, foundGoals){
         if (foundGoals.length === 0) {
