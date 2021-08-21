@@ -18,6 +18,7 @@ function App() {
     goal: "Loading", category: "", scope: [""]}])
   const [allGoals, setAllGoals] = useState([]);
   const [goalsLoaded, setGoalsLoaded] = useState(false);
+  const [dailyGoalsSet, setDailyGoalsSet] = useState(false)
 
   function addGoal(kwmlGoal){  
     setKwmlGoals(prevKwmlGoals => {
@@ -40,6 +41,7 @@ function App() {
     .post("/postGoals", {
       goal: latestGoal.goal,
       category: latestGoal.category,
+      scope: latestGoal.scope
     })
     .then(function () {
       console.log(latestGoal + "added to goals.");
@@ -49,16 +51,17 @@ function App() {
 			});
     }
   
-    function deleteGoal(goal, category){
+    function deleteGoal(goal, category, scope){
       const url = "deleteGoals"
-    console.log(goal, category)
+    console.log(goal, category, scope)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
       mode: 'cors',
       body: JSON.stringify({
         goal: goal,
-        category: category
+        category: category,
+        scope: scope
       })
     })
     .then(response => response.json())
@@ -81,8 +84,6 @@ function App() {
     let warriorDaily = filteredWarriorGoals[ getRandomNumber(filteredWarriorGoals.length) ];
     let magicianDaily = filteredMagicianGoals[ getRandomNumber(filteredMagicianGoals.length) ];
     let loverDaily = filteredLoverGoals[ getRandomNumber(filteredLoverGoals.length) ];
-
-    console.log(kingDaily)
 
     setDailyGoals([kingDaily, warriorDaily, magicianDaily, loverDaily]);
     }
@@ -118,42 +119,53 @@ function App() {
       })
     }, []);
 
+    useEffect(() => {
+      if (dailyGoals[0].goal === "Loading"){
+      findDailyGoals()
+      setDailyGoalsSet(true)
+      }
+    })
     
     return (
     <div className="app">
       <Stoic stoicInput = {randomStoic} />
       <Poem poemInput = {dailyPoem} />
+
+      <div className="component">
+        <h1>Daily Goals</h1>
+        <div className="componentContent">
+          {dailyGoals.map((dailyGoal, index) => ( 
+              <KWMLGoal 
+                key={index}
+                id={index} 
+                goal={dailyGoal.goal}
+                category={dailyGoal.category} 
+                scope={dailyGoal.scope} 
+                deleteClick={deleteKwmlGoal}
+                filterClick={filterGoals}
+                /> )) 
+            } 
+          </div>
+        <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button>
+      </div>
+
       <CreateArea onAdd={addGoal} />
 
-      <div>
-        <button onClick={findDailyGoals}>Fetch daily goals</button>
-        <h1>Daily Goals</h1>
-        {dailyGoals.map((dailyGoal, index) => ( 
+      <div className="component">
+        <h1>All Goals</h1>
+        <div className="componentContent">
+          {kwmlGoals.map((kwmlGoal, index) => ( 
             <KWMLGoal 
               key={index}
               id={index} 
-              goal={dailyGoal.goal}
-              category={dailyGoal.category} 
-              scope={dailyGoal.scope} 
+              goal={kwmlGoal.goal}
+              category={kwmlGoal.category} 
+              scope={kwmlGoal.scope} 
               deleteClick={deleteKwmlGoal}
               filterClick={filterGoals}
-              /> )) 
-          } 
-      </div>
-
-      <div>
-        <h1>All Goals</h1>
-        {kwmlGoals.map((kwmlGoal, index) => ( 
-          <KWMLGoal 
-            key={index}
-            id={index} 
-            goal={kwmlGoal.goal}
-            category={kwmlGoal.category} 
-            scope={kwmlGoal.scope} 
-            deleteClick={deleteKwmlGoal}
-            filterClick={filterGoals}
-            /> ))
-          }
+              /> ))
+            }
+        </div>
       </div>
     </div>
   );

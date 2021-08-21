@@ -10,12 +10,17 @@ function KWMLGoal(props) {
           <p className={"category " + props.category}>
             {props.category}
           </p>
-        </div>
-        <div>
+        {/* </div> */}
+        {/* <div> */}
+          <p className={"scope " + props.scope}>
+            {props.scope}
+          </p>
+        {/* </div>
+        <div> */}
          <button 
-          onClick={() => (props.deleteClick(props.id, props.goal, props.category))}
+          onClick={() => (props.deleteClick(props.id, props.goal, props.category, props.scope))}
           >
-         Completed
+          Completed
          </button>
         </div>
       </div>

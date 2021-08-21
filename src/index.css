@@ -17,7 +17,8 @@ body {
 h1 {
   color: rgba(0, 0, 0, 0.15);
   font-size: 5em;
-  margin: 0px;
+  margin-top: 100px;
+  text-align:center;
 }
 
 .app {
@@ -26,23 +27,33 @@ h1 {
   justify-content: center;
 }
 
+.component {
+ width:100%;
+}
+
+.createGoal {
+  width:50%;
+  min-width:300px;
+  margin:auto;
+}
+
+.componentContent {
+  display:flex;
+  flex-wrap:wrap;
+}
+
 .daily,
 .kwmlGoal {
   border-radius: 5px;
   border: none;
-  /* border:1px solid rgba(0,0,0,0.2); */
-  width: calc(100% - 40px);
+  width: calc(100% - 90px);
   margin: 20px;
   padding: 20px 20px 60px 20px;
   position: relative;
   background-color: white;
-  min-width: 300px;
   transition: .3s ease-in-out;
 }
 
-.daily {
-  position: relative
-}
 
 .daily-wrapper {
   position: relative;
@@ -52,8 +63,11 @@ h1 {
 
 .kwmlGoal {
   flex: 1;
+  width: unset !important;
+  min-width:200px;
   transition: .3s ease-in-out;
   position: relative;
+  padding-bottom:90px;
 }
 
 .daily:hover,
@@ -63,13 +77,13 @@ h1 {
 }
 
 .daily h1 {
-  text-align: left;
   font-size: 5em;
   line-height: 1;
   font-weight: 900;
   position: absolute;
   color: rgba(0, 0, 0, 0.05);
   z-index: 2;
+  margin:0px !important;
 }
 
 .daily h2 {
@@ -124,14 +138,14 @@ input {
 button {
   text-transform: uppercase;
   border: 2px solid rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
+  border-radius: 15px;
   background-color: transparent;
   color: rgba(0, 0, 0, 0.2);
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
   font-weight: 500;
   letter-spacing: 1px;
-  padding: 10px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -145,6 +159,11 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
+.dailyGoalsButton {
+  width:unset !important;
+  margin:auto;
+}
+
 .poem button {
   float: right;
 }
@@ -155,7 +174,7 @@ button:hover {
   align-items: center;
   flex-wrap: wrap;
   position: absolute;
-  width: calc(100%-40px);
+  width: calc(100% - 40px);
   bottom: 17px;
 }
 
@@ -165,40 +184,66 @@ button:hover {
 
 .kwmlGoal h1 {
   font-size: 1em;
-  font-weight: 300;
+  font-weight: 800;
   color: black;
+  text-align:left;
+  margin:0px !important;
 }
 
 .kwmlGoalDiv {
   display: inline-block;
+  flex:2;
 }
 
 .kwmlGoal p {
   border: solid 2px;
   border-radius: 20px;
-  cursor: pointer;
-  display: inline-block;
   font-size: 10px;
   font-weight:600;
-  padding: 5px 10px;
+  padding: 5px 1px;
   text-align:center;
-  width:100px;
   text-transform:uppercase;
+  width:100px;
 }
 
 .kwmlGoal button,.poem button {
-  float: right;
   min-height: 20px;
   max-height: 30px;
   min-width: 75px;
   max-width: 300px;
   font-size: .6em;
   font-weight: 700;
+  margin-top:10px;
   color: rgba(0, 0, 0, 0.2);
-  width:100px;
+  width:107px;
+}
+
+.kwmlGoal button:hover {
+  color:white;
+  background-color:#4CAF50;
+  border-color:#4CAF50;
+}
+
+.poem button{
+  float:right;
+}
+
+.scope {
+  border:none !important;
+  color:rgba(0,0,0,0.2);
+  font-weight:700 !important;
+  font-size:8px !important;
+  margin-left:10px;
+  padding:0px  !important;
+  width:unset !important;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  cursor:default;
 }
 
 .category {
+  cursor: pointer;
   margin: 0px;
 }
 
@@ -223,21 +268,25 @@ button:hover {
 }
 
 .King:hover {
+  border-color: #673ab7;
   background-color: #673ab7;
   color: white;
 }
 
 .Lover:hover {
+  border-color: #e91e63;
   background-color: #e91e63;
   color: white;
 }
 
 .Warrior:hover {
+  border-color: #FF5722;
   background-color: #FF5722;
   color: white;
 }
 
 .Magician:hover {
+  border-color: #03A9F4;
   background-color: #03A9F4;
   color: white;
 }

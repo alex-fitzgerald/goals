@@ -74,10 +74,11 @@ app.get('/getGoals', (req, res) => {
   });
 
   app.post('/postGoals', (req, res) => {
-      const { goal, category } = req.body;
+      const { goal, category, scope } = req.body;
     const newKwmlGoal = new KwmlGoal({
         goal: goal, 
-        category: category
+        category: category,
+        scope: scope
     })
     newKwmlGoal.save()
         .then(() => res.json({
