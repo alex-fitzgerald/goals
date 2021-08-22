@@ -4,12 +4,19 @@ function CreateArea(props) {
   const [kwmlGoal, setKwmlGoal] = useState({
     goal: "",
     category: "King",
+    type: "Goal",
     scope: "Daily"
     });
+  const [type, setType] = useState("Goal")
+  
 
   function handleChange(event){
     const { name, value } = event.target;
-  
+    
+    if (name === "type") {
+      setType(value)
+    }
+
     setKwmlGoal(prevNote => {
         return {
           ...prevNote,
@@ -23,7 +30,7 @@ function CreateArea(props) {
         alert("Please enter a goal")
         event.preventDefault();
       } else {
-        setKwmlGoal({goal:"", category:"King", scope:"Daily"})
+        setKwmlGoal({goal:"", category:"King", type: "Goal", scope:"Daily"})
         event.preventDefault();
       }
     }
@@ -51,14 +58,21 @@ function CreateArea(props) {
               <option value="Lover">Lover</option>
             </select> 
             <br />
-          <select name="scope" placeholder="Scope" list="scopeCategory" id="scopeCategory"
+          <select name="type" placeholder="Type" list="goalType" id="goalType"
             onChange={handleChange}
             rows="1" 
-            value={kwmlGoal.scope}>
-              <option value="Daily">Daily</option>
-              <option value="Monthly">Monthly</option>
-              <option value="Yearly">Yearly</option>
+            value={kwmlGoal.type}>
+              <option value="Goal">Goal</option>
+              <option value="Reminder">Reminder</option>
+              <option value="Mindset">Mindset</option>
             </select> 
+            <br />
+          {type === "Goal" ? <select name="scope" placeholder="Scope" list="scopeCategory" id="scopeCategory"  onChange={handleChange} rows="1" value={kwmlGoal.scope}>
+                          <option value="Daily">Daily</option>
+                          <option value="Monthly">Monthly</option>
+                          <option value="Yearly">Yearly</option>
+                        </select> : null
+            }
             <br />
             <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
           </form>

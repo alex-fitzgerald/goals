@@ -10,6 +10,8 @@ function App() {
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
   const [kwmlGoals, setKwmlGoals] = useState([]);
+  const [reminders, setReminders] = useState([]);
+  const [mindsets, setMindsets] = useState([]);
   const [goalsFiltered, setGoalsFiltered] = useState(false);
   const [dailyGoals, setDailyGoals] = useState([{
     goal: "Loading", category: "", scope: [""]}, {
@@ -20,6 +22,8 @@ function App() {
   const [goalsLoaded, setGoalsLoaded] = useState(false);
   const [dailyGoalsSet, setDailyGoalsSet] = useState(false)
 
+  console.log(kwmlGoals)
+
   function addGoal(kwmlGoal){  
     setKwmlGoals(prevKwmlGoals => {
       return [...prevKwmlGoals, kwmlGoal]
@@ -27,13 +31,13 @@ function App() {
     postGoal(kwmlGoal);
   }
   
-  function deleteKwmlGoal(id, goal, category) {
+  function deleteKwmlGoal(id, goal, category, type, scope) {
     setKwmlGoals(prevKwmlGoals => {
       return prevKwmlGoals.filter((kwmlGoals, index) => {
         return index !== id;
       });
     });
-    deleteGoal(goal, category);
+    deleteGoal(goal, category, type, scope);
   }
   
   function postGoal(latestGoal){
@@ -41,6 +45,7 @@ function App() {
     .post("/postGoals", {
       goal: latestGoal.goal,
       category: latestGoal.category,
+      type: latestGoal.type,
       scope: latestGoal.scope
     })
     .then(function () {
@@ -51,9 +56,9 @@ function App() {
 			});
     }
   
-    function deleteGoal(goal, category, scope){
-      const url = "deleteGoals"
-    console.log(goal, category, scope)
+    function deleteGoal(goal, category, type, scope){
+    const url = "deleteGoals"
+    console.log(goal, category, type, scope)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
@@ -61,6 +66,7 @@ function App() {
       body: JSON.stringify({
         goal: goal,
         category: category,
+        type: type,
         scope: scope
       })
     })
@@ -94,30 +100,41 @@ function App() {
       let filteredGoals = kwmlGoals.filter(goal => goal.category === selectedCategory);
     setKwmlGoals(filteredGoals);
     setGoalsFiltered(true);
-    console.log(kwmlGoals)
   } else {
-    console.log(allGoals)
     setKwmlGoals(allGoals);
     setGoalsFiltered(false);
-  }
-  }
+  }}
   
   useEffect(() => {
-    fetch("api", {
-      headers : {
-        "Content-Type": "applications/json",
-        "Accept": "application/json"
-      }
-    })
+    fetch("api", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
     .then((res) => res.json())
     .then(function(data){
       setDailyPoem(JSON.parse(data.poem))
       setRandomStoic(JSON.parse(data.stoic))
+      })}, []);
+
+  useEffect(() => {
+    fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+    .then((res) => res.json())
+    .then(function(data){
+      console.log(data)
       setKwmlGoals(JSON.parse(data.kwmlgoals))
-      setAllGoals(JSON.parse(data.kwmlgoals))
       setGoalsLoaded(true)
-      })
-    }, []);
+      })}, []);
+
+  useEffect(() => {
+    fetch("reminders", { headers : { "Content-Type": "applications/json","Accept": "application/json"}})
+    .then((res) => res.json())
+    .then(function(data){
+      setReminders(JSON.parse(data.reminders))
+      })}, []);
+
+    useEffect(() => {
+      fetch("mindsets", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+      .then((res) => res.json())
+      .then(function(data){
+        setMindsets(JSON.parse(data.mindsets))
+        })}, []);
 
     useEffect(() => {
       if (dailyGoals[0].goal === "Loading"){
@@ -132,6 +149,44 @@ function App() {
       <Poem poemInput = {dailyPoem} />
 
       <div className="component">
+        <h1>Today's Mindsets</h1>
+        <div className="componentContent">
+          {mindsets.map((mindset, index) => ( 
+              <KWMLGoal 
+                key={index}
+                id={index} 
+                goal={mindset.mindset}
+                category={mindset.category} 
+                type={null}
+                scope={null} 
+                deleteClick={deleteKwmlGoal}
+                filterClick={filterGoals}
+                /> )) 
+            } 
+          </div>
+        <button className="dailyGoalsButton" onClick={findDailyGoals}>New mindset</button>
+      </div>
+
+      <div className="component">
+        <h1>Remember</h1>
+        <div className="componentContent">
+          {reminders.map((reminder, index) => ( 
+              <KWMLGoal 
+                key={index}
+                id={index} 
+                goal={reminder.reminder}
+                category={reminder.category} 
+                type={null}
+                scope={reminder.scope} 
+                deleteClick={deleteKwmlGoal}
+                filterClick={filterGoals}
+                /> )) 
+            } 
+          </div>
+        <button className="dailyGoalsButton" onClick={findDailyGoals}>New reminders</button>
+      </div>
+
+      <div className="component">
         <h1>Daily Goals</h1>
         <div className="componentContent">
           {dailyGoals.map((dailyGoal, index) => ( 
@@ -140,7 +195,8 @@ function App() {
                 id={index} 
                 goal={dailyGoal.goal}
                 category={dailyGoal.category} 
-                scope={dailyGoal.scope} 
+                type={null}
+                scope={null} 
                 deleteClick={deleteKwmlGoal}
                 filterClick={filterGoals}
                 /> )) 
@@ -161,6 +217,7 @@ function App() {
               goal={kwmlGoal.goal}
               category={kwmlGoal.category} 
               scope={kwmlGoal.scope} 
+              type={kwmlGoal.type}
               deleteClick={deleteKwmlGoal}
               filterClick={filterGoals}
               /> ))

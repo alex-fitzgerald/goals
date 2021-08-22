@@ -42,67 +42,132 @@ https.get("https://poetrydb.org/random", (res) => {
     })
 })
 
-const KwmlGoal = require('./Goal');
+const models = require('./Goal');
 
-app.get('/getGoals', (req, res) => {
-    KwmlGoal.find()
-        .then(kwmlgoals => res.json(kwmlgoals))
-        .catch(err => console.log(err))
-})
+const KwmlGoal = models.kwmlGoalModel;
+const Reminder = models.reminderModel;
+const Mindset = models.mindsetModel;
 
-  app.get("/api", (req, res) => {
+const { type } = require('os');
+
+app.get("/api", (req, res) => {
+    res.json({
+        message: "Hello from server!",
+        stoic: JSON.stringify(dailyStoicism),
+        poem: JSON.stringify(dailyPoem)
+    });
+});
+
+app.get("/goals", (req, res) => {
     var currentGoals = []
-
 
     KwmlGoal.find({}, function(err, foundGoals){
         if (foundGoals.length === 0) {
-            console.log("Found no items")
-            res.json({
-                message: "Hello from server!",
-                stoic: JSON.stringify(dailyStoicism),
-                poem: JSON.stringify(dailyPoem)
-            });
+            console.log("Found no goals")
         } else {
-        currentGoals = foundGoals
-        res.json({
-            message: "Hello from server!",
-            stoic: JSON.stringify(dailyStoicism),
-            poem: JSON.stringify(dailyPoem),
-            kwmlgoals: JSON.stringify(currentGoals)
-        });
-    }})
-  });
+            currentGoals = foundGoals
+            res.json({
+                message: "Goals sent!",
+                kwmlgoals: JSON.stringify(currentGoals)
+            });
+        }})
+});
 
-  app.post('/postGoals', (req, res) => {
-      const { goal, category, scope } = req.body;
+app.get("/mindsets", (req, res) => {
+    var currentMindsets = []
+
+    Mindset.find({}, function(err, foundMindsets){
+        if (foundMindsets.length === 0) {
+            console.log("Found no mindsets")
+        } else {
+            currentMindsets = foundMindsets
+            res.json({
+                mindsets: JSON.stringify(currentMindsets)
+            });
+        }})
+});
+
+app.get("/reminders", (req, res) => {
+    var currentReminders = []
+
+    Reminder.find({}, function(err, foundReminders){
+        if (foundReminders.length === 0) {
+            console.log("Found no reminders")
+        } else {
+            currentReminders = foundReminders
+            res.json({
+                reminders: JSON.stringify(currentReminders)
+            });
+        }})
+});
+
+app.post('/postGoals', (req, res) => {
+const { goal, category, type, scope } = req.body;
+console.log(type)
+
+if (type === "Goal") {
     const newKwmlGoal = new KwmlGoal({
         goal: goal, 
         category: category,
+        type:type,
         scope: scope
     })
     newKwmlGoal.save()
         .then(() => res.json({
-            message: "Created account successfully"
+            message: "Created goal successfully"
         }))
         .catch(err => res.status(400).json({
             "error": err,
-            "message": "Error creating account"
+            "message": "Error creating goal"
         }))
+} else if (type === "Reminder") {
+    const newReminder = new Reminder({
+        reminder: goal, 
+        category: category,
+        type: type,
+        scope: scope
     })
+    newReminder.save()
+        .then(() => res.json({
+            message: "Created reminder successfully"
+        }))
+        .catch(err => res.status(400).json({
+            "error": err,
+            "message": "Error creating reminder"
+        }))
+} else if (type === "Mindset") {
+    const newMindset = new Mindset({
+        mindset: goal, 
+        category: category,
+        type: type,
+        scope: scope
+    })
+    newMindset.save()
+        .then(() => res.json({
+            message: "Created mindset focus successfully"
+        }))
+        .catch(err => res.status(400).json({
+            "error": err,
+            "message": "Error creating mindset focus"
+        }))
+}
+})
 
-    app.post("/deleteGoals", (req, res) => {
-        const goalToDelete = req.body.goal;
-        const goalCategoryToDelete = req.body.category
-        
-        console.log(goalToDelete, goalCategoryToDelete)
-        KwmlGoal.remove({ goal: goalToDelete, category: goalCategoryToDelete}, function(err){
-        if (!err) {
-            console.log("Task successfully deleted");
-        } else {
-            console.log("error")
-        }
-        });
-      });
+app.post("/deleteGoals", (req, res) => {
+    const goal = req.body.goal;
+    const category = req.body.category
+    const type = req.body.type
+    const scope = req.body.scope
+    
+    console.log(goal, category, type, scope)
+    KwmlGoal.remove({ goal: goal, category: category, type: type, scope:scope}, function(err){
+    if (!err) {
+        console.log("Task successfully deleted");
+    } else {
+        console.log("error")
+    }
+    });
+});
 
     
 const port = process.env.PORT || 5000;
