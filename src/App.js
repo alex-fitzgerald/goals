@@ -203,6 +203,7 @@ function App() {
     .then(function(data){
       console.log(data)
       setKwmlGoals(JSON.parse(data.kwmlgoals))
+      setAllGoals(JSON.parse(data.kwmlgoals))
       setGoalsLoaded(true)
       findDailyGoals()
       })}, []);
