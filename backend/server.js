@@ -14,6 +14,10 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build'))
 })
 
+// localhost direct
+
+// end localhost direct
+
 var dailyStoicism = {quote: "Loading...", author: ""}
 var dailyPoem = {poemTitle: "Loading...", poemAuthor: "", poemLines: ""}
 
@@ -66,6 +70,7 @@ app.get("/goals", (req, res) => {
             console.log("Found no goals")
         } else {
             currentGoals = foundGoals
+            console.log(currentGoals)
             res.json({
                 message: "Goals sent!",
                 kwmlgoals: JSON.stringify(currentGoals)
@@ -152,6 +157,24 @@ if (type === "Goal") {
         }))
 }
 })
+
+app.post("/updateGoals", (req, res) => {
+    console.log(req)
+    const { goalId, goal, category, type, scope } = req.body.goal
+    
+    console.log(goal)
+    console.log(goalId)
+        
+    KwmlGoal.findByIdAndUpdate(goalId, 
+        { goal: goal, category: category, type: type, scope:scope}, 
+        function(err){
+    if (!err) {
+        console.log("Task successfully updated");
+    } else {
+        console.log("error")
+    }
+    });
+});
 
 app.post("/deleteGoals", (req, res) => {
     const goal = req.body.goal;

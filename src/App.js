@@ -30,6 +30,7 @@ function App() {
     });
     postGoal(kwmlGoal);
   }
+
   
   function deleteKwmlGoal(id, goal, category, type, scope) {
     setKwmlGoals(prevKwmlGoals => {
@@ -56,6 +57,22 @@ function App() {
 			});
     }
   
+    function updateGoal(kwmlGoal){
+    const url = "updateGoals"
+    console.log("goal sent from app for update")
+    console.log(kwmlGoal)
+    fetch(url , {
+      headers: {'Content-Type': 'application/json' },
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        goal: kwmlGoal,
+      })
+    })
+    .then(response => response.json())
+    .then(data => this.setState({ postId: data.id }));
+  }
+
     function deleteGoal(goal, category, type, scope){
     const url = "deleteGoals"
     console.log(goal, category, type, scope)
@@ -176,6 +193,7 @@ function App() {
                 id={index} 
                 goal={reminder.reminder}
                 category={reminder.category} 
+                onChange={updateGoal}
                 type={null}
                 scope={reminder.scope} 
                 deleteClick={deleteKwmlGoal}
@@ -191,12 +209,14 @@ function App() {
         <div className="componentContent">
           {dailyGoals.map((dailyGoal, index) => ( 
               <KWMLGoal 
+                goalId={dailyGoal._id}
                 key={index}
                 id={index} 
                 goal={dailyGoal.goal}
                 category={dailyGoal.category} 
                 type={null}
                 scope={null} 
+                onChange={updateGoal}
                 deleteClick={deleteKwmlGoal}
                 filterClick={filterGoals}
                 /> )) 
@@ -210,14 +230,17 @@ function App() {
       <div className="component">
         <h1>All Goals</h1>
         <div className="componentContent">
-          {kwmlGoals.map((kwmlGoal, index) => ( 
+          {kwmlGoals.map((kwmlGoal, index) => 
+          ( 
             <KWMLGoal 
               key={index}
               id={index} 
+              goalId={kwmlGoal._id}
               goal={kwmlGoal.goal}
               category={kwmlGoal.category} 
               scope={kwmlGoal.scope} 
               type={kwmlGoal.type}
+              onChange={updateGoal}
               deleteClick={deleteKwmlGoal}
               filterClick={filterGoals}
               /> ))
