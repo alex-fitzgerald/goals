@@ -38,7 +38,7 @@ h1 {
 
 .createGoal {
   width:50%;
-  min-width:500px;
+  min-width:400px;
   margin:auto;
 }
 
@@ -51,6 +51,7 @@ h1 {
 .kwmlGoal {
   border-radius: 5px;
   border: none;
+  overflow-x: scroll;
   width: calc(100% - 90px);
   margin: 20px;
   padding: 20px 20px 60px 20px;
