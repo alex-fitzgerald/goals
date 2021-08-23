@@ -5,24 +5,27 @@ function CreateArea(props) {
     goal: "",
     category: "King",
     type: "Goal",
-    scope: "Daily"
+    scope: "Daily",
+    testing: null
     });
-  const [type, setType] = useState("Goal")
+
+    const [type, setType] = useState("Goal")
   
 
-  function handleChange(event){
-    const { name, value } = event.target;
-    
-    if (name === "type") {
-      setType(value)
-    }
-
-    setKwmlGoal(prevNote => {
+    function handleChange(event){
+      const { name, value } = event.target;
+      // console.log(event.target.value)
+      
+      setKwmlGoal(prevNote => {
         return {
           ...prevNote,
           [name]: value
         }
       });
+      
+      if (name === "type") {
+        setType(value)
+      }
     }
 
     function formSubmit(event){
@@ -44,10 +47,12 @@ function CreateArea(props) {
             <input 
               onChange={handleChange}
               name="goal" 
-              placeholder="Goal" 
+              placeholder="..." 
               value={kwmlGoal.goal}
             />
+
           <br />
+
           <select name="category" placeholder="Category" list="goalCategory" id="goalCategory"
             onChange={handleChange}
             rows="1" 
@@ -67,11 +72,19 @@ function CreateArea(props) {
               <option value="Mindset">Mindset</option>
             </select> 
             <br />
-          {type === "Goal" ? <select name="scope" placeholder="Scope" list="scopeCategory" id="scopeCategory"  onChange={handleChange} rows="1" value={kwmlGoal.scope}>
-                          <option value="Daily">Daily</option>
-                          <option value="Monthly">Monthly</option>
-                          <option value="Yearly">Yearly</option>
-                        </select> : null
+          {type === "Goal" ? 
+          <select 
+            name="scope"
+            placeholder="Scope" 
+            list="scopeCategory" 
+            id="scopeCategory"  
+            onChange={handleChange} 
+            rows="1" 
+            value={kwmlGoal.scope}>
+            <option value="Daily">Daily</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Yearly">Yearly</option>
+          </select> : null
             }
             <br />
             <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>

@@ -15,7 +15,6 @@ app.get('*', (req, res) => {
 })
 
 // localhost direct
-
 // end localhost direct
 
 var dailyStoicism = {quote: "Loading...", author: ""}
@@ -49,8 +48,6 @@ https.get("https://poetrydb.org/random", (res) => {
 const models = require('./Goal');
 
 const KwmlGoal = models.kwmlGoalModel;
-const Reminder = models.reminderModel;
-const Mindset = models.mindsetModel;
 
 const { type } = require('os');
 
@@ -67,56 +64,29 @@ app.get("/goals", (req, res) => {
 
     KwmlGoal.find({}, function(err, foundGoals){
         if (foundGoals.length === 0) {
-            console.log("Found no goals")
+            console.log("Found no goals, reminders, or mindsets")
         } else {
             currentGoals = foundGoals
             console.log(currentGoals)
             res.json({
-                message: "Goals sent!",
+                message: "Sent!",
                 kwmlgoals: JSON.stringify(currentGoals)
             });
         }})
 });
 
-app.get("/mindsets", (req, res) => {
-    var currentMindsets = []
-
-    Mindset.find({}, function(err, foundMindsets){
-        if (foundMindsets.length === 0) {
-            console.log("Found no mindsets")
-        } else {
-            currentMindsets = foundMindsets
-            res.json({
-                mindsets: JSON.stringify(currentMindsets)
-            });
-        }})
-});
-
-app.get("/reminders", (req, res) => {
-    var currentReminders = []
-
-    Reminder.find({}, function(err, foundReminders){
-        if (foundReminders.length === 0) {
-            console.log("Found no reminders")
-        } else {
-            currentReminders = foundReminders
-            res.json({
-                reminders: JSON.stringify(currentReminders)
-            });
-        }})
-});
 
 app.post('/postGoals', (req, res) => {
-const { goal, category, type, scope } = req.body;
-console.log(type)
+    const { goal, category, type, scope } = req.body;
+    // console.log(type)
 
-if (type === "Goal") {
     const newKwmlGoal = new KwmlGoal({
         goal: goal, 
         category: category,
         type:type,
         scope: scope
     })
+    
     newKwmlGoal.save()
         .then(() => res.json({
             message: "Created goal successfully"
@@ -125,37 +95,7 @@ if (type === "Goal") {
             "error": err,
             "message": "Error creating goal"
         }))
-} else if (type === "Reminder") {
-    const newReminder = new Reminder({
-        reminder: goal, 
-        category: category,
-        type: type,
-        scope: scope
-    })
-    newReminder.save()
-        .then(() => res.json({
-            message: "Created reminder successfully"
-        }))
-        .catch(err => res.status(400).json({
-            "error": err,
-            "message": "Error creating reminder"
-        }))
-} else if (type === "Mindset") {
-    const newMindset = new Mindset({
-        mindset: goal, 
-        category: category,
-        type: type,
-        scope: scope
-    })
-    newMindset.save()
-        .then(() => res.json({
-            message: "Created mindset focus successfully"
-        }))
-        .catch(err => res.status(400).json({
-            "error": err,
-            "message": "Error creating mindset focus"
-        }))
-}
+    
 })
 
 app.post("/updateGoals", (req, res) => {

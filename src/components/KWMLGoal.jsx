@@ -1,13 +1,13 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 
 function KWMLGoal(props) {
+  const goalId = props.goalId
   const goal = props.goal
   const category = props.category
   const type = props.type
   const scope = props.scope
-  const goalId = props.goalId
 
-  const [kwmlGoal, setKwmlGoal] = useState({
+  const [currentGoal, setCurrentGoal] = useState({
     goalId: goalId,
     goal: goal,
     category: category,
@@ -15,14 +15,29 @@ function KWMLGoal(props) {
     scope: scope
     });
 
+  const [goalType, setGoalType] = useState("Daily") 
+
   const [goalHasBeenChanged, setGoalHasBeenChanged] = useState(false)
+
+  function setType(){
+    if (type === "Goal"){
+      setGoalType("Goal")
+    } else if (type === "Reminder"){
+      setGoalType("Reminder")
+    } else if (type === "Mindset"){
+      setGoalType("Mindset")
+    }
+  }
+
+  useEffect(() => {
+    setType()
+  })
 
   function handleChange(event){
     const { name, value } = event.target;
 
     setGoalHasBeenChanged(true)
-    
-    setKwmlGoal(prevNote => {
+    setCurrentGoal(prevNote => {
         return {
           ...prevNote,
           [name]: value
@@ -30,38 +45,46 @@ function KWMLGoal(props) {
       });
     }
 
-    function revertGoal(){
-      setKwmlGoal({goal:goal, category:category, type:type, scope:scope})
-    }
+  function revertGoal(event){
+    setCurrentGoal({goal:goal, category:category, type:type, scope:scope})
+    event.preventDefault();
+    setGoalHasBeenChanged(false)
+  }
 
-    function formSubmit(event){
-      console.log(event)
-      if (kwmlGoal.goal === "") {
-        alert("Please enter a goal")
-        event.preventDefault();
-      } else {
-        setKwmlGoal({goalId: goalId, goal:kwmlGoal.goal, category:category, type:type, scope:scope})
-        setGoalHasBeenChanged(false)
-        event.preventDefault();
-      }
+  function formSubmit(event){
+    console.log(event)
+    if (currentGoal.goal === "") {
+      alert("Please enter a goal")
+      event.preventDefault();
+    } else {
+      setCurrentGoal({goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope})
+      setGoalHasBeenChanged(false)
+      event.preventDefault();
     }
+  }
+
 
   return (
     <div className="kwmlGoal">
       <form onSubmit={formSubmit}>
-            <input 
+            <textarea 
               onChange={handleChange}
               name="goal" 
               placeholder="Goal" 
-              value={kwmlGoal.goal}
-            />
+              value={currentGoal.goal}>
+            </textarea>
           {goalHasBeenChanged ? 
           <div>
-            <button onClick={() => (props.onChange(kwmlGoal))}>Update</button> 
-            <button onClick={revertGoal}>Cancel</button>
-            </div> : 
-            null }
+            <button onClick={() => (props.onChange(currentGoal))}>
+              Update
+            </button> 
+            <button onClick={revertGoal}>
+             Cancel
+            </button>
+          </div> : 
+          null }
         </form>
+
       <div className="footer">
 
         <div className="kwmlGoalDiv" onClick={() => (props.filterClick(category))}>
@@ -70,25 +93,20 @@ function KWMLGoal(props) {
           </p>
         </div>
 
-          <p className={"scope"}>
-            {scope}
-          </p>
-          <p className={"scope"}>
-            {type}
-          </p>
-          
+        {goalType === "Goal" ? 
+        <p className={"scope"}>{scope + " goal"}</p> : 
+        <p className={"scope"}>{type}</p>
+        }
 
-         {type === "Goal" ? 
-         <form onSubmit={formSubmit}>
-            <button name="delete"
-              onClick={() => (props.deleteClick(props.id, goal, category, type, scope))}
-              >
-              Completed
-            </button>
-          </form> : 
-          null}
-         </div>
+        <form onSubmit={formSubmit}>
+          <button name="delete"
+            onClick={() => (props.deleteClick(props.id, goal, category, type, scope))}>
+            {goalType === "Goal" ? "Completed" : "Delete"}
+          </button>
+         </form> 
+       </div>
     </div>
+  
   );
 }
 
