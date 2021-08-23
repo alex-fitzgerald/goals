@@ -22,23 +22,42 @@ function App() {
   const [allGoals, setAllGoals] = useState([]);
   const [goalsLoaded, setGoalsLoaded] = useState(false);
   const [dailyGoalsSet, setDailyGoalsSet] = useState(false)
-
+  
+  useEffect(() => {
+    fetch("api", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+    .then((res) => res.json())
+    .then(function(data){
+      setDailyPoem(JSON.parse(data.poem))
+      setRandomStoic(JSON.parse(data.stoic))
+      })}, []);
+  
+  useEffect(() => {
+    fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+    .then((res) => res.json())
+    .then(function(data){
+      console.log(data)
+      setKwmlGoals(JSON.parse(data.kwmlgoals))
+      setAllGoals(JSON.parse(data.kwmlgoals))
+      setGoalsLoaded(true)
+      // findDailyGoals()
+      })}, []);
+  
   function addGoal(kwmlGoal){  
     setKwmlGoals(prevKwmlGoals => {
       return [...prevKwmlGoals, kwmlGoal]
     });
     postGoal(kwmlGoal);
   }
-
+  
   function redrawDatabase(){
-      fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
-      .then((res) => res.json())
-      .then(function(data){
-        console.log(data)
-        setKwmlGoals(JSON.parse(data.kwmlgoals))
-        setGoalsLoaded(true)
-        findDailyGoals()
-        });
+    fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+    .then((res) => res.json())
+    .then(function(data){
+      console.log(data)
+      setKwmlGoals(JSON.parse(data.kwmlgoals))
+      setGoalsLoaded(true)
+      findDailyGoals()
+      });
   }
   
   function deleteKwmlGoal(id, goal, category, type, scope) {
@@ -121,6 +140,7 @@ function App() {
 
     if (filteredDailyGoals.length === 0) {
       console.log("No daily goals")
+      setDailyGoals(null)
     } else if (filteredDailyGoals.length < 4  && filteredDailyGoals.length > 0) {
       setDailyGoals(filteredDailyGoals)
 
@@ -141,6 +161,7 @@ function App() {
 
     if (filteredMindsets.length === 0) {
       console.log("No daily mindsets")
+      setMindsets(null)
     } else if (filteredMindsets.length < 4 && filteredMindsets.length > 0) {
       setMindsets(filteredMindsets)
     } else if (filteredMindsets.length > 4){
@@ -159,6 +180,7 @@ function App() {
 
     if (filteredReminders.length === 0) {
       console.log("No daily reminders")
+      // setReminders(null)
     } else if (filteredReminders.length < 4 && filteredReminders.length > 0) {
       setReminders(filteredReminders)
     } else if (filteredReminders.length > 4){
@@ -172,9 +194,9 @@ function App() {
       let loverDailyReminder = filteredLoverReminders[ getRandomNumber(filteredLoverReminders.length) ];
       setReminders([kingDailyReminder, warriorDailyReminder, magicianDailyReminder, loverDailyReminder]);
     }
-    // console.log(dailyGoals)
-    // console.log(reminders)
-    // console.log(mindsets)
+    console.log(dailyGoals)
+    console.log(reminders)
+    console.log(mindsets)
     setGoalsLoaded(false)
     } 
   }
@@ -189,32 +211,15 @@ function App() {
     setGoalsFiltered(false);
   }}
   
-  useEffect(() => {
-    fetch("api", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
-    .then((res) => res.json())
-    .then(function(data){
-      setDailyPoem(JSON.parse(data.poem))
-      setRandomStoic(JSON.parse(data.stoic))
-      })}, []);
-
-  useEffect(() => {
-    fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
-    .then((res) => res.json())
-    .then(function(data){
-      console.log(data)
-      setKwmlGoals(JSON.parse(data.kwmlgoals))
-      setAllGoals(JSON.parse(data.kwmlgoals))
-      setGoalsLoaded(true)
-      findDailyGoals()
-      })}, []);
-
-
-    useEffect(() => {
-      // if (dailyGoals[0].goal === "Loading"){
-      findDailyGoals()
-      setDailyGoalsSet(true)
-      // }
-    })
+  // useEffect(() => {
+  //   // if (dailyGoals[0].goal === "Loading"){
+  //   findDailyGoals()
+  //   setDailyGoalsSet(true)
+  //   console.log(mindsets)
+  //   console.log(dailygoals)
+  //   console.log(reminders)
+  //   // }
+  // })
     
     return (
     <div className="app">
@@ -224,7 +229,7 @@ function App() {
       <div className="component">
         <h1>Today's Mindsets</h1>
         <div className="componentContent">
-          {mindsets.map((mindset, index) => ( 
+          {dailyGoalsSet ? mindsets.map((mindset, index) => ( 
               <KWMLGoal 
                 key={index}
                 id={index} 
@@ -236,7 +241,7 @@ function App() {
                 onChange={updateGoal}
                 deleteClick={deleteKwmlGoal}
                 filterClick={filterGoals}
-                /> )) 
+                /> )) : null
             } 
           </div>
         <button className="dailyGoalsButton" onClick={findDailyGoals}>New mindset</button>
@@ -245,7 +250,7 @@ function App() {
       <div className="component">
         <h1>Remember</h1>
         <div className="componentContent">
-          {reminders.map((reminder, index) => ( 
+          {dailyGoalsSet ? reminders.map((reminder, index) => ( 
               <KWMLGoal 
               key={index}
               id={index} 
@@ -257,7 +262,7 @@ function App() {
               onChange={updateGoal}
               deleteClick={deleteKwmlGoal}
               filterClick={filterGoals}
-                /> )) 
+                /> )) : null
             } 
           </div>
         <button className="dailyGoalsButton" onClick={findDailyGoals}>New reminders</button>
@@ -266,7 +271,7 @@ function App() {
       <div className="component">
         <h1>Daily Goals</h1>
         <div className="componentContent">
-          {dailyGoals.map((dailyGoal, index) => ( 
+          {dailyGoalsSet ? dailyGoals.map((dailyGoal, index) => ( 
               <KWMLGoal 
                 key={index}
                 id={index} 
@@ -278,7 +283,7 @@ function App() {
                 onChange={updateGoal}
                 deleteClick={deleteKwmlGoal}
                 filterClick={filterGoals}
-                /> )) 
+                /> )) : null
             } 
           </div>
         <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button>

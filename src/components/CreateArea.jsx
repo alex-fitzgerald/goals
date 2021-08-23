@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 function CreateArea(props) {
   const [kwmlGoal, setKwmlGoal] = useState({
-    goal: "Goal, Mindset, or Reminder title",
+    goal: "",
     category: "King",
     type: "Goal",
     scope: "Daily",
