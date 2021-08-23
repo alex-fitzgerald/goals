@@ -10,11 +10,13 @@ function CreateArea(props) {
     });
 
     const [type, setType] = useState("Goal")
-  
+    const [titleInputEngaged, setTitleInputEngaged] = useState(false)
+    const [categoryInputEngaged, setCategoryInputEngaged] = useState(false)
+    const [scopeInputEngaged, setScopeInputEngaged] = useState(false)
+    const [typeInputEngaged, setTypeInputEngaged] = useState(false)
 
     function handleChange(event){
       const { name, value } = event.target;
-      // console.log(event.target.value)
       
       setKwmlGoal(prevNote => {
         return {
@@ -22,6 +24,16 @@ function CreateArea(props) {
           [name]: value
         }
       });
+
+      if (name === "goal") {
+        setTitleInputEngaged(true)
+      } else if (name === "category") {
+        setCategoryInputEngaged(true)
+      } else if (name === "type") {
+        setTypeInputEngaged(true)
+      } else if (name === "scope") {
+        setScopeInputEngaged(true)
+      } 
       
       if (name === "type") {
         setType(value)
@@ -34,6 +46,10 @@ function CreateArea(props) {
         event.preventDefault();
       } else {
         setKwmlGoal({goal:"", category:"King", type: "Goal", scope:"Daily"})
+        setTitleInputEngaged(false)
+        setCategoryInputEngaged(false)
+        setScopeInputEngaged(false)
+        setTypeInputEngaged(false)
         event.preventDefault();
       }
     }
@@ -45,15 +61,18 @@ function CreateArea(props) {
         <div class="daily-wrapper">
           <form onSubmit={formSubmit}>
             <input 
+              className={"" + (titleInputEngaged ? "input-engaged" : null)}
+              // className="input-engaged"
               onChange={handleChange}
               name="goal" 
-              placeholder="..." 
+              placeholder="Goal, Mindset, or Reminder title" 
               value={kwmlGoal.goal}
             />
 
           <br />
 
           <select name="category" placeholder="Category" list="goalCategory" id="goalCategory"
+            className={"" + (categoryInputEngaged ? "input-engaged" : null)}
             onChange={handleChange}
             rows="1" 
             value={kwmlGoal.category}>
@@ -64,6 +83,7 @@ function CreateArea(props) {
             </select> 
             <br />
           <select name="type" placeholder="Type" list="goalType" id="goalType"
+            className={"" + (typeInputEngaged ? "input-engaged" : null)}
             onChange={handleChange}
             rows="1" 
             value={kwmlGoal.type}>
@@ -74,6 +94,7 @@ function CreateArea(props) {
             <br />
           {type === "Goal" ? 
           <select 
+            className={"" + (scopeInputEngaged ? "input-engaged" : null)}
             name="scope"
             placeholder="Scope" 
             list="scopeCategory" 
