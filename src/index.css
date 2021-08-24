@@ -109,6 +109,14 @@ h1 {
   opacity:.4;
 }
 
+.poem h2 {
+  margin-bottom:0px;
+}
+
+.poem h3 {
+  margin-top:0px;
+}
+
 .daily p {
   font-weight: 500;
   font-size: 1em;
@@ -301,6 +309,9 @@ button:hover {
 
 .poem button{
   float:right;
+  position:absolute;
+  top:70px;
+  right:0px;
 }
 
 .scope {
