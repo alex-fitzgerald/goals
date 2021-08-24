@@ -259,7 +259,7 @@ function App() {
                   /> )) : null
               } 
             </div>
-          <button className="dailyGoalsButton" onClick={findDailyGoals}>New mindset</button>
+          {/* <button className="dailyGoalsButton" onClick={findDailyGoals}>New mindset</button> */}
         </div>
 
         <div className="component">
@@ -280,7 +280,7 @@ function App() {
                   /> )) : null
               } 
             </div>
-          <button className="dailyGoalsButton" onClick={findDailyGoals}>New reminders</button>
+          {/* <button className="dailyGoalsButton" onClick={findDailyGoals}>New reminders</button> */}
         </div>
 
         <div className="component">
@@ -301,10 +301,10 @@ function App() {
                   /> )) : null
               } 
             </div>
-          <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button>
+          {/* <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button> */}
         </div>
       </div>
-
+      
       <CreateArea onAdd={addGoal} />
 
       <div className="component">
