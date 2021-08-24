@@ -18,7 +18,24 @@ app.get('*', (req, res) => {
 // end localhost direct
 
 var dailyStoicism = {quote: "Loading...", author: ""}
+var dailyPhilosophy = {quote: "Loading...", author: ""}
 var dailyPoem = {poemTitle: "Loading...", poemAuthor: "", poemLines: ""}
+
+function getRandomNumber(arrayLength){
+    return Math.floor(Math.random() * arrayLength);
+  }
+
+const philosophyAPIurl = "https://philosophyapi.herokuapp.com/api/ideas/" + getRandomNumber(583) + "/"
+
+https.get(philosophyAPIurl, (res) => {
+    console.log(res.statusCode)
+    res.on("data", function(data){
+        const philosophyAPI = JSON.parse(data);
+        console.log(philosophyAPI)
+        dailyPhilosophy.quote = philosophyAPI.quote;
+        dailyPhilosophy.author = philosophyAPI.author;
+    })
+})
 
 https.get("https://stoicquotesapi.com/v1/api/quotes/random", (res) => {
     console.log(res.statusCode)
@@ -55,7 +72,8 @@ app.get("/api", (req, res) => {
     res.json({
         message: "Hello from server!",
         stoic: JSON.stringify(dailyStoicism),
-        poem: JSON.stringify(dailyPoem)
+        poem: JSON.stringify(dailyPoem),
+        philosophy: JSON.stringify(dailyPhilosophy)
     });
 });
 

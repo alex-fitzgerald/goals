@@ -27,6 +27,12 @@ h1 {
 }
 
 .app {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  justify-content: center;
+}
+
+.flexparent {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -34,6 +40,7 @@ h1 {
 
 .component {
  width:100%;
+ /* max-width:500px; */
 }
 
 .createGoal {
@@ -53,10 +60,15 @@ h1 {
   border: none;
   overflow-x: scroll;
   width: calc(100% - 90px);
+  max-width:500px;
   margin: 20px;
   padding: 20px 20px 60px 20px;
   position: relative;
   background-color: white;
+}
+
+.createGoal .daily {
+  margin:auto;
 }
 
 .daily-wrapper {

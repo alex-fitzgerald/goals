@@ -2,22 +2,18 @@ import React,{ useState, useEffect, setState } from "react";
 import Stoic from "./components/Stoic.jsx";
 import axios from "axios"
 import Poem from "./components/Poem.jsx";
+import Philosophy from "./components/Philosophy.jsx";
 import KWMLGoal from "./components/KWMLGoal.jsx";
 import CreateArea from "./components/CreateArea.jsx";
 
-
 function App() {
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
+  const [dailyPhilosophy, setDailyPhilosophy] = useState({quote: "Loading", author: ""});
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
   const [kwmlGoals, setKwmlGoals] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [mindsets, setMindsets] = useState([]);
   const [goalsFiltered, setGoalsFiltered] = useState(false);
-  // const [dailyGoals, setDailyGoals] = useState([{
-  //   goal: "Loading", category: "", scope: [""]}, {
-  //   goal: "Loading", category: "", scope: [""]}, {
-  //   goal: "Loading", category: "", scope: [""]}, {
-  //   goal: "Loading", category: "", scope: [""]}])
   const [dailyGoals, setDailyGoals] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
   const [goalsLoaded, setGoalsLoaded] = useState(false);
@@ -29,6 +25,8 @@ function App() {
     .then(function(data){
       setDailyPoem(JSON.parse(data.poem))
       setRandomStoic(JSON.parse(data.stoic))
+      setDailyPhilosophy(JSON.parse(data.philosophy))
+      console.log(data.philosophy)
       })}, []);
   
   useEffect(() => {
@@ -80,6 +78,7 @@ function App() {
     const url = "updateGoals"
     console.log("goal sent from app for update")
     setDailyGoalsSet(true)
+    setGoalsLoaded(true)
     console.log(kwmlGoal)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
@@ -237,70 +236,73 @@ function App() {
     
     return (
     <div className="app">
-      <Stoic stoicInput = {randomStoic} />
-      <Poem poemInput = {dailyPoem} />
+      <div className="flexparent">
+        <Stoic stoicInput = {randomStoic} />
+        <Philosophy philosophyInput = {dailyPhilosophy} />
+        <Poem poemInput = {dailyPoem} />
 
-      <div className="component">
-        <h1>Today's Mindsets</h1>
-        <div className="componentContent">
-          {dailyGoalsSet ? mindsets.map((mindset, index) => ( 
-              <KWMLGoal 
+        <div className="component">
+          <h1>Mindsets</h1>
+          <div className="componentContent">
+            {dailyGoalsSet ? mindsets.map((mindset, index) => ( 
+                <KWMLGoal 
+                  key={index}
+                  id={index} 
+                  goalId={mindset._id}
+                  goal={mindset.goal}
+                  category={mindset.category} 
+                  scope={mindset.scope} 
+                  type={mindset.type}
+                  onChange={updateGoal}
+                  deleteClick={deleteKwmlGoal}
+                  filterClick={filterGoals}
+                  /> )) : null
+              } 
+            </div>
+          <button className="dailyGoalsButton" onClick={findDailyGoals}>New mindset</button>
+        </div>
+
+        <div className="component">
+          <h1>Remember</h1>
+          <div className="componentContent">
+            {dailyGoalsSet ? reminders.map((reminder, index) => ( 
+                <KWMLGoal 
                 key={index}
                 id={index} 
-                goalId={mindset._id}
-                goal={mindset.goal}
-                category={mindset.category} 
-                scope={mindset.scope} 
-                type={mindset.type}
+                goalId={reminder._id}
+                goal={reminder.goal}
+                category={reminder.category} 
+                scope={reminder.scope} 
+                type={reminder.type}
                 onChange={updateGoal}
                 deleteClick={deleteKwmlGoal}
                 filterClick={filterGoals}
-                /> )) : null
-            } 
-          </div>
-        <button className="dailyGoalsButton" onClick={findDailyGoals}>New mindset</button>
-      </div>
+                  /> )) : null
+              } 
+            </div>
+          <button className="dailyGoalsButton" onClick={findDailyGoals}>New reminders</button>
+        </div>
 
-      <div className="component">
-        <h1>Remember</h1>
-        <div className="componentContent">
-          {dailyGoalsSet ? reminders.map((reminder, index) => ( 
-              <KWMLGoal 
-              key={index}
-              id={index} 
-              goalId={reminder._id}
-              goal={reminder.goal}
-              category={reminder.category} 
-              scope={reminder.scope} 
-              type={reminder.type}
-              onChange={updateGoal}
-              deleteClick={deleteKwmlGoal}
-              filterClick={filterGoals}
-                /> )) : null
-            } 
-          </div>
-        <button className="dailyGoalsButton" onClick={findDailyGoals}>New reminders</button>
-      </div>
-
-      <div className="component">
-        <h1>Daily Goals</h1>
-        <div className="componentContent">
-          {dailyGoalsSet ? dailyGoals.map((dailyGoal, index) => ( 
-              <KWMLGoal 
-                key={index}
-                id={index} 
-                goalId={dailyGoal._id}
-                goal={dailyGoal.goal}
-                category={dailyGoal.category} 
-                scope={dailyGoal.scope} 
-                type={dailyGoal.type}
-                onChange={updateGoal}
-                deleteClick={deleteKwmlGoal}
-                filterClick={filterGoals}
-                /> )) : null
-            } 
-          </div>
-        <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button>
+        <div className="component">
+          <h1>Daily Goals</h1>
+          <div className="componentContent">
+            {dailyGoalsSet ? dailyGoals.map((dailyGoal, index) => ( 
+                <KWMLGoal 
+                  key={index}
+                  id={index} 
+                  goalId={dailyGoal._id}
+                  goal={dailyGoal.goal}
+                  category={dailyGoal.category} 
+                  scope={dailyGoal.scope} 
+                  type={dailyGoal.type}
+                  onChange={updateGoal}
+                  deleteClick={deleteKwmlGoal}
+                  filterClick={filterGoals}
+                  /> )) : null
+              } 
+            </div>
+          <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button>
+        </div>
       </div>
 
       <CreateArea onAdd={addGoal} />
