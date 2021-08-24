@@ -282,7 +282,8 @@ button:hover {
   font-size: .6em;
   font-weight: 700;
   margin-top:10px;
-  color: rgba(0, 0, 0, 0.2);
+  color: rgb(233, 233, 233);
+
   width:107px;
 }
 
