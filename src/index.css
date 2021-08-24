@@ -204,9 +204,6 @@ button:hover {
   padding: 10px 20px;
 }
 
-.poem button {
-  float: right;
-}
 
 
 .footer {
@@ -290,9 +287,15 @@ button:hover {
   font-size: .6em;
   font-weight: 700;
   margin-top:10px;
-  color: rgb(233, 233, 233);
-
+  color: white;
   width:107px;
+}
+
+.poem button{
+  float:right;
+  position:absolute;
+  top:80px;
+  right:30px;
 }
 
 .kwmlGoal button {
@@ -307,12 +310,6 @@ button:hover {
   border-color: rgba(0, 0, 0, 0.25);
 }
 
-.poem button{
-  float:right;
-  position:absolute;
-  top:70px;
-  right:0px;
-}
 
 .scope {
   border:none !important;
