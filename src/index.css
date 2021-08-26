@@ -22,7 +22,8 @@ h1 {
   color: rgba(0, 0, 0, 0.15);
   font-size: 4em;
   letter-spacing:-3px;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   text-align:center;
 }
 
@@ -42,17 +43,16 @@ h1 {
 }
 
 .navigation button {
-  max-width:100px;
-  min-width:100px;
+  max-width:70px;
+  min-width:70px;
   flex:1;
-  margin:4px;
   background-color:transparent;
   padding:0px;
   color: rgba(0, 0, 0, 0.15);
   font-weight:700;
   cursor:pointer;
   letter-spacing:-0.5px;
-  font-size:.8em;
+  font-size:.6em;
 }
 
 .navigation button:hover {
@@ -271,7 +271,7 @@ button:hover {
   font-family:'Poppins',sans-serif;
   font-size: 1.4em;
   font-weight: 800;
-  height:50px;
+  height:52px;
   letter-spacing:-1.5px;
   line-height:1.2;
   margin:0px;
