@@ -113,8 +113,23 @@ app.post('/postGoals', (req, res) => {
             "error": err,
             "message": "Error creating goal"
         }))
-    
 })
+
+
+
+// function updateGoalCategories(){
+//     KwmlGoal.updateMany({"scope": "Monthly"}, {"scope": "Long-term"}, function(err){
+//         if(!err){
+//             console.log("Successfully updated entries")
+//         } else {
+//             console.log("Error in update") 
+//             console.log(err) 
+//         }
+//     }) 
+// }
+
+// updateGoalCategories()
+
 
 app.post("/updateGoals", (req, res) => {
     console.log(req)
@@ -128,6 +143,7 @@ app.post("/updateGoals", (req, res) => {
         function(err){
     if (!err) {
         console.log("Task successfully updated");
+        console.log(err)
     } else {
         console.log("error")
     }

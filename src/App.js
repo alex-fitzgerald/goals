@@ -13,6 +13,7 @@ function App() {
   const [kwmlGoals, setKwmlGoals] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [mindsets, setMindsets] = useState([]);
+  const [longTerm, setLongTerm] = useState([]);
   const [goalsFiltered, setGoalsFiltered] = useState(false);
   const [dailyGoals, setDailyGoals] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
@@ -113,18 +114,13 @@ function App() {
   function findDailyGoals(){
     if (goalsLoaded === true) {
 
-      function getRandomNumber(arrayLength){
-        return Math.floor(Math.random() * arrayLength);
-      }
+      function getRandomNumber(arrayLength){ return Math.floor(Math.random() * arrayLength); }
       
-      function filterLists(list, archetype){
-        let filteredArray = list.filter(item => item.category === archetype);
-        return filteredArray
-      }
+      function filterLists(list, archetype){ let filteredArray = list.filter(item => item.category === archetype); return filteredArray }
       
-      function processDaily(filteredList, arrayList){
-        if (filteredList.length > 0) {
-          arrayList.push(filteredList[ getRandomNumber(filteredList.length) ])
+      function processDaily(filteredList, arrayList){ 
+        if (filteredList.length > 0) { 
+          arrayList.push(filteredList[ getRandomNumber(filteredList.length) ]); 
           console.log(arrayList)
         } else {
           console.log(filteredList + " is empty")
@@ -132,60 +128,42 @@ function App() {
       }
 
       let filteredGoals = kwmlGoals.filter(goal => goal.type === "Goal");
+
       let filteredDailyGoals = filteredGoals.filter(goal => goal.scope === "Daily");
+      let filteredLongTerm = filteredGoals.filter(goal => goal.scope === "Long-term");
       let filteredMindsets = kwmlGoals.filter(goal => goal.type === "Mindset");
       let filteredReminders = kwmlGoals.filter(goal => goal.type === "Reminder");
       
-      if (filteredDailyGoals.length === 0) {
-        console.log("No daily goals")
-      } else if (filteredDailyGoals.length < 4) {
-        setDailyGoals(filteredDailyGoals)
-      } else if (filteredDailyGoals.length > 4) {
-        
-        let filteredKingGoals = filterLists(filteredDailyGoals, "King")
-        let filteredWarriorGoals = filterLists(filteredDailyGoals, "Warrior")
-        let filteredMagicianGoals = filterLists(filteredDailyGoals, "Magician")
-        let filteredLoverGoals = filterLists(filteredDailyGoals, "Lover")
-
+      if (filteredDailyGoals.length === 0) { 
+        console.log("No daily goals") 
+      } else if ( filteredDailyGoals.length < 4 ) {
+         setDailyGoals(filteredDailyGoals)
+      } else if ( filteredDailyGoals.length > 4 ) {
+        let filteredKingGoals = filterLists(filteredDailyGoals, "King");
+        let filteredWarriorGoals = filterLists(filteredDailyGoals, "Warrior");
+        let filteredMagicianGoals = filterLists(filteredDailyGoals, "Magician");
+        let filteredLoverGoals = filterLists(filteredDailyGoals, "Lover");
         let dailyGoals = []
 
-        processDaily(filteredKingGoals, dailyGoals)
-        processDaily(filteredWarriorGoals, dailyGoals)
-        processDaily(filteredMagicianGoals, dailyGoals)
-        processDaily(filteredLoverGoals, dailyGoals)
-
+        processDaily(filteredKingGoals, dailyGoals); processDaily(filteredWarriorGoals, dailyGoals); processDaily(filteredMagicianGoals, dailyGoals); processDaily(filteredLoverGoals, dailyGoals); 
         setDailyGoals(dailyGoals);
-        console.log(dailyGoals)
-        console.log("Those were the daily goals")
       }
       
-      console.log(filteredMindsets.length)
-
       if (filteredMindsets.length === 0) {
         console.log("No daily mindsets")
-        
       } else if (filteredMindsets.length < 4 && filteredMindsets.length > 0) {
         setMindsets(filteredMindsets)
-
       } else if (filteredMindsets.length > 4){
-        
-        let filteredKingMindsets = filterLists(filteredMindsets, "King")
-        let filteredWarriorMindsets = filterLists(filteredMindsets, "Warrior")
-        let filteredMagicianMindsets = filterLists(filteredMindsets, "Magician")
-        let filteredLoverMindsets = filterLists(filteredMindsets, "Lover")
-        
+    
+        let filteredKingMindsets = filterLists(filteredMindsets, "King"); 
+        let filteredWarriorMindsets = filterLists(filteredMindsets, "Warrior");
+        let filteredMagicianMindsets = filterLists(filteredMindsets, "Magician");
+        let filteredLoverMindsets = filterLists(filteredMindsets, "Lover");
         let dailyMindsets = []
 
-        processDaily(filteredKingMindsets, dailyMindsets)
-        processDaily(filteredWarriorMindsets, dailyMindsets)
-        processDaily(filteredMagicianMindsets, dailyMindsets)
-        processDaily(filteredLoverMindsets, dailyMindsets)
-
+        processDaily(filteredKingMindsets, dailyMindsets); processDaily(filteredWarriorMindsets, dailyMindsets); processDaily(filteredMagicianMindsets, dailyMindsets); processDaily(filteredLoverMindsets, dailyMindsets);
         setMindsets(dailyMindsets);
       }
-
-      console.log(filteredReminders)
-      console.log("Those were the filtered reminders")
 
       if (filteredReminders.length === 0) {
         console.log("No daily reminders")
@@ -193,19 +171,30 @@ function App() {
         setReminders(filteredReminders)
       } else if (filteredReminders.length > 4){
 
-        let filteredKingReminders = filterLists(filteredReminders, "King")
-        let filteredMagicianReminders = filterLists(filteredReminders, "Magician")
-        let filteredLoverReminders = filterLists(filteredReminders, "Lover")
-        let filteredWarriorReminders = filterLists(filteredReminders, "Warrior")
-
+        let filteredKingReminders = filterLists(filteredReminders, "King"); 
+        let filteredWarriorReminders = filterLists(filteredReminders, "Warrior"); 
+        let filteredMagicianReminders = filterLists(filteredReminders, "Magician"); 
+        let filteredLoverReminders = filterLists(filteredReminders, "Lover"); 
         let dailyReminders = []
 
-        processDaily(filteredKingReminders, dailyReminders)
-        processDaily(filteredWarriorReminders, dailyReminders)
-        processDaily(filteredMagicianReminders, dailyReminders)
-        processDaily(filteredLoverReminders, dailyReminders)
-
+        processDaily(filteredKingReminders, dailyReminders); processDaily(filteredWarriorReminders, dailyReminders); processDaily(filteredMagicianReminders, dailyReminders); processDaily(filteredLoverReminders, dailyReminders); 
         setReminders(dailyReminders); 
+      }
+
+      if (filteredLongTerm.length === 0) {
+        console.log("No long-term goals")
+      } else if (filteredLongTerm.length < 4) {
+        setReminders(filteredLongTerm)
+      } else if (filteredLongTerm.length > 4){
+
+        let filteredKingLongTerm = filterLists(filteredLongTerm, "King"); 
+        let filteredWarriorLongTerm = filterLists(filteredLongTerm, "Warrior"); 
+        let filteredMagicianLongTerm = filterLists(filteredLongTerm, "Magician"); 
+        let filteredLoverLongTerm = filterLists(filteredLongTerm, "Lover"); 
+        let dailyLongTerm = []
+
+        processDaily(filteredKingLongTerm, dailyLongTerm); processDaily(filteredWarriorLongTerm, dailyLongTerm); processDaily(filteredMagicianLongTerm, dailyLongTerm); processDaily(filteredLoverLongTerm, dailyLongTerm); 
+        setLongTerm(dailyLongTerm); 
       }
       
       if (dailyGoals.length !== 0) {
@@ -224,10 +213,6 @@ function App() {
     setKwmlGoals(allGoals);
     setGoalsFiltered(false);
   }}
-
-  function updateGoalsLoaded(){
-    setGoalsLoaded(true)
-  }
   
   useEffect(() => {
     findDailyGoals()
@@ -295,6 +280,27 @@ function App() {
                   category={dailyGoal.category} 
                   scope={dailyGoal.scope} 
                   type={dailyGoal.type}
+                  onChange={updateGoal}
+                  deleteClick={deleteKwmlGoal}
+                  filterClick={filterGoals}
+                  /> )) : null
+              } 
+            </div>
+          {/* <button className="dailyGoalsButton" onClick={findDailyGoals}>New daily goals</button> */}
+        </div>
+
+        <div className="component">
+          <h1>Long Term Goals</h1>
+          <div className="componentContent">
+            {dailyGoalsSet ? longTerm.map((longTerm, index) => ( 
+                <KWMLGoal 
+                  key={index}
+                  id={index} 
+                  goalId={longTerm._id}
+                  goal={longTerm.goal}
+                  category={longTerm.category} 
+                  scope={longTerm.scope} 
+                  type={longTerm.type}
                   onChange={updateGoal}
                   deleteClick={deleteKwmlGoal}
                   filterClick={filterGoals}
