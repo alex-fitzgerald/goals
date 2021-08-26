@@ -300,7 +300,7 @@ function App() {
         }
         { navigation === "LongTerm" ?
         <div className="component">
-          <h1>Long Term Goals</h1>
+          <h1>Long Term</h1>
           <div className="componentContent">
             {dailyGoalsSet ? longTerm.map((longTerm, index) => ( 
                 <KWMLGoal 

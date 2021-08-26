@@ -71,7 +71,8 @@ function KWMLGoal(props) {
             <textarea 
               onChange={handleChange}
               name="goal" 
-              placeholder="Goal" 
+              placeholder="Goal"
+              rows="2" 
               value={currentGoal.goal}>
             </textarea>
         </form>
@@ -96,7 +97,7 @@ function KWMLGoal(props) {
           </form> 
          </div>
         :
-        <div>
+        <div className="alterFooter">
           <button onClick={() => { props.onChange(currentGoal); setGoalHasBeenChanged(false); }}>
             Update
           </button> 
