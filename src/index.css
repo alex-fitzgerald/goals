@@ -22,7 +22,7 @@ h1 {
   color: rgba(0, 0, 0, 0.15);
   font-size: 4em;
   letter-spacing:-3px;
-  margin-top: 100px;
+  margin-top: 50px;
   text-align:center;
 }
 
@@ -45,7 +45,7 @@ h1 {
   max-width:100px;
   min-width:100px;
   flex:1;
-  margin:10px;
+  margin:4px;
   background-color:transparent;
   padding:0px;
   color: rgba(0, 0, 0, 0.15);
@@ -238,14 +238,20 @@ button:hover {
   position: absolute;
   width: calc(100% - 40px);
   bottom: 17px;
+  display:flex;
+  align-items: center;
 }
 
 .footer div {
   flex: 1;
 }
 
+.footer form {
+  display:flex;
+}
+
 .kwmlGoal h1 {
-  font-size: 1.7em;
+  font-size: 1.5em;
   font-weight: 800;
   letter-spacing:-1.5px;
   color: black;
@@ -260,7 +266,7 @@ button:hover {
   color: black;
   text-align:left;
   width:100%;
-  height:auto;
+  height:60px;
   font-family:'Poppins',sans-serif;
   margin:0px;
   margin-bottom:10px;

@@ -29,14 +29,12 @@ function App() {
       setDailyPoem(JSON.parse(data.poem))
       setRandomStoic(JSON.parse(data.stoic))
       setDailyPhilosophy(JSON.parse(data.philosophy))
-      console.log(data.philosophy)
       })}, []);
   
   useEffect(() => {
     fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
     .then((res) => res.json())
     .then(function(data){
-      console.log(data)
       setKwmlGoals(JSON.parse(data.kwmlgoals))
       setAllGoals(JSON.parse(data.kwmlgoals))
       setGoalsLoaded(true)
@@ -80,6 +78,9 @@ function App() {
     function updateGoal(kwmlGoal){
     const url = "updateGoals"
     console.log("goal sent from app for update")
+    setKwmlGoals(prevKwmlGoals => {
+      return [...prevKwmlGoals, kwmlGoal]
+    });
     setDailyGoalsSet(true)
     setGoalsLoaded(true)
     console.log(kwmlGoal)
@@ -123,7 +124,6 @@ function App() {
       function processDaily(filteredList, arrayList){ 
         if (filteredList.length > 0) { 
           arrayList.push(filteredList[ getRandomNumber(filteredList.length) ]); 
-          console.log(arrayList)
         } else {
           console.log(filteredList + " is empty")
         }

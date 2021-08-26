@@ -37,6 +37,7 @@ function KWMLGoal(props) {
     const { name, value } = event.target;
 
     setGoalHasBeenChanged(true)
+    
     setCurrentGoal(prevNote => {
         return {
           ...prevNote,
@@ -73,37 +74,38 @@ function KWMLGoal(props) {
               placeholder="Goal" 
               value={currentGoal.goal}>
             </textarea>
-          {goalHasBeenChanged ? 
-          <div>
-            <button onClick={() => (props.onChange(currentGoal))}>
-              Update
-            </button> 
-            <button onClick={revertGoal}>
-             Cancel
-            </button>
-          </div> : 
-          null }
         </form>
 
       <div className="footer">
 
-        <div className="kwmlGoalDiv" onClick={() => (props.filterClick(category))}>
-          <p className={"category " + category}>
-            {category}
-          </p>
-        </div>
+        { !goalHasBeenChanged ? 
 
-        {goalType === "Goal" ? 
-        <p className={"scope"}>{scope + " goal"}</p> : 
-        <p className={"scope"}>{type}</p>
+        <div>   
+          <div className="kwmlGoalDiv" onClick={() => (props.filterClick(category))}>
+            <p className={"category " + category}>
+              {category}
+            </p>
+          </div>
+          {goalType === "Goal" ? <p className={"scope"}>{scope + " goal"}</p> : <p className={"scope"}>{type}</p> }
+
+          <form onSubmit={formSubmit}>
+            <button name="delete"
+              onClick={() => (props.deleteClick(props.id, goal, category, type, scope))}>
+              {goalType === "Goal" ? "Completed" : "Delete"}
+            </button>
+          </form> 
+         </div>
+        :
+        <div>
+          <button onClick={() => (props.onChange(currentGoal))}>
+            Update
+          </button> 
+          <button onClick={revertGoal}>
+            Cancel
+          </button>
+        </div> 
         }
 
-        <form onSubmit={formSubmit}>
-          <button name="delete"
-            onClick={() => (props.deleteClick(props.id, goal, category, type, scope))}>
-            {goalType === "Goal" ? "Completed" : "Delete"}
-          </button>
-         </form> 
        </div>
     </div>
   
