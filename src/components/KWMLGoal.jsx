@@ -97,7 +97,7 @@ function KWMLGoal(props) {
          </div>
         :
         <div>
-          <button onClick={() => (props.onChange(currentGoal))}>
+          <button onClick={() => { props.onChange(currentGoal); setGoalHasBeenChanged(false); }}>
             Update
           </button> 
           <button onClick={revertGoal}>
