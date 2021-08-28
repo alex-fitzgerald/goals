@@ -16,8 +16,8 @@ function Navigation(props){
                 <button name="Create" onClick={() => (props.handleClick(8))}>Add</button> 
             </div>
             <div class="sideBar">
-                <button className="left" onClick={() => props.handleNavBar("left")}>.</button>
-                <button className="right" onClick={() => props.handleNavBar("right")}>.</button>
+                <button className="left" onClick={() => props.handleNavBar("left")}> </button>
+                <button className="right" onClick={() => props.handleNavBar("right")}> </button>
             </div>
         </div>
     )

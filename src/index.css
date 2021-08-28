@@ -78,18 +78,27 @@ h1 {
   min-height:100vh;
   position:absolute;
   top:0px;
-  width:40px;
+  width:20vw;
 }
 
 .right {
   right:0px;
-  background: linear-gradient(-90deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%); 
+  background: linear-gradient(-90deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,0) 100%); 
 }
 
 .left {
   left:0px;
-  background: linear-gradient(90deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%); 
+  background: linear-gradient(90deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,0) 100%); 
 }
+
+.right:hover {
+  background: linear-gradient(-90deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,0) 100%); 
+}
+
+.left:hover {
+  background: linear-gradient(90deg, rgba(0,0,0,.2) 0%, rgba(0,0,0,0) 100%); 
+}
+
 
 .flexparent {
   display: flex;
