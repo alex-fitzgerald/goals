@@ -102,9 +102,9 @@ function CreateArea(props) {
             onChange={handleChange} 
             rows="1" 
             value={kwmlGoal.scope}>
-            <option value="Daily">Daily</option>
-            <option value="Monthly">Monthly</option>
-            <option value="Yearly">Yearly</option>
+            <option value="Daily">Daily activity goal</option>
+            <option value="Long-term">Long term goal</option>
+            <option value="Very-long-term">Very long term goal</option>
           </select> : null
             }
             <br />

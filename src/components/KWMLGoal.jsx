@@ -91,7 +91,7 @@ function KWMLGoal(props) {
 
           <form onSubmit={formSubmit}>
             <button name="delete"
-              onClick={() => (props.deleteClick(props.id, goal, category, type, scope))}>
+              onClick={() => (props.deleteClick(props.id, goal, category, type, scope, props.key))}>
               {goalType === "Goal" ? "Completed" : "Delete"}
             </button>
           </form> 

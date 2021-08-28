@@ -8,18 +8,18 @@ import CreateArea from "./components/CreateArea.jsx";
 import Navigation from "./components/Navigation.jsx";
 
 function App() {
-  const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
   const [dailyPhilosophy, setDailyPhilosophy] = useState({quote: "Loading", author: ""});
+  const [dailyGoalsSet, setDailyGoalsSet] = useState(false);
+  const [goalsFiltered, setGoalsFiltered] = useState(false);
+  const [goalsLoaded, setGoalsLoaded] = useState(false);
+  const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
+  const [dailyGoals, setDailyGoals] = useState([]);
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
   const [kwmlGoals, setKwmlGoals] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [mindsets, setMindsets] = useState([]);
   const [longTerm, setLongTerm] = useState([]);
-  const [goalsFiltered, setGoalsFiltered] = useState(false);
-  const [dailyGoals, setDailyGoals] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
-  const [goalsLoaded, setGoalsLoaded] = useState(false);
-  const [dailyGoalsSet, setDailyGoalsSet] = useState(false);
 
   const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create"]
   const [navigationNumber, setNavigationNumber] = useState(0);
@@ -33,23 +33,19 @@ function App() {
   function handleButton(button){
     setNavigationNumber(button)
     setNavigation(navigationList[button])
-    console.log(navigation)
   }
 
   function handleNavBarFunc(button){
     if (button === "right" && navigationNumber < navigationList.length - 1) {
       setNavigation(navigationList[navigationNumber + 1])
       setNavigationNumber(navigationNumber + 1)
-      console.log(navigation)
     }
     if (button === "left" && navigationNumber > 0) {
       setNavigation(navigationList[navigationNumber - 1])
       setNavigationNumber(navigationNumber - 1)
-      console.log(navigation)
     }
   }
 
-  
   useEffect(() => {
     fetch("api", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
     .then((res) => res.json())
@@ -85,6 +81,15 @@ function App() {
     });
     deleteGoal(goal, category, type, scope);
     setGoalsLoaded(true)
+  }
+
+  function completeDailyGoal(id, goal, category, type, scope, key) {
+    console.log(id);
+    console.log(key);
+    let prunedGoals = dailyGoals;
+    prunedGoals.splice(id, 1)
+    setDailyGoals([...prunedGoals])
+    console.log(dailyGoals)
   }
   
   function postGoal(latestGoal){
@@ -247,7 +252,7 @@ function App() {
   useEffect(() => {
     findDailyGoals()
     setDailyGoalsSet(true)
-  })
+  }) 
 
     
     return (
@@ -309,7 +314,7 @@ function App() {
             <div className="componentContent">
               {dailyGoalsSet ? dailyGoals.map((dailyGoal, index) => ( 
                   <KWMLGoal 
-                    key={index}
+                    key={dailyGoal.category}
                     id={index} 
                     goalId={dailyGoal._id}
                     goal={dailyGoal.goal}
@@ -317,7 +322,7 @@ function App() {
                     scope={dailyGoal.scope} 
                     type={dailyGoal.type}
                     onChange={updateGoal}
-                    deleteClick={deleteKwmlGoal}
+                    deleteClick={completeDailyGoal}
                     filterClick={filterGoals}
                     /> )) : null
                 } 
