@@ -70,7 +70,7 @@ function App() {
       return [...prevKwmlGoals, kwmlGoal]
     });
     postGoal(kwmlGoal);
-    setGoalsLoaded(true)
+    // setGoalsLoaded(true)
   }
 
   function deleteKwmlGoal(id, goal, category, type, scope, key) {
@@ -79,7 +79,7 @@ function App() {
     newKwmlGoals.splice(id, 1);
     setKwmlGoals([...newKwmlGoals]);
     deleteGoal(goal, category, type, scope);
-    setGoalsLoaded(true)
+    // setGoalsLoaded(true)
   }
 
   function completeDailyGoal(id, goal, category, type, scope, key) {
@@ -87,7 +87,6 @@ function App() {
     let prunedGoals = dailyGoals;
     prunedGoals.splice(id, 1);
     setDailyGoals([...prunedGoals]);
-    console.log(dailyGoals);
   }
   
   function postGoal(latestGoal){
