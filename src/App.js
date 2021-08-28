@@ -1,4 +1,4 @@
-import React,{ useState, useEffect, setState } from "react";
+import React,{ useState, useEffect } from "react";
 import Stoic from "./components/Stoic.jsx";
 import axios from "axios"
 import Poem from "./components/Poem.jsx";
@@ -20,7 +20,35 @@ function App() {
   const [allGoals, setAllGoals] = useState([]);
   const [goalsLoaded, setGoalsLoaded] = useState(false);
   const [dailyGoalsSet, setDailyGoalsSet] = useState(false);
-  const [navigation, setNavigation] = useState("Reminders");
+
+  const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create"]
+  const [navigationNumber, setNavigationNumber] = useState(0);
+  const [navigation, setNavigation] = useState(navigationList[navigationNumber]);
+
+  // function updateNavigation(navListPosition){
+  //   setNavigation(navigationList[navListPosition])
+  //   console.log(navigation)
+  // }
+  
+  function handleButton(button){
+    setNavigationNumber(button)
+    setNavigation(navigationList[button])
+    console.log(navigation)
+  }
+
+  function handleNavBarFunc(button){
+    if (button === "right" && navigationNumber < navigationList.length - 1) {
+      setNavigation(navigationList[navigationNumber + 1])
+      setNavigationNumber(navigationNumber + 1)
+      console.log(navigation)
+    }
+    if (button === "left" && navigationNumber > 0) {
+      setNavigation(navigationList[navigationNumber - 1])
+      setNavigationNumber(navigationNumber - 1)
+      console.log(navigation)
+    }
+  }
+
   
   useEffect(() => {
     fetch("api", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
@@ -221,14 +249,12 @@ function App() {
     setDailyGoalsSet(true)
   })
 
-  function handleButton(button){
-    setNavigation(button)
-  }
     
     return (
     <div className="app">
     <Navigation 
       handleClick={handleButton}
+      handleNavBar={handleNavBarFunc}
     />
 
       <div className="flexparent">

@@ -40,6 +40,8 @@ h1 {
   align-items: center;
   margin: auto;
   max-width:500px;
+  position:relative;
+  z-index:999;
 }
 
 .navigation button {
@@ -58,6 +60,35 @@ h1 {
 .navigation button:hover {
   color: rgba(0, 0, 0, 0.25);
   background-color:transparent;
+}
+
+.sideBar {
+  min-height:100vh;
+  width:100vw;
+  position:absolute;
+  top:0;
+  left:0;
+  border:solid 1px black
+}
+
+.sideBar button {
+  align-content: center;
+  align-items:center;
+  display:flex;
+  min-height:100vh;
+  position:absolute;
+  top:0px;
+  width:40px;
+}
+
+.right {
+  right:0px;
+  background: linear-gradient(-90deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%); 
+}
+
+.left {
+  left:0px;
+  background: linear-gradient(90deg, rgba(0,0,0,.3) 0%, rgba(0,0,0,0) 100%); 
 }
 
 .flexparent {
@@ -194,12 +225,11 @@ input::placeholder{
 }
 
 .input-engaged {
-  color:black
+  color:#000000
 }
 
 button {
   text-transform: uppercase;
-  border-radius: 30px;
   border: 0px;
   background-color: rgba(0, 0, 0, 0.08);
   color: rgb(233, 233, 233);
@@ -219,6 +249,10 @@ button {
 
 button:hover {
   background-color: rgba(0, 0, 0, 0.25);
+}
+
+.kwmlGoal button, .daily button {
+  border-radius: 30px;
 }
 
 .daily-wrapper button {
