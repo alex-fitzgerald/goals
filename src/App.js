@@ -72,24 +72,22 @@ function App() {
     postGoal(kwmlGoal);
     setGoalsLoaded(true)
   }
-  
-  function deleteKwmlGoal(id, goal, category, type, scope) {
-    setKwmlGoals(prevKwmlGoals => {
-      return prevKwmlGoals.filter((kwmlGoals, index) => {
-        return index !== id;
-      });
-    });
+
+  function deleteKwmlGoal(id, goal, category, type, scope, key) {
+    console.log(key)
+    let newKwmlGoals = kwmlGoals;
+    newKwmlGoals.splice(id, 1);
+    setKwmlGoals([...newKwmlGoals]);
     deleteGoal(goal, category, type, scope);
     setGoalsLoaded(true)
   }
 
   function completeDailyGoal(id, goal, category, type, scope, key) {
-    console.log(id);
     console.log(key);
     let prunedGoals = dailyGoals;
-    prunedGoals.splice(id, 1)
-    setDailyGoals([...prunedGoals])
-    console.log(dailyGoals)
+    prunedGoals.splice(id, 1);
+    setDailyGoals([...prunedGoals]);
+    console.log(dailyGoals);
   }
   
   function postGoal(latestGoal){
@@ -361,7 +359,7 @@ function App() {
           {kwmlGoals.map((kwmlGoal, index) => 
           ( 
             <KWMLGoal 
-              key={index}
+              key={kwmlGoal._id}
               id={index} 
               goalId={kwmlGoal._id}
               goal={kwmlGoal.goal}
