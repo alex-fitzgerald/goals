@@ -6,13 +6,15 @@ function KWMLGoal(props) {
   const category = props.category
   const type = props.type
   const scope = props.scope
+  const isPinned = props.isPinned
 
   const [currentGoal, setCurrentGoal] = useState({
     goalId: goalId,
     goal: goal,
     category: category,
     type: type,
-    scope: scope
+    scope: scope, 
+    isPinned: isPinned
     });
 
   const [goalType, setGoalType] = useState("Daily") 
@@ -91,7 +93,7 @@ function KWMLGoal(props) {
 
           <form onSubmit={formSubmit}>
             <button name="delete"
-              onClick={() => (props.deleteClick(props.id, goal, category, type, scope, props.key))}>
+              onClick={() => (props.deleteClick(props.id, goal, category, type, scope, props.key, props.goalId, props.array, props.setArray))}>
               {goalType === "Goal" ? "Completed" : "Delete"}
             </button>
           </form> 

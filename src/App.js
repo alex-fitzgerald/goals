@@ -14,11 +14,11 @@ function App() {
   const [goalsLoaded, setGoalsLoaded] = useState(false);
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
   const [dailyGoals, setDailyGoals] = useState([]);
+  const [longTermGoals, setLongTermGoals] = useState([]);
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
   const [kwmlGoals, setKwmlGoals] = useState([]);
   const [reminders, setReminders] = useState([]);
   const [mindsets, setMindsets] = useState([]);
-  const [longTerm, setLongTerm] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
 
   const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create"]
@@ -61,8 +61,10 @@ function App() {
     .then(function(data){
       setKwmlGoals(JSON.parse(data.kwmlgoals))
       setAllGoals(JSON.parse(data.kwmlgoals))
+      // setDailyGoals(JSON.parse(data.dailyGoals))
+      // setLongTermGoals(JSON.parse(data.longTermGoals))
       setGoalsLoaded(true)
-      findDailyGoals()
+      // findDailyGoals()
       })}, []);
   
   function addGoal(kwmlGoal){  
@@ -81,12 +83,22 @@ function App() {
     deleteGoal(goal, category, type, scope);
     // setGoalsLoaded(true)
   }
+  
 
-  function completeDailyGoal(id, goal, category, type, scope, key) {
+  function completeGoal(id, goal, category, type, scope, key, goalId, array, setArray) {
+    unpinGoal({
+      goalId: goalId,
+      goal:goal,
+      category:category,
+      type:type,
+      scope:scope,
+      isPinned: false
+    })
+
     console.log(key);
-    let prunedGoals = dailyGoals;
+    let prunedGoals = array;
     prunedGoals.splice(id, 1);
-    setDailyGoals([...prunedGoals]);
+    setArray([...prunedGoals]);
   }
   
   function postGoal(latestGoal){
@@ -105,26 +117,41 @@ function App() {
 			});
     }
   
-    function updateGoal(kwmlGoal){
-    const url = "updateGoals"
-    console.log("goal sent from app for update")
-    setKwmlGoals(prevKwmlGoals => {
-      return [...prevKwmlGoals, kwmlGoal]
-    });
-    setDailyGoalsSet(true)
-    setGoalsLoaded(true)
-    console.log(kwmlGoal)
-    fetch(url , {
-      headers: {'Content-Type': 'application/json' },
-      method: "POST",
-      mode: 'cors',
-      body: JSON.stringify({
-        goal: kwmlGoal,
+    function unpinGoal(goal){
+      const url = "updateGoals" 
+      console.log(goal)
+      fetch(url , {
+        headers: {'Content-Type': 'application/json' },
+        method: "POST",
+        mode: 'cors',
+        body: JSON.stringify({
+          goal: goal
+        })
       })
-    })
-    .then(response => response.json())
-    .then(data => this.setState({ postId: data.id }));
-  }
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+    }
+  
+    function updateGoal(kwmlGoal){
+      const url = "updateGoals"
+      console.log("goal sent from app for update")
+      setKwmlGoals(prevKwmlGoals => {
+        return [...prevKwmlGoals, kwmlGoal]
+      });
+      setDailyGoalsSet(true)
+      setGoalsLoaded(true)
+      console.log(kwmlGoal)
+      fetch(url , {
+        headers: {'Content-Type': 'application/json' },
+        method: "POST",
+        mode: 'cors',
+        body: JSON.stringify({
+          goal: kwmlGoal
+        })
+      })
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+    }
 
     function deleteGoal(goal, category, type, scope){
     const url = "deleteGoals"
@@ -148,7 +175,6 @@ function App() {
     if (goalsLoaded === true) {
 
       function getRandomNumber(arrayLength){ return Math.floor(Math.random() * arrayLength); }
-      
       function filterLists(list, archetype){ let filteredArray = list.filter(item => item.category === archetype); return filteredArray }
       
       function processDaily(filteredList, arrayList){ 
@@ -159,28 +185,12 @@ function App() {
         }
       }
 
-      let filteredGoals = kwmlGoals.filter(goal => goal.type === "Goal");
-
-      let filteredDailyGoals = filteredGoals.filter(goal => goal.scope === "Daily");
-      let filteredLongTerm = filteredGoals.filter(goal => goal.scope === "Long-term");
+      let filteredPinned = kwmlGoals.filter(goal => goal.isPinned === true);
+      let filteredPinnedDaily = filteredPinned.filter(goal => goal.scope === "Daily");
+      let filteredPinnedLongTerm = filteredPinned.filter(goal => goal.scope === "Long-term");
       let filteredMindsets = kwmlGoals.filter(goal => goal.type === "Mindset");
       let filteredReminders = kwmlGoals.filter(goal => goal.type === "Reminder");
-      
-      if (filteredDailyGoals.length === 0) { 
-        console.log("No daily goals") 
-      } else if ( filteredDailyGoals.length < 4 ) {
-         setDailyGoals(filteredDailyGoals)
-      } else if ( filteredDailyGoals.length > 4 ) {
-        let filteredKingGoals = filterLists(filteredDailyGoals, "King");
-        let filteredWarriorGoals = filterLists(filteredDailyGoals, "Warrior");
-        let filteredMagicianGoals = filterLists(filteredDailyGoals, "Magician");
-        let filteredLoverGoals = filterLists(filteredDailyGoals, "Lover");
-        let dailyGoals = []
 
-        processDaily(filteredKingGoals, dailyGoals); processDaily(filteredWarriorGoals, dailyGoals); processDaily(filteredMagicianGoals, dailyGoals); processDaily(filteredLoverGoals, dailyGoals); 
-        setDailyGoals(dailyGoals);
-      }
-      
       if (filteredMindsets.length === 0) {
         console.log("No daily mindsets")
       } else if (filteredMindsets.length < 4 && filteredMindsets.length > 0) {
@@ -213,21 +223,20 @@ function App() {
         setReminders(dailyReminders); 
       }
 
-      if (filteredLongTerm.length === 0) {
-        console.log("No long-term goals")
-      } else if (filteredLongTerm.length < 4) {
-        setReminders(filteredLongTerm)
-      } else if (filteredLongTerm.length > 4){
-
-        let filteredKingLongTerm = filterLists(filteredLongTerm, "King"); 
-        let filteredWarriorLongTerm = filterLists(filteredLongTerm, "Warrior"); 
-        let filteredMagicianLongTerm = filterLists(filteredLongTerm, "Magician"); 
-        let filteredLoverLongTerm = filterLists(filteredLongTerm, "Lover"); 
-        let dailyLongTerm = []
-
-        processDaily(filteredKingLongTerm, dailyLongTerm); processDaily(filteredWarriorLongTerm, dailyLongTerm); processDaily(filteredMagicianLongTerm, dailyLongTerm); processDaily(filteredLoverLongTerm, dailyLongTerm); 
-        setLongTerm(dailyLongTerm); 
+      if (filteredPinnedDaily.length === 0) {
+        console.log("No pinned daily goals received")
+      } else {
+        setDailyGoals(filteredPinnedDaily)
       }
+
+      if (filteredPinnedLongTerm.length === 0) {
+        console.log("No pinned long term goals received")
+      } else {
+        setLongTermGoals(filteredPinnedLongTerm)
+      }
+
+      console.log(filteredPinnedDaily)
+      console.log(filteredPinnedLongTerm)
       
       if (dailyGoals.length !== 0) {
         setDailyGoalsSet(true)
@@ -318,8 +327,10 @@ function App() {
                     category={dailyGoal.category} 
                     scope={dailyGoal.scope} 
                     type={dailyGoal.type}
+                    array={dailyGoals}
+                    setArray={setDailyGoals}
                     onChange={updateGoal}
-                    deleteClick={completeDailyGoal}
+                    deleteClick={completeGoal}
                     filterClick={filterGoals}
                     /> )) : null
                 } 
@@ -330,17 +341,19 @@ function App() {
         <div className="component">
           <h1>Long Term</h1>
           <div className="componentContent">
-            {dailyGoalsSet ? longTerm.map((longTerm, index) => ( 
+            {dailyGoalsSet ? longTermGoals.map((longTerm, index) => ( 
                 <KWMLGoal 
-                  key={index}
+                  key={longTerm.category}
                   id={index} 
                   goalId={longTerm._id}
                   goal={longTerm.goal}
                   category={longTerm.category} 
                   scope={longTerm.scope} 
                   type={longTerm.type}
+                  array={longTermGoals}
+                  setArray={setLongTermGoals}
                   onChange={updateGoal}
-                  deleteClick={deleteKwmlGoal}
+                  deleteClick={completeGoal}
                   filterClick={filterGoals}
                   /> )) : null
               } 
@@ -365,6 +378,7 @@ function App() {
               category={kwmlGoal.category} 
               scope={kwmlGoal.scope} 
               type={kwmlGoal.type}
+              isPinned={kwmlGoal.isPinned}
               onChange={updateGoal}
               deleteClick={deleteKwmlGoal}
               filterClick={filterGoals}

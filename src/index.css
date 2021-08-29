@@ -135,7 +135,7 @@ h1 {
   overflow-x: scroll;
   width: calc(100% - 90px);
   max-width:500px;
-  margin: 20px;
+  margin: 6px;
   padding: 20px 20px 60px 20px;
   position: relative;
   background-color: white;

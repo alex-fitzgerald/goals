@@ -20,10 +20,45 @@ app.get('*', (req, res) => {
 var dailyStoicism = {quote: "Loading...", author: ""}
 var dailyPhilosophy = {quote: "Loading...", author: ""}
 var dailyPoem = {poemTitle: "Loading...", poemAuthor: "", poemLines: ""}
+// eslint-disable-next-line no-unused-vars
+var dailyGoals = []
+// eslint-disable-next-line no-unused-vars
+var longTermGoals = []
 
 function getRandomNumber(arrayLength){
     return Math.floor(Math.random() * arrayLength);
-  }
+}
+
+function filterLists(list, archetype){ 
+    let filteredArray = list.filter(item => item.category === archetype); 
+    return filteredArray 
+}
+
+function processDaily(filteredList){ 
+    if (filteredList.length > 0) { 
+        var randomGoal = filteredList[ getRandomNumber(filteredList.length) ];
+                
+        KwmlGoal.findByIdAndUpdate(randomGoal._id, {isPinned: true}, function(err){
+            if (!err) {
+                console.log(randomGoal + " successfully pinned");
+            } else {
+                console.log("error")
+                console.log(err)
+            }
+        });
+        }
+}
+
+function addToPinned(goal){              
+    KwmlGoal.findByIdAndUpdate(goal._id, {isPinned: true}, function(err){
+        if (!err) {
+            console.log(goal + " successfully pinned");
+        } else {
+            console.log("error")
+            console.log(err)
+        }
+    });
+}
 
 const philosophyAPIurl = "https://philosophyapi.herokuapp.com/api/ideas/" + getRandomNumber(583) + "/"
 
@@ -31,7 +66,7 @@ https.get(philosophyAPIurl, (res) => {
     console.log(res.statusCode)
     res.on("data", function(data){
         const philosophyAPI = JSON.parse(data);
-        console.log(philosophyAPI)
+        // console.log(philosophyAPI)
         dailyPhilosophy.quote = philosophyAPI.quote;
         dailyPhilosophy.author = philosophyAPI.author;
     })
@@ -68,6 +103,95 @@ const KwmlGoal = models.kwmlGoalModel;
 
 const { type } = require('os');
 
+
+function findDailyGoals(){
+    KwmlGoal.find({type: "Goal", scope: "Daily", isPinned: true}, function(err, foundGoals){
+        if (foundGoals.length === 0) {
+            newDailyGoals()
+            console.log("Have sent to set new daily goals")
+        } else {
+            console.log("There are current daily goals")
+        }
+    })
+}
+
+function findLongTermGoals(){
+    KwmlGoal.find({type: "Goal", scope: "Long-term", isPinned: true}, function(err, foundGoals){
+        if (foundGoals.length === 0) {
+            newLongTermGoals()
+            console.log("Have sent to set new long term goals")
+
+        } else {
+            console.log("There are current long term goals")
+        }
+    })
+}
+
+function newDailyGoals(){
+    let goals = []
+    KwmlGoal.find({}, function(err, foundGoals){
+        if (foundGoals.length === 0) {
+            console.log("Found no goals, reminders, or mindsets")
+        } else {
+            goals = foundGoals    
+            let filteredGoals = goals.filter(goal => goal.type === "Goal");
+            let filteredDailyGoals = filteredGoals.filter(goal => goal.scope === "Daily");
+            console.log(filteredDailyGoals);
+            
+            if (filteredDailyGoals.length === 0) { 
+                console.log("No daily goals");
+            } else if ( filteredDailyGoals.length <= 4 ) {
+                filteredDailyGoals.forEach((dailyGoal) => addToPinned(dailyGoal))
+            } else if ( filteredDailyGoals.length > 4 ) {
+                let filteredKingGoals = filterLists(filteredDailyGoals, "King");
+                let filteredWarriorGoals = filterLists(filteredDailyGoals, "Warrior");
+                let filteredMagicianGoals = filterLists(filteredDailyGoals, "Magician");
+                let filteredLoverGoals = filterLists(filteredDailyGoals, "Lover");
+
+                processDaily(filteredKingGoals);
+                processDaily(filteredWarriorGoals); 
+                processDaily(filteredMagicianGoals); 
+                processDaily(filteredLoverGoals); 
+
+                console.log("Have set new daily goals");
+            }
+        }
+    })
+}
+
+function newLongTermGoals(){
+    let goals = []
+    KwmlGoal.find({}, function(err, foundGoals){
+        if (foundGoals.length === 0) {
+            console.log("Found no goals, reminders, or mindsets")
+        } else {
+            goals = foundGoals    
+            let filteredGoals = goals.filter(goal => goal.type === "Goal");
+            let filteredLongTermGoals = filteredGoals.filter(goal => goal.scope === "Long-term");
+            console.log(filteredLongTermGoals.length)
+            
+            if (filteredLongTermGoals.length === 0) { 
+                console.log("No daily goals");
+            } else if ( filteredLongTermGoals.length <= 4 ) {
+                filteredLongTermGoals.forEach((longTermGoal) => addToPinned(longTermGoal))
+            } else if ( filteredLongTermGoals.length > 4 ) {
+                let filteredKingGoals = filterLists(filteredLongTermGoals, "King");
+                let filteredWarriorGoals = filterLists(filteredLongTermGoals, "Warrior");
+                let filteredMagicianGoals = filterLists(filteredLongTermGoals, "Magician");
+                let filteredLoverGoals = filterLists(filteredLongTermGoals, "Lover");
+
+                processDaily(filteredKingGoals);
+                processDaily(filteredWarriorGoals); 
+                processDaily(filteredMagicianGoals); 
+                processDaily(filteredLoverGoals); 
+
+                console.log("Have set new long term goals");
+            }
+        }
+    })
+}
+
+
 app.get("/api", (req, res) => {
     res.json({
         message: "Hello from server!",
@@ -79,30 +203,33 @@ app.get("/api", (req, res) => {
 
 app.get("/goals", (req, res) => {
     var currentGoals = []
+    findDailyGoals()
+    findLongTermGoals()
 
     KwmlGoal.find({}, function(err, foundGoals){
         if (foundGoals.length === 0) {
             console.log("Found no goals, reminders, or mindsets")
         } else {
             currentGoals = foundGoals
-            console.log(currentGoals)
             res.json({
                 message: "Sent!",
                 kwmlgoals: JSON.stringify(currentGoals)
             });
-        }})
+        }
+    })
 });
 
 
 app.post('/postGoals', (req, res) => {
-    const { goal, category, type, scope } = req.body;
+    const { goal, category, type, scope, isPinned } = req.body;
     // console.log(type)
 
     const newKwmlGoal = new KwmlGoal({
         goal: goal, 
         category: category,
         type:type,
-        scope: scope
+        scope: scope,
+        isPinned: isPinned
     })
     
     newKwmlGoal.save()
@@ -133,13 +260,13 @@ app.post('/postGoals', (req, res) => {
 
 app.post("/updateGoals", (req, res) => {
     console.log(req)
-    const { goalId, goal, category, type, scope } = req.body.goal
+    const { goalId, goal, category, type, scope, isPinned } = req.body.goal
     
     console.log(goal)
     console.log(goalId)
         
     KwmlGoal.findByIdAndUpdate(goalId, 
-        { goal: goal, category: category, type: type, scope:scope}, 
+        { goal: goal, category: category, type: type, scope:scope, isPinned: isPinned}, 
         function(err){
     if (!err) {
         console.log("Task successfully updated");
