@@ -7,6 +7,7 @@ function KWMLGoal(props) {
   const type = props.type
   const scope = props.scope
   const isPinned = props.isPinned
+  const canBePinned = props.canBePinned
 
   const [currentGoal, setCurrentGoal] = useState({
     goalId: goalId,
@@ -17,8 +18,8 @@ function KWMLGoal(props) {
     isPinned: isPinned
     });
 
-  const [goalType, setGoalType] = useState("Daily") 
-
+  const [renderPin, setRenderPin] = useState("no pin")
+  const [goalType, setGoalType] = useState("Goal") 
   const [goalHasBeenChanged, setGoalHasBeenChanged] = useState(false)
 
   function setType(){
@@ -31,8 +32,15 @@ function KWMLGoal(props) {
     }
   }
 
+  function definePinAction(){
+    if (type === "Goal" && canBePinned === true) {
+        setRenderPin("RenderPin")
+    } 
+  }
+
   useEffect(() => {
     setType()
+    definePinAction()
   })
 
   function handleChange(event){
@@ -66,9 +74,18 @@ function KWMLGoal(props) {
     }
   }
 
+  function handlePin(event){
+    console.log(event.target.checked)
+
+    setCurrentGoal({goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope, isPinned:event.target.checked})
+    var pinnedGoal = {goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope, isPinned:event.target.checked}
+    console.log(currentGoal)
+    props.onChange(pinnedGoal)
+  }
 
   return (
     <div className="kwmlGoal">
+    {renderPin === "RenderPin" ? <div><input type="checkbox" onChange={handlePin} checked={isPinned}/><label>Pin</label></div> : null}
       <form onSubmit={formSubmit}>
             <textarea 
               onChange={handleChange}

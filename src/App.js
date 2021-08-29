@@ -266,6 +266,7 @@ function App() {
     <Navigation 
       handleClick={handleButton}
       handleNavBar={handleNavBarFunc}
+      currentPage={navigation}
     />
 
       <div className="flexparent">
@@ -378,7 +379,9 @@ function App() {
               category={kwmlGoal.category} 
               scope={kwmlGoal.scope} 
               type={kwmlGoal.type}
+              canBePinned={true}
               isPinned={kwmlGoal.isPinned}
+              onPin={updateGoal}
               onChange={updateGoal}
               deleteClick={deleteKwmlGoal}
               filterClick={filterGoals}

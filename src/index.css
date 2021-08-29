@@ -57,6 +57,10 @@ h1 {
   font-size:.5em;
 }
 
+.activePage {
+  color: rgba(0, 0, 0, 0.35) !important;
+}
+
 .navigation button:hover {
   color: rgba(0, 0, 0, 0.35);
   background-color:transparent;
@@ -224,7 +228,7 @@ select {
   align-items: center;
   justify-content: center;
   align-content: center;
-  min-height: 30px;
+  /* min-height: 30px; */
   max-height: 50px;
   width: 100%;
   text-align: center;
@@ -312,7 +316,7 @@ button:hover {
   margin:0px !important;
 }
 
-.kwmlGoal input,.kwmlGoal textarea {
+.kwmlGoal textarea {
   border: 0px;
   border-bottom: solid 2px;
   border-color:transparent;
@@ -332,6 +336,21 @@ button:hover {
   transition:.3s;
   vertical-align:middle;
   width:100%;
+}
+
+.kwmlGoal input {
+  height: 14px;
+  position: absolute;
+  right: -140px;
+}
+
+.kwmlGoal label {
+  position: absolute;
+  right: 18px;
+  top: 45px;
+  font-size: .6em;
+  font-weight:700;
+  color: rgba(0,0,0,0.35);
 }
 
 *:focus {
