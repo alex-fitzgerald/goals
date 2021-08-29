@@ -22,8 +22,8 @@ h1 {
   color: rgba(0, 0, 0, 0.15);
   font-size: 4em;
   letter-spacing:-3px;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   text-align:center;
 }
 
@@ -45,8 +45,8 @@ h1 {
 }
 
 .navigation button {
-  max-width:70px;
-  min-width:70px;
+  max-width:100px;
+  min-width:10px;
   flex:1;
   background-color:transparent;
   padding:0px;
@@ -54,11 +54,11 @@ h1 {
   font-weight:700;
   cursor:pointer;
   letter-spacing:-0.5px;
-  font-size:.6em;
+  font-size:.5em;
 }
 
 .navigation button:hover {
-  color: rgba(0, 0, 0, 0.25);
+  color: rgba(0, 0, 0, 0.35);
   background-color:transparent;
 }
 
