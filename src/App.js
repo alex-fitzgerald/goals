@@ -258,7 +258,7 @@ function App() {
   useEffect(() => {
     findDailyGoals()
     setDailyGoalsSet(true)
-  }) 
+  })
 
     
     return (

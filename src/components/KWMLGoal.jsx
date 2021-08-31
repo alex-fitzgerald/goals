@@ -85,7 +85,7 @@ function KWMLGoal(props) {
 
   return (
     <div className="kwmlGoal">
-    {renderPin === "RenderPin" ? <div><input type="checkbox" onChange={handlePin} checked={isPinned}/><label>Pin</label></div> : null}
+    {renderPin === "RenderPin" ? <div className="checkboxDiv"><input type="checkbox" onChange={handlePin} checked={isPinned}/><label>Pin</label></div> : null}
       <form onSubmit={formSubmit}>
             <textarea 
               onChange={handleChange}

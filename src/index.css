@@ -284,6 +284,10 @@ button:hover {
   color:white;
 }
 
+.daily-wrapper input {
+  width:100%
+}
+
 .dailyGoalsButton {
   width:unset !important;
   margin:auto;
