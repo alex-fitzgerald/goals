@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Checkbox from "./Checkbox.jsx"
 
 function KWMLGoal(props) {
   const goalId = props.goalId
@@ -18,7 +19,7 @@ function KWMLGoal(props) {
     isPinned: isPinned
     });
 
-  const [renderPin, setRenderPin] = useState("no pin")
+  const [renderPin, setRenderPin] = useState(false)
   const [goalType, setGoalType] = useState("Goal") 
   const [goalHasBeenChanged, setGoalHasBeenChanged] = useState(false)
 
@@ -34,10 +35,10 @@ function KWMLGoal(props) {
 
   function definePinAction(){
     if (type === "Goal" && canBePinned === true) {
-        setRenderPin("RenderPin")
-    } 
+        setRenderPin(true)
+    }
   }
-
+  
   useEffect(() => {
     setType()
     definePinAction()
@@ -74,18 +75,22 @@ function KWMLGoal(props) {
     }
   }
 
-  function handlePin(event){
-    console.log(event.target.checked)
-
-    setCurrentGoal({goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope, isPinned:event.target.checked})
-    var pinnedGoal = {goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope, isPinned:event.target.checked}
-    console.log(currentGoal)
+  function toggle(value){
+    var pinnedGoal = {goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope, isPinned:value}
+    setCurrentGoal(pinnedGoal)
+    console.log(pinnedGoal)
     props.onChange(pinnedGoal)
   }
 
   return (
     <div className="kwmlGoal">
-    {renderPin === "RenderPin" ? <div className="checkboxDiv"><input type="checkbox" onChange={handlePin} checked={isPinned}/><label>Pin</label></div> : null}
+      {renderPin ? 
+        <Checkbox 
+          state={props.isPinned}
+          onChange={toggle} 
+          />
+        : null
+      }
       <form onSubmit={formSubmit}>
             <textarea 
               onChange={handleChange}

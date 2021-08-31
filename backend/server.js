@@ -261,19 +261,14 @@ app.post('/postGoals', (req, res) => {
 app.post("/updateGoals", (req, res) => {
     console.log(req)
     const { goalId, goal, category, type, scope, isPinned } = req.body.goal
-    
-    console.log(goal)
-    console.log(goalId)
-        
-    KwmlGoal.findByIdAndUpdate(goalId, 
-        { goal: goal, category: category, type: type, scope:scope, isPinned: isPinned}, 
-        function(err){
-    if (!err) {
-        console.log("Task successfully updated");
-        console.log(err)
-    } else {
-        console.log("error")
-    }
+            
+    KwmlGoal.findByIdAndUpdate(goalId, { goal: goal, category: category, type: type, scope:scope, isPinned: isPinned}, function(err){
+        if (!err) {
+            console.log("Task successfully updated");
+            console.log(req.body.goal)
+        } else {
+            console.log("error")
+        }
     });
 });
 

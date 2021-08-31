@@ -83,7 +83,6 @@ function App() {
     deleteGoal(goal, category, type, scope);
     // setGoalsLoaded(true)
   }
-  
 
   function completeGoal(id, goal, category, type, scope, key, goalId, array, setArray) {
     unpinGoal({
@@ -134,13 +133,17 @@ function App() {
   
     function updateGoal(kwmlGoal){
       const url = "updateGoals"
-      console.log("goal sent from app for update")
+      const { isPinned } = kwmlGoal
+      console.log(isPinned + " is the inPinned status passed to App.js")
+      if (!isPinned){
+        unpinGoal(kwmlGoal)
+      }  
+
       setKwmlGoals(prevKwmlGoals => {
         return [...prevKwmlGoals, kwmlGoal]
       });
       setDailyGoalsSet(true)
       setGoalsLoaded(true)
-      console.log(kwmlGoal)
       fetch(url , {
         headers: {'Content-Type': 'application/json' },
         method: "POST",
