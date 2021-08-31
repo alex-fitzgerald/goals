@@ -230,13 +230,19 @@ select {
   align-content: center;
   /* min-height: 30px; */
   max-height: 50px;
-  width: 100%;
+  /* width: 100%; */
   text-align: center;
 }
 
 input {
-  width: calc(100% - 20px);
+  /* width: calc(100% - 20px); */
   text-align:left;
+}
+
+.checkboxDiv {
+  position:absolute;
+  top:20px;
+  right:20px;
 }
 
 input::placeholder{
@@ -340,14 +346,9 @@ button:hover {
 
 .kwmlGoal input {
   height: 14px;
-  position: absolute;
-  right: -140px;
 }
 
 .kwmlGoal label {
-  position: absolute;
-  right: 18px;
-  top: 45px;
   font-size: .6em;
   font-weight:700;
   color: rgba(0,0,0,0.35);
