@@ -69,7 +69,6 @@ function CreateArea(props) {
               value={kwmlGoal.goal}
             />
 
-          <br />
 
           <select name="category" placeholder="Category" list="goalCategory" id="goalCategory"
             className={"" + (categoryInputEngaged ? "input-engaged" : null)}
@@ -81,7 +80,6 @@ function CreateArea(props) {
               <option value="Magician">Magician</option>
               <option value="Lover">Lover</option>
             </select> 
-            <br />
           <select name="type" placeholder="Type" list="goalType" id="goalType"
             className={"" + (typeInputEngaged ? "input-engaged" : null)}
             onChange={handleChange}
@@ -91,7 +89,6 @@ function CreateArea(props) {
               <option value="Reminder">Reminder</option>
               <option value="Mindset">Mindset</option>
             </select> 
-            <br />
           {type === "Goal" ? 
           <select 
             className={"" + (scopeInputEngaged ? "input-engaged" : null)}
@@ -107,7 +104,6 @@ function CreateArea(props) {
             <option value="Very-long-term">Very long term goal</option>
           </select> : null
             }
-            <br />
             <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
           </form>
           </div>

@@ -6,6 +6,7 @@ import Philosophy from "./components/Philosophy.jsx";
 import KWMLGoal from "./components/KWMLGoal.jsx";
 import CreateArea from "./components/CreateArea.jsx";
 import Navigation from "./components/Navigation.jsx";
+import Login from "./components/Login.jsx"
 
 function App() {
   const [dailyPhilosophy, setDailyPhilosophy] = useState({quote: "Loading", author: ""});
@@ -13,6 +14,7 @@ function App() {
   const [goalsFiltered, setGoalsFiltered] = useState(false);
   const [goalsLoaded, setGoalsLoaded] = useState(false);
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
+  const [loggedIn, setLoggedIn] = useState(false)
   const [dailyGoals, setDailyGoals] = useState([]);
   const [longTermGoals, setLongTermGoals] = useState([]);
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
@@ -21,14 +23,26 @@ function App() {
   const [mindsets, setMindsets] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
 
-  const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create"]
-  const [navigationNumber, setNavigationNumber] = useState(0);
+  const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
+  const [navigationNumber, setNavigationNumber] = useState(9);
   const [navigation, setNavigation] = useState(navigationList[navigationNumber]);
 
-  // function updateNavigation(navListPosition){
-  //   setNavigation(navigationList[navListPosition])
-  //   console.log(navigation)
-  // }
+  function registerUser(user){
+    axios
+    .post("/register", {
+      email: user.email,
+      password: user.password
+    })
+    .then(function () {
+      console.log(user.email + "added to users.");
+      setLoggedIn(true)
+      setNavigationNumber(0)
+      console.log(loggedIn)
+    })
+    .catch(function () {
+				alert("Could not create user. Please try again");
+			});
+  }
   
   function handleButton(button){
     setNavigationNumber(button)
@@ -73,7 +87,7 @@ function App() {
     });
     postGoal(kwmlGoal);
     // setGoalsLoaded(true)
-  }
+  } 
 
   function deleteKwmlGoal(id, goal, category, type, scope, key) {
     console.log(key)
@@ -109,7 +123,7 @@ function App() {
       scope: latestGoal.scope
     })
     .then(function () {
-      console.log(latestGoal + "added to goals.");
+      console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
     })
     .catch(function () {
 				alert("Could not create goal. Please try again");
@@ -130,6 +144,8 @@ function App() {
       .then(response => response.json())
       .then(data => this.setState({ postId: data.id }));
     }
+
+    
   
     function updateGoal(kwmlGoal){
       const url = "updateGoals"
@@ -273,6 +289,7 @@ function App() {
     />
 
       <div className="flexparent">
+        { navigation === "Login" ? <Login onRegister={registerUser} /> : null}
         { navigation === "Stoic" ? <Stoic stoicInput = {randomStoic} /> : null }
         { navigation === "Philosophy" ? <Philosophy philosophyInput = {dailyPhilosophy} /> : null }
         { navigation === "Poem" ? <Poem poemInput = {dailyPoem} /> : null }

@@ -14,8 +14,11 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build'))
 })
 
-// localhost direct
-// end localhost direct
+const models = require('./Models');
+const KwmlGoal = models.kwmlGoalModel;
+const User = models.userModel;
+
+const { type } = require('os');
 
 var dailyStoicism = {quote: "Loading...", author: ""}
 var dailyPhilosophy = {quote: "Loading...", author: ""}
@@ -96,12 +99,6 @@ https.get("https://poetrydb.org/random", (res) => {
         dailyPoem.poemLines = poem[0].lines
     })
 })
-
-const models = require('./Goal');
-
-const KwmlGoal = models.kwmlGoalModel;
-
-const { type } = require('os');
 
 
 function findDailyGoals(){
@@ -191,6 +188,21 @@ function newLongTermGoals(){
     })
 }
 
+
+app.post("/register", (req, res) => {
+    const { email, password } = req.body;
+    const newUser = new User({
+        email: email,
+        password: password
+    });
+    newUser.save(function(err){
+        if(err){
+            console.log(err);
+        } else {
+            console.log("User " + newUser.email + " successfully created.")
+        }
+    })
+});
 
 app.get("/api", (req, res) => {
     res.json({
