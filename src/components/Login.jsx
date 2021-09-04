@@ -26,6 +26,10 @@ function Login(props){
             alert("Please enter your password")
             event.preventDefault();
         } else {
+            setUser({
+                email: "",
+                password:""
+            })
         }
     }
 
