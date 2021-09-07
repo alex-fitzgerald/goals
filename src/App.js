@@ -265,11 +265,6 @@ function App() {
     
     return (
     <div className="app">
-      <div className="authParent">
-        {!isAuthenticated &&  <LoginButton /> }
-        {isAuthenticated &&   <Profile /> }
-        {isAuthenticated &&   <LogoutButton /> }
-      </div>
       <Navigation 
         handleClick={handleButton}
         handleNavBar={handleNavBarFunc}
@@ -284,7 +279,7 @@ function App() {
             { navigation === "Mindsets" ?    <DailyItems  dailyGoals={dailyGoalsSet} itemSet={mindsets} componentName="Mindsets" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} /> : null }
             { navigation === "Reminders" ?   <DailyItems  dailyGoals={dailyGoalsSet} itemSet={reminders} componentName="Reminders" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} /> : null }
             { navigation === "Daily" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={dailyGoals} componentName="Daily Goals" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={dailyGoals} setArray={setDailyGoals}/> : null }             
-            { navigation === "LongTerm" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={longTermGoals} componentName="Long Term Goals" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={longTermGoals} setArray={setLongTermGoals}/> : null }             
+            { navigation === "LongTerm" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={longTermGoals} componentName="Long Term" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={longTermGoals} setArray={setLongTermGoals}/> : null }             
           </div> }
         </div>
 
@@ -314,6 +309,10 @@ function App() {
               }
           </div>
         </div> : null }
+      <div className="authParent">
+        <Profile />
+        {!isAuthenticated ? <LoginButton /> : <LogoutButton /> }
+      </div>
     </div>
   );
 }

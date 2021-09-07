@@ -2,7 +2,7 @@ import React from 'react';
 import KWMLGoal from './KWMLGoal.jsx';
 
 function DailyItems(props){
-    const dailyGoalsSet = props.dailyGoalsSet
+    // const dailyGoalsSet = props.dailyGoalsSet
     const renderedName = props.componentName
     const itemSet = props.itemSet
     const updateGoal = props.updateGoal

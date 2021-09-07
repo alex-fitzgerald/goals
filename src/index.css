@@ -25,12 +25,13 @@ body {
 
 .log button {
   cursor:pointer;
-  font-size:.8em;
+  font-size:.6em;
+  padding:5px;
   border-radius:10px;
 }
 
 .profile{
-  display:flex;
+  text-align:center;
 }
 
 .profile img {
@@ -53,6 +54,7 @@ h1 {
 .authParent {
   max-width:200px;
   margin:auto;
+  text-align:center;
 }
 
 .app {
