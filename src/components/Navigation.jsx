@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 
 function Navigation(props){
-
     const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create"]
-    const [navigationNumber, setNavigationNumber] = useState(0);
+    const [navigationNumber, setNavigationNumber] = useState(9);
     const [navigation, setNavigation] = useState(navigationList[navigationNumber]);
   
     function handleClick(number){

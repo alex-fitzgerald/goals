@@ -1,12 +1,16 @@
-import React,{ useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Stoic from "./components/Stoic.jsx";
-import axios from "axios"
+import axios from "axios";
+import { useAuth0 } from '@auth0/auth0-react'
 import Poem from "./components/Poem.jsx";
 import Philosophy from "./components/Philosophy.jsx";
+import DailyItems from "./components/DailyItems.jsx"
 import KWMLGoal from "./components/KWMLGoal.jsx";
 import CreateArea from "./components/CreateArea.jsx";
 import Navigation from "./components/Navigation.jsx";
-import Login from "./components/Login.jsx"
+import LoginButton from "./components/LoginButton.jsx"
+import LogoutButton from "./components/LogoutButton.jsx"
+import Profile from "./components/Profile.jsx"
 
 function App() {
   const [dailyPhilosophy, setDailyPhilosophy] = useState({quote: "Loading", author: ""});
@@ -14,7 +18,6 @@ function App() {
   const [goalsFiltered, setGoalsFiltered] = useState(false);
   const [goalsLoaded, setGoalsLoaded] = useState(false);
   const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
-  const [loggedIn, setLoggedIn] = useState(false)
   const [dailyGoals, setDailyGoals] = useState([]);
   const [longTermGoals, setLongTermGoals] = useState([]);
   const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
@@ -22,28 +25,13 @@ function App() {
   const [reminders, setReminders] = useState([]);
   const [mindsets, setMindsets] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
+  const { user, isAuthenticated } = useAuth0(); 
+
 
   const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
-  const [navigationNumber, setNavigationNumber] = useState(9);
+  const [navigationNumber, setNavigationNumber] = useState(0);
   const [navigation, setNavigation] = useState(navigationList[navigationNumber]);
 
-  function registerUser(user){
-    axios
-    .post("/register", {
-      email: user.email,
-      password: user.password
-    })
-    .then(function () {
-      console.log(user.email + "added to users.");
-      setLoggedIn(true)
-      setNavigationNumber(0)
-      console.log(loggedIn)
-    })
-    .catch(function () {
-				alert("Could not create user. Please try again");
-			});
-  }
-  
   function handleButton(button){
     setNavigationNumber(button)
     setNavigation(navigationList[button])
@@ -75,10 +63,7 @@ function App() {
     .then(function(data){
       setKwmlGoals(JSON.parse(data.kwmlgoals))
       setAllGoals(JSON.parse(data.kwmlgoals))
-      // setDailyGoals(JSON.parse(data.dailyGoals))
-      // setLongTermGoals(JSON.parse(data.longTermGoals))
       setGoalsLoaded(true)
-      // findDailyGoals()
       })}, []);
   
   function addGoal(kwmlGoal){  
@@ -86,7 +71,6 @@ function App() {
       return [...prevKwmlGoals, kwmlGoal]
     });
     postGoal(kwmlGoal);
-    // setGoalsLoaded(true)
   } 
 
   function deleteKwmlGoal(id, goal, category, type, scope, key) {
@@ -142,10 +126,9 @@ function App() {
         })
       })
       .then(response => response.json())
-      .then(data => this.setState({ postId: data.id }));
+      // .then(data => this.setState({ postId: data.id }));
     }
 
-    
   
     function updateGoal(kwmlGoal){
       const url = "updateGoals"
@@ -169,7 +152,7 @@ function App() {
         })
       })
       .then(response => response.json())
-      .then(data => this.setState({ postId: data.id }));
+      // .then(data => this.setState({ postId: data.id }));
     }
 
     function deleteGoal(goal, category, type, scope){
@@ -187,7 +170,7 @@ function App() {
       })
     })
     .then(response => response.json())
-    .then(data => this.setState({ postId: data.id }));
+    // .then(data => this.setState({ postId: data.id }));
   }
   
   function findDailyGoals(){
@@ -282,134 +265,55 @@ function App() {
     
     return (
     <div className="app">
-    <Navigation 
-      handleClick={handleButton}
-      handleNavBar={handleNavBarFunc}
-      currentPage={navigation}
-    />
-
-      <div className="flexparent">
-        { navigation === "Login" ? <Login onRegister={registerUser} /> : null}
-        { navigation === "Stoic" ? <Stoic stoicInput = {randomStoic} /> : null }
-        { navigation === "Philosophy" ? <Philosophy philosophyInput = {dailyPhilosophy} /> : null }
-        { navigation === "Poem" ? <Poem poemInput = {dailyPoem} /> : null }
-        { navigation === "Mindsets" ?       
-          <div className="component">
-            <h1>Mindsets</h1>
-            <div className="componentContent">
-              {dailyGoalsSet ? mindsets.map((mindset, index) => ( 
-                  <KWMLGoal 
-                    key={index}
-                    id={index} 
-                    goalId={mindset._id}
-                    goal={mindset.goal}
-                    category={mindset.category} 
-                    scope={mindset.scope} 
-                    type={mindset.type}
-                    onChange={updateGoal}
-                    deleteClick={deleteKwmlGoal}
-                    filterClick={filterGoals}
-                    /> )) : null
-                } 
-              </div>
-          </div> : null 
-        }
-        { navigation === "Reminders" ?
-          <div className="component">
-            <h1>Remember</h1>
-            <div className="componentContent">
-              {dailyGoalsSet ? reminders.map((reminder, index) => ( 
-                  <KWMLGoal 
-                  key={index}
-                  id={index} 
-                  goalId={reminder._id}
-                  goal={reminder.goal}
-                  category={reminder.category} 
-                  scope={reminder.scope} 
-                  type={reminder.type}
-                  onChange={updateGoal}
-                  deleteClick={deleteKwmlGoal}
-                  filterClick={filterGoals}
-                    /> )) : null
-                } 
-              </div>
-          </div>: null 
-        }
-        { navigation === "Daily" ?
-          <div className="component">
-            <h1>Daily Goals</h1>
-            <div className="componentContent">
-              {dailyGoalsSet ? dailyGoals.map((dailyGoal, index) => ( 
-                  <KWMLGoal 
-                    key={dailyGoal.category}
-                    id={index} 
-                    goalId={dailyGoal._id}
-                    goal={dailyGoal.goal}
-                    category={dailyGoal.category} 
-                    scope={dailyGoal.scope} 
-                    type={dailyGoal.type}
-                    array={dailyGoals}
-                    setArray={setDailyGoals}
-                    onChange={updateGoal}
-                    deleteClick={completeGoal}
-                    filterClick={filterGoals}
-                    /> )) : null
-                } 
-              </div>
-          </div>: null 
-        }
-        { navigation === "LongTerm" ?
-        <div className="component">
-          <h1>Long Term</h1>
-          <div className="componentContent">
-            {dailyGoalsSet ? longTermGoals.map((longTerm, index) => ( 
-                <KWMLGoal 
-                  key={longTerm.category}
-                  id={index} 
-                  goalId={longTerm._id}
-                  goal={longTerm.goal}
-                  category={longTerm.category} 
-                  scope={longTerm.scope} 
-                  type={longTerm.type}
-                  array={longTermGoals}
-                  setArray={setLongTermGoals}
-                  onChange={updateGoal}
-                  deleteClick={completeGoal}
-                  filterClick={filterGoals}
-                  /> )) : null
-              } 
-            </div>
-        </div>: null 
-        }
+      <div className="authParent">
+        {!isAuthenticated &&  <LoginButton /> }
+        {isAuthenticated &&   <Profile /> }
+        {isAuthenticated &&   <LogoutButton /> }
       </div>
-
-      { navigation === "Create" ? <CreateArea onAdd={addGoal} /> : null }
-
-      { navigation === "AllGoals" ?
-      <div className="component">
-        <h1>All Goals</h1>
-        <div className="componentContent">
-          {kwmlGoals.map((kwmlGoal, index) => 
-          ( 
-            <KWMLGoal 
-              key={kwmlGoal._id}
-              id={index} 
-              goalId={kwmlGoal._id}
-              goal={kwmlGoal.goal}
-              category={kwmlGoal.category} 
-              scope={kwmlGoal.scope} 
-              type={kwmlGoal.type}
-              canBePinned={true}
-              isPinned={kwmlGoal.isPinned}
-              onPin={updateGoal}
-              onChange={updateGoal}
-              deleteClick={deleteKwmlGoal}
-              filterClick={filterGoals}
-              /> ))
-            }
+      <Navigation 
+        handleClick={handleButton}
+        handleNavBar={handleNavBarFunc}
+        currentPage={navigation}
+      />
+        <div className="flexparent">
+          {/* { navigation === "Login" ? <Login onRegister={registerUser} /> : null} */}
+          { navigation === "Stoic" ?       <Stoic       stoicInput = {randomStoic} /> : null }
+          { navigation === "Philosophy" ?  <Philosophy  philosophyInput = {dailyPhilosophy} /> : null }
+          { navigation === "Poem" ?        <Poem        poemInput = {dailyPoem} /> : null }
+          {isAuthenticated && <div>
+            { navigation === "Mindsets" ?    <DailyItems  dailyGoals={dailyGoalsSet} itemSet={mindsets} componentName="Mindsets" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} /> : null }
+            { navigation === "Reminders" ?   <DailyItems  dailyGoals={dailyGoalsSet} itemSet={reminders} componentName="Reminders" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} /> : null }
+            { navigation === "Daily" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={dailyGoals} componentName="Daily Goals" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={dailyGoals} setArray={setDailyGoals}/> : null }             
+            { navigation === "LongTerm" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={longTermGoals} componentName="Long Term Goals" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={longTermGoals} setArray={setLongTermGoals}/> : null }             
+          </div> }
         </div>
-      </div> : null
-      }
+
+        { navigation === "Create" ? <CreateArea onAdd={addGoal} /> : null }
+
+        { navigation === "AllGoals" ?
+        <div className="component">
+          <h1>All Goals</h1>
+          <div className="componentContent">
+            {kwmlGoals.map((kwmlGoal, index) => 
+            ( 
+              <KWMLGoal 
+                key={kwmlGoal._id}
+                id={index} 
+                goalId={kwmlGoal._id}
+                goal={kwmlGoal.goal}
+                category={kwmlGoal.category} 
+                scope={kwmlGoal.scope} 
+                type={kwmlGoal.type}
+                canBePinned={true}
+                isPinned={kwmlGoal.isPinned}
+                onPin={updateGoal}
+                onChange={updateGoal}
+                deleteClick={deleteKwmlGoal}
+                filterClick={filterGoals}
+                /> ))
+              }
+          </div>
+        </div> : null }
     </div>
   );
 }

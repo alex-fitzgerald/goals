@@ -188,21 +188,67 @@ function newLongTermGoals(){
     })
 }
 
+// app.post("/register", (req, res) => {
+//     const { email, password } = req.body.user;
+//     const newUser = new User({
+//         email: email,
+//         password: password
+//     });
+//     newUser.save()        
+//     .then(() => {
+//         console.log("User " + email + " successfully created.")
+//         res.json({
+//             message: "Created user successfully"
+//         })
+//     })  
+//     .catch(err => {
+//         console.log("Error creating user")
+//         console.log(err)
+//         res.status(400).json({
+//             "error": err,
+//             "message": "Error creating user"
+//         })
+//     })
+// });
 
-app.post("/register", (req, res) => {
-    const { email, password } = req.body;
-    const newUser = new User({
-        email: email,
-        password: password
-    });
-    newUser.save(function(err){
-        if(err){
-            console.log(err);
-        } else {
-            console.log("User " + newUser.email + " successfully created.")
-        }
-    })
-});
+// app.post("/login", (req, res) => {
+//     const { email, password } = req.body.user;
+//     const newUser = new User({
+//         email: email,
+//         password: password
+//     });
+//     newUser.findOne({email: email}, function(err, foundUser){
+//         if (err) {
+//             console.log(err)
+//             res.status(400).json({
+//                 "error":err,
+//                 "message": "No user found"
+//             })
+//         } else {
+//             if (foundUser){
+//                 if (foundUser.password === password) {
+//                     res.json({
+                        
+//                     })
+//                 }
+//             }
+//         }
+//     })        
+//     .then(() => {
+//         console.log("User " + email + " successfully created.")
+//         res.json({
+//             message: "Created user successfully"
+//         })
+//     })  
+//     .catch(err => {
+//         console.log("Error creating user")
+//         console.log(err)
+//         res.status(400).json({
+//             "error": err,
+//             "message": "Error creating user"
+//         })
+//     })
+// });
 
 app.get("/api", (req, res) => {
     res.json({
