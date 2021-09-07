@@ -188,68 +188,6 @@ function newLongTermGoals(){
     })
 }
 
-// app.post("/register", (req, res) => {
-//     const { email, password } = req.body.user;
-//     const newUser = new User({
-//         email: email,
-//         password: password
-//     });
-//     newUser.save()        
-//     .then(() => {
-//         console.log("User " + email + " successfully created.")
-//         res.json({
-//             message: "Created user successfully"
-//         })
-//     })  
-//     .catch(err => {
-//         console.log("Error creating user")
-//         console.log(err)
-//         res.status(400).json({
-//             "error": err,
-//             "message": "Error creating user"
-//         })
-//     })
-// });
-
-// app.post("/login", (req, res) => {
-//     const { email, password } = req.body.user;
-//     const newUser = new User({
-//         email: email,
-//         password: password
-//     });
-//     newUser.findOne({email: email}, function(err, foundUser){
-//         if (err) {
-//             console.log(err)
-//             res.status(400).json({
-//                 "error":err,
-//                 "message": "No user found"
-//             })
-//         } else {
-//             if (foundUser){
-//                 if (foundUser.password === password) {
-//                     res.json({
-                        
-//                     })
-//                 }
-//             }
-//         }
-//     })        
-//     .then(() => {
-//         console.log("User " + email + " successfully created.")
-//         res.json({
-//             message: "Created user successfully"
-//         })
-//     })  
-//     .catch(err => {
-//         console.log("Error creating user")
-//         console.log(err)
-//         res.status(400).json({
-//             "error": err,
-//             "message": "Error creating user"
-//         })
-//     })
-// });
-
 app.get("/api", (req, res) => {
     res.json({
         message: "Hello from server!",
@@ -260,6 +198,27 @@ app.get("/api", (req, res) => {
 });
 
 app.get("/goals", (req, res) => {
+    var currentGoals = []
+    findDailyGoals()
+    findLongTermGoals()
+
+    KwmlGoal.find({}, function(err, foundGoals){
+        if (foundGoals.length === 0) {
+            console.log("Found no goals, reminders, or mindsets")
+        } else {
+            currentGoals = foundGoals
+            res.json({
+                message: "Sent!",
+                kwmlgoals: JSON.stringify(currentGoals)
+            });
+        }
+    })
+});
+
+app.get("/goals/:user", (req, res) => {
+    const user = req.params.user
+    console.log(user)
+
     var currentGoals = []
     findDailyGoals()
     findLongTermGoals()

@@ -26,7 +26,7 @@ function App() {
   const [mindsets, setMindsets] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
   const { user, isAuthenticated } = useAuth0(); 
-
+  console.log(user)
 
   const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
   const [navigationNumber, setNavigationNumber] = useState(0);
@@ -48,23 +48,20 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    fetch("api", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
-    .then((res) => res.json())
-    .then(function(data){
-      setDailyPoem(JSON.parse(data.poem))
-      setRandomStoic(JSON.parse(data.stoic))
-      setDailyPhilosophy(JSON.parse(data.philosophy))
-      })}, []);
-  
-  useEffect(() => {
-    fetch("goals", {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
-    .then((res) => res.json())
-    .then(function(data){
-      setKwmlGoals(JSON.parse(data.kwmlgoals))
-      setAllGoals(JSON.parse(data.kwmlgoals))
-      setGoalsLoaded(true)
-      })}, []);
+  useEffect(() => {  
+    if (isAuthenticated) {
+      const url = 'goals/' + user.email;
+      fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+      .then((res) => res.json())
+      .then(function(data){
+        setKwmlGoals(JSON.parse(data.kwmlgoals))
+        setAllGoals(JSON.parse(data.kwmlgoals))
+        setGoalsLoaded(true)
+        })
+      } else {
+        console.log("No user is logged in, cannot fetch lists.")
+      }
+    }, [isAuthenticated]);
   
   function addGoal(kwmlGoal){  
     setKwmlGoals(prevKwmlGoals => {
@@ -99,6 +96,7 @@ function App() {
   }
   
   function postGoal(latestGoal){
+    const url = 'postGoals/' + user.email;
     axios
     .post("/postGoals", {
       goal: latestGoal.goal,
@@ -276,9 +274,9 @@ function App() {
           { navigation === "Philosophy" ?  <Philosophy  philosophyInput = {dailyPhilosophy} /> : null }
           { navigation === "Poem" ?        <Poem        poemInput = {dailyPoem} /> : null }
           {isAuthenticated && <div>
-            { navigation === "Mindsets" ?    <DailyItems  dailyGoals={dailyGoalsSet} itemSet={mindsets} componentName="Mindsets" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} /> : null }
-            { navigation === "Reminders" ?   <DailyItems  dailyGoals={dailyGoalsSet} itemSet={reminders} componentName="Reminders" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} /> : null }
-            { navigation === "Daily" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={dailyGoals} componentName="Daily Goals" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={dailyGoals} setArray={setDailyGoals}/> : null }             
+            { navigation === "Mindsets" ?    <DailyItems  dailyGoals={dailyGoalsSet} itemSet={mindsets} componentName="Mindsets" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} /> : null }
+            { navigation === "Reminders" ?   <DailyItems  dailyGoals={dailyGoalsSet} itemSet={reminders} componentName="Reminders" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} /> : null }
+            { navigation === "Daily" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={dailyGoals} componentName="Daily Goals" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} array={dailyGoals} setArray={setDailyGoals}/> : null }             
             { navigation === "LongTerm" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={longTermGoals} componentName="Long Term" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={longTermGoals} setArray={setLongTermGoals}/> : null }             
           </div> }
         </div>

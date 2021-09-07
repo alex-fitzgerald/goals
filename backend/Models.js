@@ -3,17 +3,6 @@ const Schema = mongoose.Schema;
 
 // const KwmlGoal = mongoose.model("KwmlGoal", kwmlGoalSchema);
 
-const userSchema = {
-  email: {
-    type:String,
-    required:true
-  },
-  password: {
-    type:String,
-    required:true
-  }  
-}
-
 const kwmlGoalSchema = Schema({
   goal: {
     type: String,
@@ -26,12 +15,17 @@ const kwmlGoalSchema = Schema({
     type: String
   },
   scope: {
-   type: String
+    type: String
   },
   isPinned: {
     type: Boolean
   }
 });
+
+const userSchema = {
+  name: String,
+  items: [kwmlGoalSchema]
+  } 
 
 const kwmlGoalModel = mongoose.model("KwmlGoal", kwmlGoalSchema, "kwmlgoals");
 const userModel = mongoose.model("User", userSchema, "users");
