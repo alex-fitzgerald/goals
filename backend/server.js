@@ -237,7 +237,33 @@ app.get("/goals/:user", (req, res) => {
 });
 
 
-app.post('/postGoals', (req, res) => {
+// app.post('/postGoals/:user', (req, res) => {
+//     const user = req.params.user;
+//     const { goal, category, type, scope, isPinned } = req.body;
+//     // console.log(type)
+
+//     const newKwmlGoal = new KwmlGoal({
+//         goal: goal, 
+//         category: category,
+//         type:type,
+//         scope: scope,
+//         isPinned: isPinned
+//     })
+
+//     User.findOne({user: user}, function(err, foundUser))
+    
+//     newKwmlGoal.save()
+//         .then(() => res.json({
+//             message: "Created goal successfully"
+//         }))
+//         .catch(err => res.status(400).json({
+//             "error": err,
+//             "message": "Error creating goal"
+//         }))
+// })
+
+app.post('/postGoals/:user', (req, res) => {
+    const user = req.params.user;
     const { goal, category, type, scope, isPinned } = req.body;
     // console.log(type)
 
@@ -247,6 +273,26 @@ app.post('/postGoals', (req, res) => {
         type:type,
         scope: scope,
         isPinned: isPinned
+    })
+
+    const newUser = new User({
+        name:user
+    })
+
+    User.findOne({name: user}, function(err, foundUser){
+        if (!err) {
+            if (!foundUser){
+                newUser.save();
+                console.log("Saved " + user + " as new user.");
+            } else {
+                foundUser.items.push(newKwmlGoal);
+                foundUser.save();
+                console.log("Found user " + user + ", saved item " + newKwmlGoal + ".");
+                console.log(foundUser.items)
+            } 
+        } else {
+            console.log(err)
+        }
     })
     
     newKwmlGoal.save()
@@ -258,9 +304,6 @@ app.post('/postGoals', (req, res) => {
             "message": "Error creating goal"
         }))
 })
-
-
-
 // function updateGoalCategories(){
 //     KwmlGoal.updateMany({"scope": "Monthly"}, {"scope": "Long-term"}, function(err){
 //         if(!err){

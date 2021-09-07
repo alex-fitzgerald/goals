@@ -98,7 +98,7 @@ function App() {
   function postGoal(latestGoal){
     const url = 'postGoals/' + user.email;
     axios
-    .post("/postGoals", {
+    .post(url, {
       goal: latestGoal.goal,
       category: latestGoal.category,
       type: latestGoal.type,
@@ -111,6 +111,23 @@ function App() {
 				alert("Could not create goal. Please try again");
 			});
     }
+  
+  // function postGoal(latestGoal){
+  //   const url = 'goals/' + user.email;
+  //   axios
+  //   .post("/postGoals", {
+  //     goal: latestGoal.goal,
+  //     category: latestGoal.category,
+  //     type: latestGoal.type,
+  //     scope: latestGoal.scope
+  //   })
+  //   .then(function () {
+  //     console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
+  //   })
+  //   .catch(function () {
+	// 			alert("Could not create goal. Please try again");
+	// 		});
+  //   }
   
     function unpinGoal(goal){
       const url = "updateGoals" 
