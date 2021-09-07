@@ -284,31 +284,32 @@ function App() {
         </div>
 
         { navigation === "Create" ? <CreateArea onAdd={addGoal} /> : null }
-
-        { navigation === "AllGoals" ?
-        <div className="component">
-          <h1>All Goals</h1>
-          <div className="componentContent">
-            {kwmlGoals.map((kwmlGoal, index) => 
-            ( 
-              <KWMLGoal 
-                key={kwmlGoal._id}
-                id={index} 
-                goalId={kwmlGoal._id}
-                goal={kwmlGoal.goal}
-                category={kwmlGoal.category} 
-                scope={kwmlGoal.scope} 
-                type={kwmlGoal.type}
-                canBePinned={true}
-                isPinned={kwmlGoal.isPinned}
-                onPin={updateGoal}
-                onChange={updateGoal}
-                deleteClick={deleteKwmlGoal}
-                filterClick={filterGoals}
-                /> ))
-              }
-          </div>
-        </div> : null }
+        {isAuthenticated && <div>
+          { navigation === "AllGoals" ?
+          <div className="component">
+            <h1>All Goals</h1>
+            <div className="componentContent">
+              {kwmlGoals.map((kwmlGoal, index) => 
+              ( 
+                <KWMLGoal 
+                  key={kwmlGoal._id}
+                  id={index} 
+                  goalId={kwmlGoal._id}
+                  goal={kwmlGoal.goal}
+                  category={kwmlGoal.category} 
+                  scope={kwmlGoal.scope} 
+                  type={kwmlGoal.type}
+                  canBePinned={true}
+                  isPinned={kwmlGoal.isPinned}
+                  onPin={updateGoal}
+                  onChange={updateGoal}
+                  deleteClick={deleteKwmlGoal}
+                  filterClick={filterGoals}
+                  /> ))
+                }
+            </div>
+          </div> : null }
+          </div>}
       <div className="authParent">
         <Profile />
         {!isAuthenticated ? <LoginButton /> : <LogoutButton /> }
