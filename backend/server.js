@@ -32,6 +32,37 @@ function getRandomNumber(arrayLength){
     return Math.floor(Math.random() * arrayLength);
 }
 
+const dummyGoals = [
+    {
+        goal: "Here's a placeholder goal",
+        category: "King",
+        type: "Goal",
+        scope: "Daily",
+        isPinned: true
+    }, 
+    {
+        goal: "Here's another placeholder goal",
+        category: "Warrior",
+        type: "Goal",
+        scope: "Daily",
+        isPinned: true
+    }, 
+    {
+        goal: "Here's placeholder mindset",
+        category: "Magician",
+        type: "Mindset",
+        scope: "Daily",
+        isPinned: true
+    }, 
+    {
+        goal: "Here's placeholder reminder",
+        category: "Lover",
+        type: "Reminder",
+        scope: "Daily",
+        isPinned: true
+    }
+]
+
 function filterLists(list, archetype){ 
     let filteredArray = list.filter(item => item.category === archetype); 
     return filteredArray 
@@ -195,6 +226,23 @@ app.get("/api", (req, res) => {
     });
 });
 
+app.get("/newUser/:user", (req, res) => {
+    const user = req.params.user
+    const newUser = new User({
+        name:user
+    })
+
+    User.findOne({name: user}, function(err, foundUser){
+        if (!err){
+            if(foundUser){
+                console.log("User is not currently on the database, no saved items.")
+            } else {
+                newUser.save();
+            }
+        } 
+    })
+});
+
 app.get("/goals/:user", (req, res) => {
     const user = req.params.user
 
@@ -229,14 +277,32 @@ app.post('/postGoals/:user', (req, res) => {
         name:name
     })
 
-    const newUser = new User({
-        name:user
-    })
-
     User.findOne({name: user}, function(err, foundUser){
         if (!err) {
             if (!foundUser){
+
+                const newUser = new User({
+                    name:user
+                })
+
                 newUser.save();
+
+                User.findOne({name:user}, function(err, foundUser){
+                    console.log(foundUser)
+                    dummyGoals.forEach(function(newGoal){
+                        var newGoal = new KwmlGoal({
+                            goal: newGoal.goal, 
+                            category: newGoal.category,
+                            type:newGoal.type,
+                            scope: newGoal.scope,
+                            isPinned: newGoal.isPinned,
+                            name:user
+                        });
+                        foundUser.items.push(newGoal)
+                        foundUser.save()
+                        console.log("Created user " + name + " and added dummy goals")
+                    })
+                })
                 console.log("Saved " + user + " as new user.");
             } else {
                 foundUser.items.push(newKwmlGoal);
@@ -248,15 +314,6 @@ app.post('/postGoals/:user', (req, res) => {
             console.log(err)
         }
     })
-    
-    newKwmlGoal.save()
-        .then(() => res.json({
-            message: "Created goal successfully"
-        }))
-        .catch(err => res.status(400).json({
-            "error": err,
-            "message": "Error creating goal"
-        }))
 })
 // function updateGoalCategories(){
 //     KwmlGoal.updateMany({"scope": "Monthly"}, {"scope": "Long-term"}, function(err){

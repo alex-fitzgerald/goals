@@ -13,18 +13,18 @@ import LogoutButton from "./components/LogoutButton.jsx"
 import Profile from "./components/Profile.jsx"
 
 function App() {
-  const [dailyPhilosophy, setDailyPhilosophy] = useState({quote: "Loading", author: ""});
-  const [dailyGoalsSet, setDailyGoalsSet] = useState(false);
-  const [goalsFiltered, setGoalsFiltered] = useState(false);
-  const [goalsLoaded, setGoalsLoaded] = useState(false);
-  const [randomStoic, setRandomStoic] = useState({quote: "Loading", author: ""});
-  const [dailyGoals, setDailyGoals] = useState([]);
-  const [longTermGoals, setLongTermGoals] = useState([]);
-  const [dailyPoem, setDailyPoem] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
-  const [kwmlGoals, setKwmlGoals] = useState([]);
-  const [reminders, setReminders] = useState([]);
-  const [mindsets, setMindsets] = useState([]);
-  const [allGoals, setAllGoals] = useState([]);
+  const [ dailyPhilosophy, setDailyPhilosophy ] = useState({quote: "Loading", author: ""});
+  const [ dailyGoalsSet, setDailyGoalsSet ] = useState(false);
+  const [ goalsFiltered, setGoalsFiltered ] = useState(false);
+  const [ goalsLoaded, setGoalsLoaded ] = useState(false);
+  const [ randomStoic, setDailyStoic ] = useState({quote: "Loading", author: ""});
+  const [ dailyGoals, setDailyGoals ] = useState([]);
+  const [ longTermGoals, setLongTermGoals ] = useState([]);
+  const [ dailyPoem, setDailyPoem ] = useState({poemTitle: "Loading", poemAuthor: "", poemLines: [""]});
+  const [ kwmlGoals, setKwmlGoals ] = useState([]);
+  const [ reminders, setReminders ] = useState([]);
+  const [ mindsets, setMindsets ] = useState([]);
+  const [ allGoals, setAllGoals ] = useState([]);
   const { user, isAuthenticated } = useAuth0(); 
 
   const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
@@ -49,6 +49,23 @@ function App() {
 
   useEffect(() => {  
     if (isAuthenticated) {
+      const url = 'newUser/' + user.email;
+      fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+      .then((res) => res.json())
+      } else {
+        console.log("No user is logged in, cannot fetch lists.")
+      }
+    }, [isAuthenticated]);
+  
+  function addGoal(kwmlGoal){  
+    setKwmlGoals(prevKwmlGoals => {
+      return [...prevKwmlGoals, kwmlGoal]
+    });
+    postGoal(kwmlGoal);
+  } 
+
+  useEffect(() => {  
+    if (isAuthenticated) {
       const url = 'goals/' + user.email;
       fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
       .then((res) => res.json())
@@ -61,6 +78,25 @@ function App() {
         console.log("No user is logged in, cannot fetch lists.")
       }
     }, [isAuthenticated]);
+  
+  function addGoal(kwmlGoal){  
+    setKwmlGoals(prevKwmlGoals => {
+      return [...prevKwmlGoals, kwmlGoal]
+    });
+    postGoal(kwmlGoal);
+  } 
+  
+  useEffect(() => {  
+      const url = '/api'
+      fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+      .then((res) => res.json())
+      .then(function(data){
+        console.log(data)
+        setDailyPoem(JSON.parse(data.poem))
+        setDailyStoic(JSON.parse(data.stoic))
+        setDailyPhilosophy(JSON.parse(data.philosophy))
+        })
+    }, []);
   
   function addGoal(kwmlGoal){  
     setKwmlGoals(prevKwmlGoals => {
