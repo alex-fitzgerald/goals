@@ -19,7 +19,8 @@ const kwmlGoalSchema = Schema({
   },
   isPinned: {
     type: Boolean
-  }
+  },
+  name: String
 });
 
 const userSchema = {

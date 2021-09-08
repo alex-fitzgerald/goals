@@ -26,7 +26,6 @@ function App() {
   const [mindsets, setMindsets] = useState([]);
   const [allGoals, setAllGoals] = useState([]);
   const { user, isAuthenticated } = useAuth0(); 
-  console.log(user)
 
   const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
   const [navigationNumber, setNavigationNumber] = useState(0);
@@ -102,7 +101,8 @@ function App() {
       goal: latestGoal.goal,
       category: latestGoal.category,
       type: latestGoal.type,
-      scope: latestGoal.scope
+      scope: latestGoal.scope,
+      name: user.email
     })
     .then(function () {
       console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
