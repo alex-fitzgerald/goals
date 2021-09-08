@@ -42,17 +42,7 @@ function processDaily(user, filteredList){
         var randomGoal = filteredList[ getRandomNumber(filteredList.length) ];
 
         console.log(randomGoal._id)
-        const filter = { "name":"user", "items._id":randomGoal._id }
-        const update = { $set: { "items.$.isPinned": true } }
      
-
-
-        // User.aggregate(
-        //     { $match: { name:user } },
-        //     { $unwind: '$items' },
-        //     { $match: {'items._id' : randomGoal._id }})
-            
-
         User.findOne( { name: user }, function(err, foundUser){
             if (!err) {
                 var foundRandomGoal = foundUser.items.id(randomGoal._id);
@@ -73,12 +63,20 @@ function processDaily(user, filteredList){
 }
 
 function addToPinned(user, goal){              
-    User.find(goal._id, {isPinned: true}, function(err){
+    User.findOne( { name: user }, function(err, foundUser){
         if (!err) {
-            console.log(goal + " successfully pinned");
+            var pinnedGoal = foundUser.items.id(goal._id);
+            pinnedGoal.isPinned = true;
+            foundUser.save(function(err){
+                if (err){
+                    console.log(err)
+                } else {
+                    console.log("Goal pinned")
+                }
+            })
+            console.log(pinnedGoal + " successfully pinned");
         } else {
             console.log("error")
-            console.log(err)
         }
     });
 }
@@ -130,7 +128,9 @@ function findDailyGoals(user){
             } else {
                 console.log("Gonna try find")
                 const dailyGoals = foundUser.items.filter(item => item.type === "Goal" && item.scope === "Daily");
+                const longTermGoals = foundUser.items.filter(item => item.type === "Goal" && item.scope === "Long-term");
                 const pinnedDailyGoals = dailyGoals.filter(item => item.isPinned === true);
+                const pinnedLongTermGoals = longTermGoals.filter(item => item.isPinned === true);
                 // console.log(dailyGoals + ":D :D :D")
                 // console.log(pinnedDailyGoals)
                 if (pinnedDailyGoals.length === 0) {
@@ -139,85 +139,20 @@ function findDailyGoals(user){
                 } else {
                     console.log("There are current daily goals")
                 }
+                if (pinnedLongTermGoals.length === 0) {
+                    newLongTermGoals(user, longTermGoals)
+                    console.log("Have sent to set new long term goals")
+                } else {
+                    console.log("There are current long term goals")
+                }
             }
         }
     })
 }
 
-// function findLongTermGoals(user){
-//     console.log("Have started findLongTermGoals")
-
-//     User.findOne({name: user}, function(err, foundUser){
-//         if (!err){
-//             if(!foundUser){
-//                 console.log("User is not currently on the database, no saved items.")
-//             } else {
-//                 foundUser.items.find({type: "Goal", scope: "Long-term", isPinned: true}, function(err, foundGoals){
-//                     if (foundGoals.length === 0) {
-//                         newLongTermGoals(user)
-//                         console.log("Have sent to set new long term goals")
-//                     } else {
-//                         console.log("There are current long term  goals")
-//                     }
-//                 })
-//             }
-//         }
-//     })
-// }
-
-
-// function newDailyGoals(user){
-//     console.log("Have started newDailyGoals")
-
-//     let goals = [];
-
-//     User.findOne({name: user}, function(err, foundUser){
-//         if (!err){
-//             if(!foundUser){
-//                 console.log("User is not currently on the database, no saved items.")
-//             } else {
-//                 goals = foundUser.items;
-//                 User.find({name:user, 'items.type':"Goal"}, function(err, foundGoals){
-//                     if (foundGoals.length === 0) {
-//                         console.log("Found no goals, reminders, or mindsets")
-//                         console.log(foundGoals)
-//                     } else {
-//                         goals = foundGoals    
-//                         console.log(foundGoals)
-//                         console.log("Found goals")
-//                         let filteredGoals = goals.filter(goal => goal.type === "Goal");
-//                         let filteredDailyGoals = filteredGoals.filter(goal => goal.scope === "Daily");
-//                         console.log(filteredDailyGoals);
-                        
-//                         if (filteredDailyGoals.length === 0) { 
-//                             console.log("No daily goals");
-//                         } else if ( filteredDailyGoals.length <= 4 ) {
-//                             filteredDailyGoals.forEach((dailyGoal) => addToPinned(dailyGoal))
-//                         } else if ( filteredDailyGoals.length > 4 ) {
-//                             let filteredKingGoals = filterLists(filteredDailyGoals, "King");
-//                             let filteredWarriorGoals = filterLists(filteredDailyGoals, "Warrior");
-//                             let filteredMagicianGoals = filterLists(filteredDailyGoals, "Magician");
-//                             let filteredLoverGoals = filterLists(filteredDailyGoals, "Lover");
-
-//                             processDaily(filteredKingGoals);
-//                             processDaily(filteredWarriorGoals); 
-//                             processDaily(filteredMagicianGoals); 
-//                             processDaily(filteredLoverGoals); 
-
-//                             console.log("Have set new daily goals");
-//                         }
-//                     }
-//                 })
-//             }
-//         }
-//     }) 
-// }
-
 function newDailyGoals(user, dailyGoals){
-    console.log("Have started newDailyGoals")
-
     if ( dailyGoals.length <= 4 ) {
-        dailyGoals.forEach((dailyGoal) => addToPinned(dailyGoal))
+        dailyGoals.forEach((dailyGoal) => addToPinned(user, dailyGoal))
     } else if ( dailyGoals.length > 4 ) {
         let filteredKingGoals = filterLists(dailyGoals, "King");
         let filteredWarriorGoals = filterLists(dailyGoals, "Warrior");
@@ -233,50 +168,22 @@ function newDailyGoals(user, dailyGoals){
     }
 }
 
-function newLongTermGoals(user){
-    console.log("Have started newLongTermGoals")
+function newLongTermGoals(user, longTermGoals){
+    if ( longTermGoals.length <= 4 ) {
+        longTermGoals.forEach((longTermGoal) => addToPinned(user, longTermGoal))
+    } else if ( longTermGoals.length > 4 ) {
+        let filteredKingGoals = filterLists(longTermGoals, "King");
+        let filteredWarriorGoals = filterLists(longTermGoals, "Warrior");
+        let filteredMagicianGoals = filterLists(longTermGoals, "Magician");
+        let filteredLoverGoals = filterLists(longTermGoals, "Lover");
 
-    let goals = [];
+        processDaily(user, filteredKingGoals);
+        processDaily(user, filteredWarriorGoals); 
+        processDaily(user, filteredMagicianGoals); 
+        processDaily(user, filteredLoverGoals); 
 
-    User.findOne({name: user}, function(err, foundUser){
-        if (!err){
-            if(!foundUser){
-                console.log("User is not currently on the database, no saved items.")
-            } else {
-                goals = foundUser.items;
-                console.log(goals)
-                
-                foundUser.items.find({}, function(err, foundGoals){
-                    if (foundGoals.length === 0) {
-                        console.log("Found no goals, reminders, or mindsets")
-                    } else {
-                        goals = foundGoals    
-                        let filteredGoals = goals.filter(goal => goal.type === "Goal");
-                        let filteredLongTermGoals = filteredGoals.filter(goal => goal.scope === "Long-term");
-                        console.log(filteredLongTermGoals.length)
-                        
-                        if (filteredLongTermGoals.length === 0) { 
-                            console.log("No daily goals");
-                        } else if ( filteredLongTermGoals.length <= 4 ) {
-                            filteredLongTermGoals.forEach((longTermGoal) => addToPinned(longTermGoal))
-                        } else if ( filteredLongTermGoals.length > 4 ) {
-                            let filteredKingGoals = filterLists(filteredLongTermGoals, "King");
-                            let filteredWarriorGoals = filterLists(filteredLongTermGoals, "Warrior");
-                            let filteredMagicianGoals = filterLists(filteredLongTermGoals, "Magician");
-                            let filteredLoverGoals = filterLists(filteredLongTermGoals, "Lover");
-
-                            processDaily(filteredKingGoals);
-                            processDaily(filteredWarriorGoals); 
-                            processDaily(filteredMagicianGoals); 
-                            processDaily(filteredLoverGoals); 
-                            
-                            console.log("Have set new long term goals");
-                        }
-                    }
-                })
-            }
-        }
-    }) 
+        console.log("Have set new long term goals");
+    }
 }
 
 app.get("/api", (req, res) => {
@@ -292,7 +199,6 @@ app.get("/goals/:user", (req, res) => {
     const user = req.params.user
 
     findDailyGoals(user)
-    // findLongTermGoals(user)
 
     User.findOne({name: user}, function(err, foundUser){
         if (!err){
@@ -366,35 +272,68 @@ app.post('/postGoals/:user', (req, res) => {
 // updateGoalCategories()
 
 
-app.post("/updateGoals", (req, res) => {
-    console.log(req)
+app.post("/updateGoals/:user", (req, res) => {
+    const name = req.params.user
     const { goalId, goal, category, type, scope, isPinned } = req.body.goal
-            
-    KwmlGoal.findByIdAndUpdate(goalId, { goal: goal, category: category, type: type, scope:scope, isPinned: isPinned}, function(err){
+
+    User.findOne( { name: name }, function(err, foundUser){
         if (!err) {
-            console.log("Task successfully updated");
-            console.log(req.body.goal)
+            var goalToUpdate = foundUser.items.id(goalId);
+            goalToUpdate.goalId = goalId;
+            goalToUpdate.goal = goal;
+            goalToUpdate.category = category;
+            goalToUpdate.type = type;
+            goalToUpdate.scope = scope;
+            goalToUpdate.isPinned = isPinned;
+            foundUser.save(function(err){
+                if (err){
+                    console.log(err)
+                } else {
+                    console.log("Goal update")
+                }
+            })
         } else {
             console.log("error")
         }
     });
 });
 
-app.post("/deleteGoals", (req, res) => {
-    const goal = req.body.goal;
-    const category = req.body.category
-    const type = req.body.type
-    const scope = req.body.scope
+app.post("/deleteGoals/:user", (req, res) => {
+    const name = req.params.user;
+    const goalId = req.body.goalId;
+    console.log(name)
+    console.log(goalId)
     
-    console.log(goal, category, type, scope)
-    KwmlGoal.remove({ goal: goal, category: category, type: type, scope:scope}, function(err){
-    if (!err) {
-        console.log("Task successfully deleted");
-    } else {
-        console.log("error")
-    }
-    });
-});
+    User.findOne({ name: name }, function(err, foundUser){
+        if(err){
+            console.log(err)
+        } else {
+            const uid = foundUser._id
+
+            User.updateOne( { _id: uid } , { $pull : { items: { _id :goalId } } }, function(err, results){
+                if(!err){
+                  console.log("successfully deleted");
+                } else {
+                  console.log("error in deletion");
+                }
+            });
+    }})
+})
+        
+
+//         $pull: {
+//           items: {_id: goalId}
+//         }
+//       },  function(err){
+//         if (!err) {
+//             console.log(goalId)
+//             console.log("Task successfully deleted");
+//         } else {
+//             console.log("error")
+//         }
+//     });
+// });
+
 
     
 const port = process.env.PORT || 5000;

@@ -69,12 +69,12 @@ function App() {
     postGoal(kwmlGoal);
   } 
 
-  function deleteKwmlGoal(id, goal, category, type, scope, key) {
-    console.log(key)
+  function deleteKwmlGoal(id, goalId, array, setArray) {
     let newKwmlGoals = kwmlGoals;
+    console.log(id)
     newKwmlGoals.splice(id, 1);
     setKwmlGoals([...newKwmlGoals]);
-    deleteGoal(goal, category, type, scope);
+    deleteGoal(goalId);
     // setGoalsLoaded(true)
   }
 
@@ -112,25 +112,8 @@ function App() {
 			});
     }
   
-  // function postGoal(latestGoal){
-  //   const url = 'goals/' + user.email;
-  //   axios
-  //   .post("/postGoals", {
-  //     goal: latestGoal.goal,
-  //     category: latestGoal.category,
-  //     type: latestGoal.type,
-  //     scope: latestGoal.scope
-  //   })
-  //   .then(function () {
-  //     console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
-  //   })
-  //   .catch(function () {
-	// 			alert("Could not create goal. Please try again");
-	// 		});
-  //   }
-  
     function unpinGoal(goal){
-      const url = "updateGoals" 
+      const url = "updateGoals/" + user.email
       console.log(goal)
       fetch(url , {
         headers: {'Content-Type': 'application/json' },
@@ -143,21 +126,32 @@ function App() {
       .then(response => response.json())
       // .then(data => this.setState({ postId: data.id }));
     }
-
   
     function updateGoal(kwmlGoal){
-      const url = "updateGoals"
+      const url = "updateGoals/" + user.email 
       const { isPinned } = kwmlGoal
-      console.log(isPinned + " is the inPinned status passed to App.js")
+
       if (!isPinned){
         unpinGoal(kwmlGoal)
       }  
+      console.log(kwmlGoal._id)
+      console.log(kwmlGoal)
+      //map out old list. Find array item matching number, send back updated version. 
 
-      setKwmlGoals(prevKwmlGoals => {
-        return [...prevKwmlGoals, kwmlGoal]
-      });
+      let updatedList = kwmlGoals.map(goal => {
+        console.log(goal._id)
+        if (goal._id === kwmlGoal.goalId) {
+          return kwmlGoal; //gets everything that was already in item, and updates "done"
+        } else {
+          return goal
+        }
+      })
+
+      setKwmlGoals(updatedList)
+
       setDailyGoalsSet(true)
       setGoalsLoaded(true)
+
       fetch(url , {
         headers: {'Content-Type': 'application/json' },
         method: "POST",
@@ -170,18 +164,15 @@ function App() {
       // .then(data => this.setState({ postId: data.id }));
     }
 
-    function deleteGoal(goal, category, type, scope){
-    const url = "deleteGoals"
-    console.log(goal, category, type, scope)
+    function deleteGoal(goalId){
+    const url = "deleteGoals/" + user.email
+    console.log(goalId)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
       mode: 'cors',
       body: JSON.stringify({
-        goal: goal,
-        category: category,
-        type: type,
-        scope: scope
+        goalId:goalId
       })
     })
     .then(response => response.json())

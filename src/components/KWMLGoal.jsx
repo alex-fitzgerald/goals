@@ -19,6 +19,7 @@ function KWMLGoal(props) {
     isPinned: isPinned
     });
 
+
   const [renderPin, setRenderPin] = useState(false)
   const [goalType, setGoalType] = useState("Goal") 
   const [goalHasBeenChanged, setGoalHasBeenChanged] = useState(false)
@@ -115,7 +116,7 @@ function KWMLGoal(props) {
 
           <form onSubmit={formSubmit}>
             <button name="delete"
-              onClick={() => (props.deleteClick(props.id, goal, category, type, scope, props.key, props.goalId, props.array, props.setArray))}>
+              onClick={() => (props.deleteClick(props.id, goalId, props.array, props.setArray))}>
               {goalType === "Goal" ? "Completed" : "Delete"}
             </button>
           </form> 
