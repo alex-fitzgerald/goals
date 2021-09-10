@@ -2,10 +2,11 @@ import React from "react";
 
 function Philosophy(props){
     return(
+      <div>
+        <h1>
+            Philosophy
+        </h1>
         <div className="daily component">
-            <h1>
-                Philosophy
-            </h1>
             <h2>
                 {props.philosophyInput.quote}
             </h2>
@@ -13,6 +14,7 @@ function Philosophy(props){
                 {props.philosophyInput.author}
             </h3>
         </div>
+    </div>
     )
 }
 

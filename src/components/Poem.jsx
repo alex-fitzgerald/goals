@@ -24,16 +24,16 @@ function Poem(props){
     }}
 
     return(
-        <div className="daily poem component">
-            <div>
-                 <h1>Today's poem</h1>
+        <div>
+            <h1>Today's poem</h1>
+            <div className="daily poem component">
                  <div class="daily-wrapper">
                      <h2>{props.poemInput.poemTitle}</h2>
                  </div>
-            </div>
                      <button onClick={handleClick}>{renderButton}</button>
             <h3>{props.poemInput.poemAuthor}</h3>
             {handleLines()}
+        </div>
         </div>
     )
 }

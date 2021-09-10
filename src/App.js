@@ -27,7 +27,7 @@ function App() {
   const [ allGoals, setAllGoals ] = useState([]);
   const { user, isAuthenticated } = useAuth0(); 
 
-  const navigationList = ["Stoic", "Philosophy", "Poem", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
+  const navigationList = ["Introduction", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
   const [navigationNumber, setNavigationNumber] = useState(0);
   const [navigation, setNavigation] = useState(navigationList[navigationNumber]);
 
@@ -316,9 +316,12 @@ function App() {
       />
         <div className="flexparent">
           {/* { navigation === "Login" ? <Login onRegister={registerUser} /> : null} */}
-          { navigation === "Stoic" ?       <Stoic       stoicInput = {randomStoic} /> : null }
-          { navigation === "Philosophy" ?  <Philosophy  philosophyInput = {dailyPhilosophy} /> : null }
-          { navigation === "Poem" ?        <Poem        poemInput = {dailyPoem} /> : null }
+          { navigation === "Introduction" ?     
+          <div>  
+            {/* <Stoic stoicInput = {randomStoic} />  */}
+            <Philosophy philosophyInput = {dailyPhilosophy} /> 
+            <Poem poemInput = {dailyPoem} /> 
+            </div> : null }
           {isAuthenticated && <div>
             { navigation === "Mindsets" ?    <DailyItems  dailyGoals={dailyGoalsSet} itemSet={mindsets} componentName="Mindsets" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} /> : null }
             { navigation === "Reminders" ?   <DailyItems  dailyGoals={dailyGoalsSet} itemSet={reminders} componentName="Reminders" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} /> : null }

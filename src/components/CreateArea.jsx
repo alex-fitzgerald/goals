@@ -46,6 +46,7 @@ function CreateArea(props) {
         event.preventDefault();
       } else {
         setKwmlGoal({goal:"", category:"King", type: "Goal", scope:"Daily"})
+        setType("Goal");
         setTitleInputEngaged(false)
         setCategoryInputEngaged(false)
         setScopeInputEngaged(false)
