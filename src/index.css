@@ -250,12 +250,12 @@ select {
   align-content: center;
   background-color: transparent;
   border: none;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-  color: rgba(0, 0, 0, .2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  color: rgba(0, 0, 0, .1);
   display: flex;
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
-  font-weight: 800;
+  font-weight: 400;
   letter-spacing: 0px;
   padding: 10px;
   padding-left:0px;
