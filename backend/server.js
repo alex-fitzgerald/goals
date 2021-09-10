@@ -331,12 +331,13 @@ app.post('/postGoals/:user', (req, res) => {
 
 app.post("/updateGoals/:user", (req, res) => {
     const name = req.params.user
-    const { goalId, goal, category, type, scope, isPinned } = req.body.goal
+    const { _id, goal, category, type, scope, isPinned } = req.body.goal
+    console.log(req.body.goal)
 
     User.findOne( { name: name }, function(err, foundUser){
         if (!err) {
-            var goalToUpdate = foundUser.items.id(goalId);
-            goalToUpdate.goalId = goalId;
+            var goalToUpdate = foundUser.items.id(_id);
+            goalToUpdate._id = _id;
             goalToUpdate.goal = goal;
             goalToUpdate.category = category;
             goalToUpdate.type = type;

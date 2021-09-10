@@ -53,7 +53,7 @@ function App() {
       fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
       .then((res) => res.json())
       } else {
-        console.log("No user is logged in, cannot fetch lists.")
+        // console.log("No user is logged in, cannot fetch lists.")
       }
     }, [isAuthenticated]);
   
@@ -91,7 +91,7 @@ function App() {
       fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
       .then((res) => res.json())
       .then(function(data){
-        console.log(data)
+        // console.log(data)
         setDailyPoem(JSON.parse(data.poem))
         setDailyStoic(JSON.parse(data.stoic))
         setDailyPhilosophy(JSON.parse(data.philosophy))
@@ -116,7 +116,7 @@ function App() {
 
   function completeGoal(id, goal, category, type, scope, key, goalId, array, setArray) {
     unpinGoal({
-      goalId: goalId,
+      _id: goalId,
       goal:goal,
       category:category,
       type:type,
@@ -170,13 +170,15 @@ function App() {
       if (!isPinned){
         unpinGoal(kwmlGoal)
       }  
+      console.log(kwmlGoal.key)
       console.log(kwmlGoal._id)
       console.log(kwmlGoal)
       //map out old list. Find array item matching number, send back updated version. 
 
       let updatedList = kwmlGoals.map(goal => {
         console.log(goal._id)
-        if (goal._id === kwmlGoal.goalId) {
+        console.log(kwmlGoal._id)
+        if (goal._id === kwmlGoal._id) {
           return kwmlGoal; //gets everything that was already in item, and updates "done"
         } else {
           return goal
@@ -279,8 +281,8 @@ function App() {
         setLongTermGoals(filteredPinnedLongTerm)
       }
 
-      console.log(filteredPinnedDaily)
-      console.log(filteredPinnedLongTerm)
+      // console.log(filteredPinnedDaily)
+      // console.log(filteredPinnedLongTerm)
       
       if (dailyGoals.length !== 0) {
         setDailyGoalsSet(true)

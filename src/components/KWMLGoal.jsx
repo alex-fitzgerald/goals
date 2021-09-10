@@ -11,7 +11,7 @@ function KWMLGoal(props) {
   const canBePinned = props.canBePinned
 
   const [currentGoal, setCurrentGoal] = useState({
-    goalId: goalId,
+    _id: goalId,
     goal: goal,
     category: category,
     type: type,
@@ -70,14 +70,22 @@ function KWMLGoal(props) {
       alert("Please enter a goal")
       event.preventDefault();
     } else {
-      setCurrentGoal({goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope})
+      setCurrentGoal({_id: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope})
       setGoalHasBeenChanged(false)
       event.preventDefault();
     }
   }
 
   function toggle(value){
-    var pinnedGoal = {goalId: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope, isPinned:value}
+    var pinnedGoal = {
+      category:category, 
+      goal:currentGoal.goal, 
+      name:currentGoal.name, 
+      scope:scope, 
+      type:type, 
+      _id: goalId, 
+      isPinned:value
+    }
     setCurrentGoal(pinnedGoal)
     console.log(pinnedGoal)
     props.onChange(pinnedGoal)
