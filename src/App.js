@@ -114,22 +114,30 @@ function App() {
     // setGoalsLoaded(true)
   }
 
-  function completeGoal(id, goal, category, type, scope, key, goalId, array, setArray) {
-    unpinGoal({
-      _id: goalId,
-      goal:goal,
-      category:category,
-      type:type,
-      scope:scope,
-      isPinned: false
-    })
+  function completeGoal(id, currentGoal, array, setArray) {
+    
+    unpinGoal(currentGoal)
 
-    console.log(key);
     let prunedGoals = array;
     prunedGoals.splice(id, 1);
     setArray([...prunedGoals]);
   }
   
+  function unpinGoal(goal){
+    const url = "updateGoals/" + user.email
+    console.log(goal)
+    fetch(url , {
+      headers: {'Content-Type': 'application/json' },
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        goal: goal,
+        user:user.email
+      })
+    })
+    .then(response => response.json())
+    // .then(data => this.setState({ postId: data.id }));
+  }
   function postGoal(latestGoal){
     const url = 'postGoals/' + user.email;
     axios
@@ -148,20 +156,6 @@ function App() {
 			});
     }
   
-    function unpinGoal(goal){
-      const url = "updateGoals/" + user.email
-      console.log(goal)
-      fetch(url , {
-        headers: {'Content-Type': 'application/json' },
-        method: "POST",
-        mode: 'cors',
-        body: JSON.stringify({
-          goal: goal
-        })
-      })
-      .then(response => response.json())
-      // .then(data => this.setState({ postId: data.id }));
-    }
   
     function updateGoal(kwmlGoal){
       const url = "updateGoals/" + user.email 
