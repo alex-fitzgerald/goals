@@ -317,10 +317,48 @@ function App() {
             <Poem poemInput = {dailyPoem} /> 
             </div> : null }
           {isAuthenticated && <div>
-            { navigation === "Mindsets" ?    <DailyItems  dailyGoals={dailyGoalsSet} itemSet={mindsets} componentName="Mindsets" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} /> : null }
-            { navigation === "Reminders" ?   <DailyItems  dailyGoals={dailyGoalsSet} itemSet={reminders} componentName="Reminders" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} /> : null }
-            { navigation === "Daily" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={dailyGoals} componentName="Daily Goals" updateGoal={updateGoal} deleteKwmlGoal={completeGoal} filterGoals={filterGoals} array={dailyGoals} setArray={setDailyGoals}/> : null }             
-            { navigation === "LongTerm" ?       <DailyItems  dailyGoals={dailyGoalsSet} itemSet={longTermGoals} componentName="Long Term" updateGoal={updateGoal} deleteKwmlGoal={deleteKwmlGoal} filterGoals={filterGoals} array={longTermGoals} setArray={setLongTermGoals}/> : null }             
+          
+          {/* Render daily mindsets - perspectives to keep in mind */}
+            { navigation === "Mindsets" ? 
+            <DailyItems  
+              dailyGoals={dailyGoalsSet} 
+              itemSet={mindsets} 
+              componentName="Mindsets" 
+              updateGoal={updateGoal} deleteKwmlGoal={completeGoal}   filterGoals={filterGoals} /> : null }
+          
+          {/* Render daily reminders - things to remind myself of */}
+            { navigation === "Reminders" ? 
+            <DailyItems  
+              dailyGoals={dailyGoalsSet} 
+              itemSet={reminders} 
+              componentName="Reminders" 
+              updateGoal={updateGoal} 
+              deleteKwmlGoal={completeGoal} 
+              filterGoals={filterGoals} /> : null }
+
+          {/* Render daily goals - a random selection of things to do in a day, one of each archetype */}
+            { navigation === "Daily" ? 
+            <DailyItems  
+              dailyGoals={dailyGoalsSet} 
+              itemSet={dailyGoals} 
+              componentName="Daily Goals" 
+              updateGoal={updateGoal} 
+              deleteKwmlGoal={completeGoal} 
+              filterGoals={filterGoals} 
+              array={dailyGoals} 
+              setArray={setDailyGoals}/> : null }         
+
+          {/* Render longer-term goals - a random selection of things to do over a span of time, one of each archetype */}
+            { navigation === "LongTerm" ? 
+            <DailyItems  
+              dailyGoals={dailyGoalsSet} 
+              itemSet={longTermGoals} 
+              componentName="Long Term" 
+              updateGoal={updateGoal}
+               deleteKwmlGoal={deleteKwmlGoal} 
+              filterGoals={filterGoals} 
+              array={longTermGoals} 
+              setArray={setLongTermGoals}/> : null }             
           </div> }
         </div>
 
