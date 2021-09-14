@@ -92,7 +92,7 @@ function KWMLGoal(props) {
   }
 
   return (
-    <div className="kwmlGoal">
+    <div className={"kwmlGoal " + category}>
       {renderPin ? 
         <Checkbox 
           state={props.isPinned}
@@ -115,7 +115,7 @@ function KWMLGoal(props) {
         { !goalHasBeenChanged ? 
 
         <div>   
-          <div className={"kwmlGoalDiv " + category} onClick={() => (props.filterClick(category))}>
+          <div className="kwmlGoalDiv" onClick={() => (props.filterClick(category))}>
             <p className={"category"}>
               {category}
             </p>
