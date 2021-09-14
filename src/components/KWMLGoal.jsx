@@ -115,8 +115,8 @@ function KWMLGoal(props) {
         { !goalHasBeenChanged ? 
 
         <div>   
-          <div className="kwmlGoalDiv" onClick={() => (props.filterClick(category))}>
-            <p className={"category " + category}>
+          <div className={"kwmlGoalDiv " + category} onClick={() => (props.filterClick(category))}>
+            <p className={"category"}>
               {category}
             </p>
           </div>

@@ -55,6 +55,7 @@ h1 {
   max-width:200px;
   margin:auto;
   margin-top:50px;
+  margin-bottom:50px;
   text-align:center;
 }
 
@@ -358,16 +359,17 @@ button:hover {
   font-size: 1.5em;
   font-weight: 800;
   letter-spacing:-1.5px;
-  color: black;
+  color: white;
   text-align:left;
   margin:0px !important;
 }
 
 .kwmlGoal textarea {
+  background-color:transparent;
   border: 0px;
   border-bottom: solid 2px;
   border-color:transparent;
-  color: black;
+  color: white;
   font-family:'Poppins',sans-serif;
   font-size: 1.2em;
   font-weight: 800;
@@ -479,29 +481,31 @@ button:hover {
 .category {
   cursor: pointer;
   margin: 0px;
+  border-color:white;
+  color:white;
 }
 
 .King {
-  border-color: #673ab7;
-  color: #673ab7
+  background-color: #673ab7;
+  /* color: #673ab7 */
 }
 
 .Lover {
-  border-color: #e91e63;
-  color: #e91e63;
+  background-color: #e91e63;
+  /* color: #e91e63; */
 }
 
 .Warrior {
-  border-color: #FF5722;
-  color: #FF5722;
+  background-color: #FF5722;
+  /* color: #FF5722; */
 }
 
 .Magician {
-  border-color: #03A9F4;
-  color: #03A9F4;
+  background-color: #03A9F4;
+  /* color: #03A9F4; */
 }
 
-.King:hover {
+/* .King:hover {
   border-color: #673ab7;
   background-color: #673ab7;
   color: white;
@@ -523,4 +527,4 @@ button:hover {
   border-color: #03A9F4;
   background-color: #03A9F4;
   color: white;
-}
+} */

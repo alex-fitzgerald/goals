@@ -10,7 +10,9 @@ import CreateArea from "./components/CreateArea.jsx";
 import Navigation from "./components/Navigation.jsx";
 import LoginButton from "./components/LoginButton.jsx"
 import LogoutButton from "./components/LogoutButton.jsx"
-import Profile from "./components/Profile.jsx"
+import Profile from "./components/Profile.jsx";
+import { useTransition, animated } from "react-spring";
+
 
 function App() {
   const [ dailyPhilosophy, setDailyPhilosophy ] = useState({quote: "Loading", author: ""});
@@ -26,6 +28,14 @@ function App() {
   const [ mindsets, setMindsets ] = useState([]);
   const [ allGoals, setAllGoals ] = useState([]);
   const { user, isAuthenticated } = useAuth0(); 
+  
+  const [goalIsVisible, setGoalIsVisible] = useState(true)
+
+  const transition = useTransition(goalIsVisible, {
+      from: { x: -100, opacity:0 },
+      enter:{ x: 0, opacity:1 },
+      leave:{ x: 100, opacity:0 } 
+    } )
 
   const navigationList = ["Introduction", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
   const [navigationNumber, setNavigationNumber] = useState(0);
@@ -79,13 +89,6 @@ function App() {
       }
     }, [isAuthenticated]);
   
-  function addGoal(kwmlGoal){  
-    setKwmlGoals(prevKwmlGoals => {
-      return [...prevKwmlGoals, kwmlGoal]
-    });
-    postGoal(kwmlGoal);
-  } 
-  
   useEffect(() => {  
       const url = '/api'
       fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
@@ -138,6 +141,7 @@ function App() {
     .then(response => response.json())
     // .then(data => this.setState({ postId: data.id }));
   }
+
   function postGoal(latestGoal){
     const url = 'postGoals/' + user.email;
     axios
@@ -155,7 +159,6 @@ function App() {
 				alert("Could not create goal. Please try again");
 			});
     }
-  
   
     function updateGoal(kwmlGoal){
       const url = "updateGoals/" + user.email 
@@ -355,7 +358,7 @@ function App() {
               itemSet={longTermGoals} 
               componentName="Long Term" 
               updateGoal={updateGoal}
-               deleteKwmlGoal={deleteKwmlGoal} 
+              deleteKwmlGoal={deleteKwmlGoal} 
               filterGoals={filterGoals} 
               array={longTermGoals} 
               setArray={setLongTermGoals}/> : null }             
