@@ -290,7 +290,7 @@ input::placeholder{
 button {
   text-transform: uppercase;
   border: 0px;
-  background-color: rgba(0, 0, 0, 0.12);
+  background-color: rgba(0, 0, 0, 0);
   color: rgb(233, 233, 233);
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
@@ -482,7 +482,8 @@ button:hover {
 .category {
   cursor: pointer;
   margin: 0px;
-  border-color:white;
+  /* border-color:white; */
+  padding: 8px 10px;
   /* color:white; */
   color: rgba(255,255,255,0.5);
 }
