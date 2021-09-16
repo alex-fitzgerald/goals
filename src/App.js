@@ -11,7 +11,6 @@ import Navigation from "./components/Navigation.jsx";
 import LoginButton from "./components/LoginButton.jsx"
 import LogoutButton from "./components/LogoutButton.jsx"
 import Profile from "./components/Profile.jsx";
-import { useTransition, animated } from "react-spring";
 
 
 function App() {
@@ -30,12 +29,6 @@ function App() {
   const { user, isAuthenticated } = useAuth0(); 
   
   const [goalIsVisible, setGoalIsVisible] = useState(true)
-
-  const transition = useTransition(goalIsVisible, {
-      from: { x: -100, opacity:0 },
-      enter:{ x: 0, opacity:1 },
-      leave:{ x: 100, opacity:0 } 
-    } )
 
   const navigationList = ["Introduction", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
   const [navigationNumber, setNavigationNumber] = useState(0);
