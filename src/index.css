@@ -13,11 +13,14 @@ body {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   text-align: left;
-  background-color: rgb(233, 233, 233);
+  background-color: #232b3a;
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   align-items: top;
 }
 
+h3 {
+  color:rgba(0,0,0, .15)
+}
 .log {
   position:relative;
   z-index:999;
@@ -83,19 +86,19 @@ h1 {
   flex:1;
   background-color:transparent;
   padding:0px;
-  color: rgba(0, 0, 0, 0.15);
-  font-weight:700;
+  color: rgba(255, 255, 255, 0.15);
+  font-weight:500;
   cursor:pointer;
   letter-spacing:-0.5px;
   font-size:.5em;
 }
 
 .activePage {
-  color: rgba(0, 0, 0, 0.35) !important;
+  color: rgba(255, 255, 255, 0.35) !important;
 }
 
 .navigation button:hover {
-  color: rgba(0, 0, 0, 0.35);
+  color: rgba(255, 255, 255, 0.35);
   background-color:transparent;
 }
 
@@ -175,7 +178,8 @@ h1 {
   margin: 10px 20px;
   padding: 20px 20px 60px 20px;
   position: relative;
-  background-color: white;
+  /* background-color: white; */
+  background-color: rgba(0,0,0,0.2);
 }
 
 .createGoal .daily {
@@ -202,7 +206,7 @@ h1 {
   line-height: 1;
   font-weight: 900;
   position: absolute;
-  color: rgba(0, 0, 0, 0.05);
+  color: white;
   letter-spacing:-.5px;
   z-index: 2;
   margin:0px !important;
@@ -213,11 +217,13 @@ h1 {
   font-weight: 700;
   text-align: left;
   line-height: 2;
+  color:rgba(255,255,255,0.95);
 }
 
 .daily h3 {
   font-weight:300;
   opacity:.4;
+  color:rgba(255,255,255,0.6);
 }
 
 .poem h2 {
@@ -237,6 +243,7 @@ h1 {
   font-family: 'Poppins', sans-serif !important;
   font-size: .8rem;
   font-weight: 500;
+  color:rgba(255,255,255,0.8);
 }
 
 .header {
@@ -291,7 +298,7 @@ button {
   text-transform: uppercase;
   border: 0px;
   background-color: rgba(0, 0, 0, 0);
-  color: rgb(233, 233, 233);
+  color: rgb(255, 255, 255, .15);
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
   font-weight: 500;
@@ -307,7 +314,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0,0,0,.35);
 }
 
 .kwmlGoal button, .daily button {
@@ -357,7 +364,7 @@ button:hover {
 
 .kwmlGoal h1 {
   font-size: 1.5em;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing:-1.5px;
   color: white;
   text-align:left;
@@ -372,7 +379,7 @@ button:hover {
   color: white;
   font-family:'Poppins',sans-serif;
   font-size: 1.2em;
-  font-weight: 800;
+  font-weight: 600;
   height:52px;
   letter-spacing:-1.5px;
   line-height:1.2;
@@ -424,7 +431,7 @@ button:hover {
   border-radius: 20px;
   font-size: 9px;
   font-weight:500;
-  padding: 5px 1px;
+  padding: 8px 10px;
   text-align:center;
   text-transform:uppercase;
   width:100px;
@@ -458,9 +465,8 @@ button:hover {
 }
 
 .kwmlGoal button:hover {
-  color:white;
-  background-color: rgba(0, 0, 0, 0.25);
-  border-color: rgba(0, 0, 0, 0.25);
+  color:rgba(255,255,255,0.5);
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 
@@ -489,7 +495,7 @@ button:hover {
 }
 
 .category:hover {
-  background-color: rgba(0, 0, 0, 0.25);
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .King {
