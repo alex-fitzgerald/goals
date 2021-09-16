@@ -422,9 +422,9 @@ button:hover {
 .kwmlGoal p {
   border: solid 2px;
   border-radius: 20px;
-  font-size: 10px;
-  font-weight:700;
-  padding: 5px 1px;
+  font-size: 9px;
+  font-weight:500;
+  /* padding: 5px 1px; */
   text-align:center;
   text-transform:uppercase;
   width:100px;
@@ -435,11 +435,12 @@ button:hover {
   max-height: 30px;
   min-width: 75px;
   max-width: 110px;
-  font-size: .6em;
-  font-weight: 700;
+  font-size: 9px;
+  font-weight: 500;
   margin-top:10px;
-  color: white;
+  color: rgba(255,255,255,0.5);
   width:107px;
+  cursor:pointer;
 }
 
 .poem button{
@@ -482,7 +483,12 @@ button:hover {
   cursor: pointer;
   margin: 0px;
   border-color:white;
-  color:white;
+  /* color:white; */
+  color: rgba(255,255,255,0.5);
+}
+
+.category:hover {
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .King {
