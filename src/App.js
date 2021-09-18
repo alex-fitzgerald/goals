@@ -321,7 +321,8 @@ function App() {
               dailyGoals={dailyGoalsSet} 
               itemSet={mindsets} 
               componentName="Mindsets" 
-              updateGoal={updateGoal} deleteKwmlGoal={completeGoal}   filterGoals={filterGoals} /> : null }
+              updateGoal={updateGoal} deleteKwmlGoal={completeGoal}   filterGoals={filterGoals}                        
+              section={"Mindsets"} /> : null }  
           
           {/* Render daily reminders - things to remind myself of */}
             { navigation === "Reminders" ? 
@@ -331,7 +332,8 @@ function App() {
               componentName="Reminders" 
               updateGoal={updateGoal} 
               deleteKwmlGoal={completeGoal} 
-              filterGoals={filterGoals} /> : null }
+              filterGoals={filterGoals}                        
+              section={"Reminders"} /> : null }  
 
           {/* Render daily goals - a random selection of things to do in a day, one of each archetype */}
             { navigation === "Daily" ? 
@@ -343,7 +345,9 @@ function App() {
               deleteKwmlGoal={completeGoal} 
               filterGoals={filterGoals} 
               array={dailyGoals} 
-              setArray={setDailyGoals}/> : null }         
+              setArray={setDailyGoals}                        
+              section={"Daily goals"} /> : null }    
+                
 
           {/* Render longer-term goals - a random selection of things to do over a span of time, one of each archetype */}
             { navigation === "LongTerm" ? 
@@ -355,7 +359,8 @@ function App() {
               deleteKwmlGoal={deleteKwmlGoal} 
               filterGoals={filterGoals} 
               array={longTermGoals} 
-              setArray={setLongTermGoals}/> : null }             
+              setArray={setLongTermGoals}                        
+              section={"Long term goals"} /> : null }  
           </div> }
         </div>
 
@@ -381,6 +386,7 @@ function App() {
                   onChange={updateGoal}
                   deleteClick={deleteKwmlGoal}
                   filterClick={filterGoals}
+                  section={"All goals"}
                   /> ))
                 }
             </div>

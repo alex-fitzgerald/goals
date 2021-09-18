@@ -9,6 +9,14 @@ function KWMLGoal(props) {
   const scope = props.scope
   const isPinned = props.isPinned
   const canBePinned = props.canBePinned
+  const section = props.section
+  const buttonLabel = () => {
+    if (type === "Goal" && section === "All Goals"){ 
+      return "Delete" 
+    } else {
+      return "Completed"
+    }
+  }
 
   const [currentGoal, setCurrentGoal] = useState({
     _id: goalId,
@@ -39,10 +47,17 @@ function KWMLGoal(props) {
         setRenderPin(true)
     }
   }
+
+  function defineButtonTitle(){
+    if (type === "" && canBePinned === true) {
+        setRenderPin(true)
+    }
+  }
   
   useEffect(() => {
     setType()
     definePinAction()
+    defineButtonTitle()
   })
 
   function handleChange(event){
@@ -122,12 +137,18 @@ function KWMLGoal(props) {
           </div>
           {goalType === "Goal" ? <p className={"scope"}>{scope + " goal"}</p> : <p className={"scope"}>{type}</p> }
 
+          {goalType === "Goal" && section !== "All goals" ? 
           <form onSubmit={formSubmit}>
             <button name="delete"
-              onClick={() => (props.deleteClick(props.id, currentGoal, props.array, props.setArray))}>
-              {goalType === "Goal" ? "Completed" : "Delete"}
+              onClick={() => (props.deleteClick(props.id, currentGoal, props.array, props.setArray))}>Completed
             </button>
-          </form> 
+          </form> : null }
+          {section === "All goals" ? 
+          <form onSubmit={formSubmit}>
+            <button name="delete"
+              onClick={() => (props.deleteClick(props.id, currentGoal, props.array, props.setArray))}>Delete
+            </button>
+          </form> : null}
          </div>
         :
         <div className="alterFooter">
