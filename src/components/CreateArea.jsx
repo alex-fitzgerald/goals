@@ -68,6 +68,7 @@ function CreateArea(props) {
             <input 
               className={"" + (inputEngaged ? "input-engaged" : null)}
               // className="input-engaged"
+              type="text"
               onChange={handleChange}
               name="goal" 
               placeholder="Goal, Mindset, or Reminder title" 
