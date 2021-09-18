@@ -207,6 +207,7 @@ function App() {
   
   function findDailyGoals(){
     if (goalsLoaded === true) {
+      console.log(kwmlGoals)
 
       function getRandomNumber(arrayLength){ return Math.floor(Math.random() * arrayLength); }
       function filterLists(list, archetype){ let filteredArray = list.filter(item => item.category === archetype); return filteredArray }
@@ -227,8 +228,9 @@ function App() {
 
       if (filteredMindsets.length === 0) {
         console.log("No daily mindsets")
-      } else if (filteredMindsets.length < 4 && filteredMindsets.length > 0) {
+      } else if (filteredMindsets.length < 5 && filteredMindsets.length > 0) {
         setMindsets(filteredMindsets)
+        console.log(filteredMindsets)
       } else if (filteredMindsets.length > 4){
     
         let filteredConscientiousnessMindsets = filterLists(filteredMindsets, "Conscientiousness"); 
@@ -239,11 +241,12 @@ function App() {
 
         processDaily(filteredConscientiousnessMindsets, dailyMindsets); processDaily(filteredExtraversionMindsets, dailyMindsets); processDaily(filteredOpennessMindsets, dailyMindsets); processDaily(filteredAgreeablenessMindsets, dailyMindsets);
         setMindsets(dailyMindsets);
+        console.log(dailyMindsets)
       }
 
       if (filteredReminders.length === 0) {
         console.log("No daily reminders")
-      } else if (filteredReminders.length < 4) {
+      } else if (filteredReminders.length < 5) {
         setReminders(filteredReminders)
       } else if (filteredReminders.length > 4){
 

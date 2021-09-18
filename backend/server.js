@@ -49,18 +49,94 @@ const dummyGoals = [
         isPinned: true
     }, 
     {
-        goal: "Here's placeholder mindset",
+        goal: "Here's another placeholder goal",
         category: "Openness",
-        type: "Mindset",
+        type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "Here's placeholder reminder",
+        goal: "Here's another placeholder goal",
+        category: "Agreeableness",
+        type: "Goal",
+        scope: "Daily",
+        isPinned: true
+    },
+    {
+        goal: "Here's a placeholder long term goal",
+        category: "Conscientiousness",
+        type: "Goal",
+        scope: "Long-term",
+        isPinned: true
+    }, 
+    {
+        goal: "Here's another placeholder long term goal",
+        category: "Extraversion",
+        type: "Goal",
+        scope: "Long-term",
+        isPinned: true
+    }, 
+    {
+        goal: "Here's another placeholder long term goal",
+        category: "Openness",
+        type: "Goal",
+        scope: "Long-term",
+        isPinned: true
+    }, 
+    {
+        goal: "Here's another placeholder long term goal",
+        category: "Agreeableness",
+        type: "Goal",
+        scope: "Long-term",
+        isPinned: true
+    },
+    {
+        goal: "Here's a placeholder reminder",
+        category: "Conscientiousness",
+        type: "Reminder",
+        scope: "Daily",
+    }, 
+    {
+        goal: "Here's another placeholder reminder",
+        category: "Extraversion",
+        type: "Reminder",
+        scope: "Daily",
+    }, 
+    {
+        goal: "Here's another placeholder reminder",
+        category: "Openness",
+        type: "Reminder",
+        scope: "Daily",
+    }, 
+    {
+        goal: "Here's another placeholder reminder",
         category: "Agreeableness",
         type: "Reminder",
         scope: "Daily",
-        isPinned: true
+    },
+    {
+        goal: "Here's a placeholder mindset to cultivate",
+        category: "Conscientiousness",
+        type: "Mindset",
+        scope: "Daily",
+    }, 
+    {
+        goal: "Here's another placeholder mindset to cultivate",
+        category: "Extraversion",
+        type: "Mindset",
+        scope: "Daily",
+    }, 
+    {
+        goal: "Here's another placeholder mindset to cultivate",
+        category: "Openness",
+        type: "Mindset",
+        scope: "Daily",
+    }, 
+    {
+        goal: "Here's another placeholder mindset to cultivate",
+        category: "Agreeableness",
+        type: "Mindset",
+        scope: "Daily",
     }
 ]
 
@@ -235,9 +311,7 @@ app.get("/newUser/:user", (req, res) => {
 
     User.findOne({name: user}, function(err, foundUser){
         if (!err){
-            if(foundUser){
-                console.log("User is not currently on the database, no saved items.")
-            } else {
+            if(!foundUser){
                 newUser.save();
             }
         } 
@@ -254,11 +328,17 @@ app.get("/goals/:user", (req, res) => {
             if(!foundUser){
                 console.log("User is not currently on the database, no saved items.")
             } else {
-                let currentGoals = foundUser.items
-                // console.log(currentGoals)
-                res.json({
-                    kwmlgoals: JSON.stringify(currentGoals)
-                })
+                let currentGoals = foundUser.items;
+                if (currentGoals.length === 0) {
+                    console.log("Sending dummy goals");
+                    res.json({
+                        kwmlgoals: JSON.stringify(dummyGoals)
+                    })
+                } else {
+                    res.json({
+                        kwmlgoals: JSON.stringify(currentGoals)
+                    })
+                }
             }
         } 
     })
@@ -316,24 +396,46 @@ app.post('/postGoals/:user', (req, res) => {
         }
     })
 })
-function updateGoalCategories(){
-    // KwmlGoal.updateMany({"category": "King"}, {"category": "Conscientiouesness"}, function(err){
-    //     if(!err){
-    //         console.log("Successfully updated entries")
-    //     } else {
-    //         console.log("Error in update") 
-    //         console.log(err) 
-    //     }
-    // }) 
-    User.findOne({name: "fitzgerald.s.alexander@gmail.com", "items.category": "King"}, function(err, foundGoals){
-        if (!err) {
-            console.log(foundGoals)
-        }
-    })
-}
 
-updateGoalCategories()
+// ----------------------- Model for updating category names ----------------------- 
 
+// function updateGoalCategories(){
+//     // KwmlGoal.updateMany({"category": "King"}, {"category": "Conscientiouesness"}, function(err){
+//     //     if(!err){
+//     //         console.log("Successfully updated entries")
+//     //     } else {
+//     //         console.log("Error in update") 
+//     //         console.log(err) 
+//     //     }
+//     // }) 
+//     User.findOne({name: "fitzgerald.s.alexander@gmail.com", "items.category": "King"}, function(err, foundGoals){
+//         if (!err) {
+//             console.log(foundGoals);
+//             foundGoals.items.map(goal => {
+//                 if (goal.category === "King"){
+//                     goal.category = "Conscientiousness"
+//                 }
+//                 if (goal.category === "Warrior"){
+//                     goal.category = "Extraversion"
+//                 }
+//                 if (goal.category === "Magician"){
+//                     goal.category = "Openness"
+//                 }
+//                 if (goal.category === "Lover"){
+//                     goal.category = "Agreeableness"
+//                 }
+//             })
+//             foundGoals.save(function(err){
+//                 if (err) {
+//                     console.log(err)
+//                 } else {
+//                     console.log("Goals updated")
+//                 }
+//             })
+//         }
+//     })
+// }
+// updateGoalCategories();
 
 app.post("/updateGoals/:user", (req, res) => {
     const name = req.params.user
@@ -384,22 +486,6 @@ app.post("/deleteGoals/:user", (req, res) => {
     }})
 })
         
-
-//         $pull: {
-//           items: {_id: goalId}
-//         }
-//       },  function(err){
-//         if (!err) {
-//             console.log(goalId)
-//             console.log("Task successfully deleted");
-//         } else {
-//             console.log("error")
-//         }
-//     });
-// });
-
-
-    
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
