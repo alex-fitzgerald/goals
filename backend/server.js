@@ -35,28 +35,28 @@ function getRandomNumber(arrayLength){
 
 const dummyGoals = [
     {
-        goal: "Here's a placeholder goal",
+        goal: "Soon, I'll add different 'types' within goals, like counters",
         category: "Conscientiousness",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "Here's another placeholder goal",
+        goal: "Add the option to create new categories and rename existing ones",
         category: "Extraversion",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "Here's another placeholder goal",
+        goal: "I'll implement my own authentication and OAuth rather than using Auth0",
         category: "Openness",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "Here's another placeholder goal",
+        goal: "and finally, data reporting.",
         category: "Agreeableness",
         type: "Goal",
         scope: "Daily",
@@ -91,49 +91,49 @@ const dummyGoals = [
         isPinned: true
     },
     {
-        goal: "Here's a placeholder reminder",
+        goal: "It's a relatively simple app. Perspectives to cultivate, reminders to ground oneself, and small and larger goals to strive towards. ",
         category: "Conscientiousness",
         type: "Reminder",
         scope: "Daily",
     }, 
     {
-        goal: "Here's another placeholder reminder",
+        goal: "An ancient Roman philosopher king once said 'The soul is dyed the colour of its thoughts'",
         category: "Extraversion",
         type: "Reminder",
         scope: "Daily",
     }, 
     {
-        goal: "Here's another placeholder reminder",
+        goal: "I think we sometimes live focussing too much on some dimensions of our lives and neglecting others",
         category: "Openness",
         type: "Reminder",
         scope: "Daily",
     }, 
     {
-        goal: "Here's another placeholder reminder",
+        goal: "So I wanted a simple app that provides those mindsets, reminders, and goals, from a large list, randomly, in each dimension",
         category: "Agreeableness",
         type: "Reminder",
         scope: "Daily",
     },
     {
-        goal: "Here's a placeholder mindset to cultivate",
+        goal: "As you haven't yet set your own goals, reminders, and mindsets, I've rendered some dummy ones with explanatory text",
         category: "Conscientiousness",
         type: "Mindset",
         scope: "Daily",
     }, 
     {
-        goal: "Here's another placeholder mindset to cultivate",
+        goal: "Here would be four 'mindsets', one for each archetype",
         category: "Extraversion",
         type: "Mindset",
         scope: "Daily",
     }, 
     {
-        goal: "Here's another placeholder mindset to cultivate",
+        goal: "The database is structured simply: a User mode, and within there, an Item model",
         category: "Openness",
         type: "Mindset",
         scope: "Daily",
     }, 
     {
-        goal: "Here's another placeholder mindset to cultivate",
+        goal: "Items have types (e.g. Mindset / Reminder / Goal) and Categories (e.g. Conscientiousness, Extraversion)",
         category: "Agreeableness",
         type: "Mindset",
         scope: "Daily",
