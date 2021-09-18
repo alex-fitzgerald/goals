@@ -18,6 +18,7 @@ const models = require('./Models');
 const KwmlGoal = models.kwmlGoalModel;
 const User = models.userModel;
 
+// eslint-disable-next-line no-unused-vars
 const { type } = require('os');
 
 var dailyStoicism = {quote: "Loading...", author: ""}
@@ -35,28 +36,28 @@ function getRandomNumber(arrayLength){
 const dummyGoals = [
     {
         goal: "Here's a placeholder goal",
-        category: "King",
+        category: "Conscientiousness",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
         goal: "Here's another placeholder goal",
-        category: "Warrior",
+        category: "Extraversion",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
         goal: "Here's placeholder mindset",
-        category: "Magician",
+        category: "Openness",
         type: "Mindset",
         scope: "Daily",
         isPinned: true
     }, 
     {
         goal: "Here's placeholder reminder",
-        category: "Lover",
+        category: "Agreeableness",
         type: "Reminder",
         scope: "Daily",
         isPinned: true
@@ -185,15 +186,15 @@ function newDailyGoals(user, dailyGoals){
     if ( dailyGoals.length <= 4 ) {
         dailyGoals.forEach((dailyGoal) => addToPinned(user, dailyGoal))
     } else if ( dailyGoals.length > 4 ) {
-        let filteredKingGoals = filterLists(dailyGoals, "King");
-        let filteredWarriorGoals = filterLists(dailyGoals, "Warrior");
-        let filteredMagicianGoals = filterLists(dailyGoals, "Magician");
-        let filteredLoverGoals = filterLists(dailyGoals, "Lover");
+        let filteredConscientiousnessGoals = filterLists(dailyGoals, "Conscientiousness");
+        let filteredExtraversionGoals = filterLists(dailyGoals, "Extraversion");
+        let filteredOpennessGoals = filterLists(dailyGoals, "Openness");
+        let filteredAgreeablenessGoals = filterLists(dailyGoals, "Agreeableness");
 
-        processDaily(user, filteredKingGoals);
-        processDaily(user, filteredWarriorGoals); 
-        processDaily(user, filteredMagicianGoals); 
-        processDaily(user, filteredLoverGoals); 
+        processDaily(user, filteredConscientiousnessGoals);
+        processDaily(user, filteredExtraversionGoals); 
+        processDaily(user, filteredOpennessGoals); 
+        processDaily(user, filteredAgreeablenessGoals); 
 
         console.log("Have set new daily goals");
     }
@@ -203,15 +204,15 @@ function newLongTermGoals(user, longTermGoals){
     if ( longTermGoals.length <= 4 ) {
         longTermGoals.forEach((longTermGoal) => addToPinned(user, longTermGoal))
     } else if ( longTermGoals.length > 4 ) {
-        let filteredKingGoals = filterLists(longTermGoals, "King");
-        let filteredWarriorGoals = filterLists(longTermGoals, "Warrior");
-        let filteredMagicianGoals = filterLists(longTermGoals, "Magician");
-        let filteredLoverGoals = filterLists(longTermGoals, "Lover");
+        let filteredConscientiousnessGoals = filterLists(longTermGoals, "Conscientiousness");
+        let filteredExtraversionGoals = filterLists(longTermGoals, "Extraversion");
+        let filteredOpennessGoals = filterLists(longTermGoals, "Openness");
+        let filteredAgreeablenessGoals = filterLists(longTermGoals, "Agreeableness");
 
-        processDaily(user, filteredKingGoals);
-        processDaily(user, filteredWarriorGoals); 
-        processDaily(user, filteredMagicianGoals); 
-        processDaily(user, filteredLoverGoals); 
+        processDaily(user, filteredConscientiousnessGoals);
+        processDaily(user, filteredExtraversionGoals); 
+        processDaily(user, filteredOpennessGoals); 
+        processDaily(user, filteredAgreeablenessGoals); 
 
         console.log("Have set new long term goals");
     }
@@ -290,7 +291,7 @@ app.post('/postGoals/:user', (req, res) => {
                 User.findOne({name:user}, function(err, foundUser){
                     console.log(foundUser)
                     dummyGoals.forEach(function(newGoal){
-                        var newGoal = new KwmlGoal({
+                        var newKwmlGoal = new KwmlGoal({
                             goal: newGoal.goal, 
                             category: newGoal.category,
                             type:newGoal.type,
@@ -298,7 +299,7 @@ app.post('/postGoals/:user', (req, res) => {
                             isPinned: newGoal.isPinned,
                             name:user
                         });
-                        foundUser.items.push(newGoal)
+                        foundUser.items.push(newKwmlGoal)
                         foundUser.save()
                         console.log("Created user " + name + " and added dummy goals")
                     })
@@ -315,18 +316,23 @@ app.post('/postGoals/:user', (req, res) => {
         }
     })
 })
-// function updateGoalCategories(){
-//     KwmlGoal.updateMany({"scope": "Monthly"}, {"scope": "Long-term"}, function(err){
-//         if(!err){
-//             console.log("Successfully updated entries")
-//         } else {
-//             console.log("Error in update") 
-//             console.log(err) 
-//         }
-//     }) 
-// }
+function updateGoalCategories(){
+    // KwmlGoal.updateMany({"category": "King"}, {"category": "Conscientiouesness"}, function(err){
+    //     if(!err){
+    //         console.log("Successfully updated entries")
+    //     } else {
+    //         console.log("Error in update") 
+    //         console.log(err) 
+    //     }
+    // }) 
+    User.findOne({name: "fitzgerald.s.alexander@gmail.com", "items.category": "King"}, function(err, foundGoals){
+        if (!err) {
+            console.log(foundGoals)
+        }
+    })
+}
 
-// updateGoalCategories()
+updateGoalCategories()
 
 
 app.post("/updateGoals/:user", (req, res) => {

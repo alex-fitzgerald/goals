@@ -28,8 +28,6 @@ function App() {
   const [ allGoals, setAllGoals ] = useState([]);
   const { user, isAuthenticated } = useAuth0(); 
   
-  const [goalIsVisible, setGoalIsVisible] = useState(true)
-
   const navigationList = ["Introduction", "Mindsets", "Reminders", "Daily", "LongTerm", "AllGoals", "Create", "Login"]
   const [navigationNumber, setNavigationNumber] = useState(0);
   const [navigation, setNavigation] = useState(navigationList[navigationNumber]);
@@ -233,13 +231,13 @@ function App() {
         setMindsets(filteredMindsets)
       } else if (filteredMindsets.length > 4){
     
-        let filteredKingMindsets = filterLists(filteredMindsets, "King"); 
-        let filteredWarriorMindsets = filterLists(filteredMindsets, "Warrior");
-        let filteredMagicianMindsets = filterLists(filteredMindsets, "Magician");
-        let filteredLoverMindsets = filterLists(filteredMindsets, "Lover");
+        let filteredConscientiousnessMindsets = filterLists(filteredMindsets, "Conscientiousness"); 
+        let filteredExtraversionMindsets = filterLists(filteredMindsets, "Extraversion");
+        let filteredOpennessMindsets = filterLists(filteredMindsets, "Openness");
+        let filteredAgreeablenessMindsets = filterLists(filteredMindsets, "Agreeableness");
         let dailyMindsets = []
 
-        processDaily(filteredKingMindsets, dailyMindsets); processDaily(filteredWarriorMindsets, dailyMindsets); processDaily(filteredMagicianMindsets, dailyMindsets); processDaily(filteredLoverMindsets, dailyMindsets);
+        processDaily(filteredConscientiousnessMindsets, dailyMindsets); processDaily(filteredExtraversionMindsets, dailyMindsets); processDaily(filteredOpennessMindsets, dailyMindsets); processDaily(filteredAgreeablenessMindsets, dailyMindsets);
         setMindsets(dailyMindsets);
       }
 
@@ -249,13 +247,13 @@ function App() {
         setReminders(filteredReminders)
       } else if (filteredReminders.length > 4){
 
-        let filteredKingReminders = filterLists(filteredReminders, "King"); 
-        let filteredWarriorReminders = filterLists(filteredReminders, "Warrior"); 
-        let filteredMagicianReminders = filterLists(filteredReminders, "Magician"); 
-        let filteredLoverReminders = filterLists(filteredReminders, "Lover"); 
+        let filteredConscientiousnessReminders = filterLists(filteredReminders, "Conscientiousness"); 
+        let filteredExtraversionReminders = filterLists(filteredReminders, "Extraversion"); 
+        let filteredOpennessReminders = filterLists(filteredReminders, "Openness"); 
+        let filteredAgreeablenessReminders = filterLists(filteredReminders, "Agreeableness"); 
         let dailyReminders = []
 
-        processDaily(filteredKingReminders, dailyReminders); processDaily(filteredWarriorReminders, dailyReminders); processDaily(filteredMagicianReminders, dailyReminders); processDaily(filteredLoverReminders, dailyReminders); 
+        processDaily(filteredConscientiousnessReminders, dailyReminders); processDaily(filteredExtraversionReminders, dailyReminders); processDaily(filteredOpennessReminders, dailyReminders); processDaily(filteredAgreeablenessReminders, dailyReminders); 
         setReminders(dailyReminders); 
       }
 

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 function CreateArea(props) {
   const [kwmlGoal, setKwmlGoal] = useState({
     goal: "",
-    category: "King",
+    category: "Conscientiousness",
     type: "Goal",
     scope: "Daily",
     testing: null
@@ -48,7 +48,7 @@ function CreateArea(props) {
         alert("Please enter a goal")
         event.preventDefault();
       } else {
-        setKwmlGoal({goal:"", category:"King", type: "Goal", scope:"Daily"})
+        setKwmlGoal({goal:"", category:"Conscientiousness", type: "Goal", scope:"Daily"})
         setType("Goal");
         setInputEngaged(false)
         // setTitleInputEngaged(false)
@@ -80,10 +80,10 @@ function CreateArea(props) {
             onChange={handleChange}
             rows="1" 
             value={kwmlGoal.category}>
-              <option value="King">King</option>
-              <option value="Warrior">Warrior</option>
-              <option value="Magician">Magician</option>
-              <option value="Lover">Lover</option>
+              <option value="Conscientiousness">Conscientiousness</option>
+              <option value="Extraversion">Extraversion</option>
+              <option value="Openness">Openness</option>
+              <option value="Agreeableness">Agreeableness</option>
             </select> 
           <select name="type" placeholder="Type" list="goalType" id="goalType"
             className={"" + (inputEngaged ? "input-engaged" : null)}

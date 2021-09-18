@@ -498,45 +498,45 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.15);
 }
 
-.King {
+.Conscientiousness {
   background-color: #673ab7;
   /* color: #673ab7 */
 }
 
-.Lover {
+.Agreeableness {
   background-color: #e91e63;
   /* color: #e91e63; */
 }
 
-.Warrior {
+.Extraversion {
   background-color: #FF5722;
   /* color: #FF5722; */
 }
 
-.Magician {
+.Openness {
   background-color: #03A9F4;
   /* color: #03A9F4; */
 }
 
-/* .King:hover {
+/* .Conscientiousness:hover {
   border-color: #673ab7;
   background-color: #673ab7;
   color: white;
 }
 
-.Lover:hover {
+.Agreeableness:hover {
   border-color: #e91e63;
   background-color: #e91e63;
   color: white;
 }
 
-.Warrior:hover {
+.Extraversion:hover {
   border-color: #FF5722;
   background-color: #FF5722;
   color: white;
 }
 
-.Magician:hover {
+.Openness:hover {
   border-color: #03A9F4;
   background-color: #03A9F4;
   color: white;
