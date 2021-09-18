@@ -107,7 +107,7 @@ function CreateArea(props) {
             value={kwmlGoal.scope}>
             <option value="Daily">Daily activity goal</option>
             <option value="Long-term">Long term goal</option>
-            <option value="Very-long-term">Very long term goal</option>
+            {/* <option value="Very-long-term">Very long term goal</option> */}
           </select> : null
             }
             <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>

@@ -35,56 +35,56 @@ function getRandomNumber(arrayLength){
 
 const dummyGoals = [
     {
-        goal: "Soon, I'll add different 'types' within goals, like counters",
+        goal: "Now that the basics are all down - the database and rendering is working as intended, I can move on to the nice-to-haves",
         category: "Conscientiousness",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "Add the option to create new categories and rename existing ones",
+        goal: "Like adding the option to create new categories and rename existing ones",
         category: "Extraversion",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "I'll implement my own authentication and OAuth rather than using Auth0",
+        goal: "Implementing my own authentication and OAuth rather than using Auth0",
         category: "Openness",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     }, 
     {
-        goal: "and finally, data reporting.",
+        goal: "and notifications for mobile and watches.",
         category: "Agreeableness",
         type: "Goal",
         scope: "Daily",
         isPinned: true
     },
     {
-        goal: "Here's a placeholder long term goal",
+        goal: "I'd also like to add animations when goals are added and completed",
         category: "Conscientiousness",
         type: "Goal",
         scope: "Long-term",
         isPinned: true
     }, 
     {
-        goal: "Here's another placeholder long term goal",
+        goal: "Light mode and dark mode stylesheets",
         category: "Extraversion",
         type: "Goal",
         scope: "Long-term",
         isPinned: true
     }, 
     {
-        goal: "Here's another placeholder long term goal",
+        goal: "This is all been created with with the MERN stack",
         category: "Openness",
         type: "Goal",
         scope: "Long-term",
         isPinned: true
     }, 
     {
-        goal: "Here's another placeholder long term goal",
+        goal: "Thanks for checking out my work",
         category: "Agreeableness",
         type: "Goal",
         scope: "Long-term",
