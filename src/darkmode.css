@@ -13,15 +13,14 @@ body {
   -webkit-font-smoothing: antialiased !important;
   -moz-osx-font-smoothing: grayscale !important;
   text-align: left;
-  background-color: white;
+  background-color: #232b3a;
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   align-items: top;
 }
 
 h3 {
-  color:rgba(0,0,0, .15)
+  color:rgba(255,255,255, .15)
 }
-
 .log {
   position:relative;
   z-index:999;
@@ -47,7 +46,7 @@ h3 {
 }
 
 h1 {
-  color: rgba(0,0,0, 0.15);
+  color: rgba(255,255,255, 0.15);
   font-size: 4em;
   letter-spacing:-3px;
   margin-top: 50px;
@@ -87,7 +86,7 @@ h1 {
   flex:1;
   background-color:transparent;
   padding:0px;
-  color: rgba(0,0,0, 0.15);
+  color: rgba(255, 255, 255, 0.15);
   font-weight:500;
   cursor:pointer;
   letter-spacing:-0.5px;
@@ -95,11 +94,11 @@ h1 {
 }
 
 .activePage {
-  color: rgba(0,0,0, 0.35) !important;
+  color: rgba(255, 255, 255, 0.35) !important;
 }
 
 .navigation button:hover {
-  color: rgba(0,0,0, 0.35);
+  color: rgba(255, 255, 255, 0.35);
   background-color:transparent;
 }
 
@@ -132,11 +131,11 @@ h1 {
 }
 
 .right:hover {
-  background: linear-gradient(-90deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,0) 100%); 
+  background: linear-gradient(-90deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,0) 100%); 
 }
 
 .left:hover {
-  background: linear-gradient(90deg, rgba(0,0,0,.15) 0%, rgba(0,0,0,0) 100%); 
+  background: linear-gradient(90deg, rgba(0,0,0,.1) 0%, rgba(0,0,0,0) 100%); 
 }
 
 .right:active {
@@ -180,7 +179,7 @@ h1 {
   margin: 10px 20px;
   padding: 20px 20px 60px 20px;
   position: relative;
-  background-color: rgba(0,0,0,0.05);
+  background-color: rgba(0,0,0,0.2);
 }
 
 .createGoal .daily {
@@ -220,13 +219,13 @@ h1 {
   font-weight: 700;
   text-align: left;
   line-height: 2;
-  color:rgba(0,0,0,0.95);
+  color:rgba(255,255,255,0.95);
 }
 
 .daily h3 {
   font-weight:300;
   opacity:.4;
-  color:rgba(0,0,0,0.6);
+  color:rgba(255,255,255,0.6);
 }
 
 .poem h2 {
@@ -246,7 +245,7 @@ h1 {
   font-family: 'Poppins', sans-serif !important;
   font-size: .8rem;
   font-weight: 500;
-  color:rgba(0,0,0,0.8);
+  color:rgba(255,255,255,0.8);
 }
 
 .header {
@@ -262,11 +261,11 @@ select {
   background-color: transparent;
   border: none;
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
-  color: rgba(0,0,0, .1);
+  color: rgba(255, 255, 255, .1);
   display: flex;
   font-family: 'Poppins', sans-serif;
-  font-size: 1.2em;
-  font-weight: 900;
+  font-size: 1em;
+  font-weight: 400;
   letter-spacing: 0px;
   padding: 10px;
   padding-left:0px;
@@ -276,11 +275,6 @@ select {
   max-height: 50px;
   /* width: 100%; */
   text-align: left;
-}
-
-input[type=text]:hover,
-select:hover {
-  color: rgba(0,0,0, .2);
 }
 
 input {
@@ -311,18 +305,18 @@ label {
 }
 
 input::placeholder{
-  color: rgba(0,0,0, .1);
+  color: rgba(255, 255, 255, .1);
 }
 
 .input-engaged {
-  color:black
+  color:white
 }
 
 button {
   text-transform: uppercase;
   border: 0px;
   background-color: rgba(0, 0, 0, 0);
-  color: rgb(0,0,0, .35);
+  color: rgb(255, 255, 255, .35);
   font-family: 'Poppins', sans-serif;
   font-size: 1em;
   font-weight: 500;
@@ -338,22 +332,16 @@ button {
 }
 
 button:hover {
-  color: rgba(0,0,0,.5);
+  color: rgba(255,255,255,.5);
+}
+
+.kwmlGoal button, .daily button {
+  border-radius: 30px;
 }
 
 .daily-wrapper button {
-  color:white;
-  background: rgb(233,30,99);
-  border-radius:10px;
-  cursor:pointer;
-  font-weight:800;
-  transition:.3s;
-}
-
-.daily-wrapper button:hover {
-  background: rgb(103,58,183);
-  transition:.3s;
-  font-weight:800;
+  color:rgba(0,0,0,0.3);
+  font-weight:700;
 }
 
 .daily-wrapper select {
@@ -407,13 +395,13 @@ button:hover {
   border: 0px;
   border-bottom: solid 2px;
   border-color:transparent;
-  color: black;
+  color: white;
   font-family:'Poppins',sans-serif;
-  font-size: 1.6em;
-  font-weight: 800;
-  height:60px;
-  letter-spacing:-1px;
-  line-height:1.3;
+  font-size: 1.2em;
+  font-weight: 600;
+  height:100px;
+  letter-spacing:-1.5px;
+  line-height:1.2;
   margin:0px;
   margin-bottom:10px;
   padding-left:0px;
@@ -468,7 +456,7 @@ button:hover {
   font-size: 9px;
   font-weight: 500;
   margin-top:10px;
-  color: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.35);
   width:107px;
   cursor:pointer;
 }
@@ -495,14 +483,14 @@ button:hover {
 }
 
 .kwmlGoal button:hover {
-  color:rgba(0,0,0,0.5);
+  color:rgba(255,255,255,0.5);
   background-color:transparent;
 }
 
 
 .scope {
   border:none !important;
-  color:rgba(0,0,0,.15);
+  color:rgba(255,255,255,.15);
   font-size:8px !important;
   margin-left:10px;
   padding:0px  !important;
@@ -519,11 +507,11 @@ button:hover {
   margin: 0px;
   /* border-color:white; */
   /* color:white; */
-  color: rgba(0,0,0,0.35);
+  color: rgba(255,255,255,0.35);
 }
 
 .category:hover {
-  color: rgba(0,0,0,0.5);
+  color: rgba(255,255,255,0.5);
 }
 
 .Conscientiousness {

@@ -71,7 +71,7 @@ function CreateArea(props) {
               type="text"
               onChange={handleChange}
               name="goal" 
-              placeholder="Goal, Mindset, or Reminder title" 
+              placeholder="Title" 
               value={kwmlGoal.goal}
             />
 
