@@ -98,13 +98,6 @@ function App() {
         setDailyPhilosophy(JSON.parse(data.philosophy))
         })
     }, []);
-  
-  function addGoal(kwmlGoal){  
-    setKwmlGoals(prevKwmlGoals => {
-      return [...prevKwmlGoals, kwmlGoal]
-    });
-    postGoal(kwmlGoal);
-  } 
 
   function deleteKwmlGoal(id, goalId, array, setArray) {
     let newKwmlGoals = kwmlGoals;
@@ -127,7 +120,7 @@ function App() {
   function unpinGoal(goal){
     if (isAuthenticated) {
     const url = "updateGoals/" + user.email
-    console.log(goal)
+//     console.log(goal)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
@@ -141,7 +134,7 @@ function App() {
     // .then(data => this.setState({ postId: data.id }));
   } else {
     const url = "updateGoals/guest" 
-    console.log(goal)
+//     console.log(goal)
     fetch(url , {
       headers: {'Content-Type': 'application/json' },
       method: "POST",
@@ -165,10 +158,11 @@ function App() {
         category: latestGoal.category,
         type: latestGoal.type,
         scope: latestGoal.scope,
+        isPinned: latestGoal.isPinned,
         name: user.email
       })
       .then(function () {
-        console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
+    //     console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
       })
       .catch(function () {
           alert("Could not create goal. Please try again");
@@ -180,11 +174,12 @@ function App() {
           goal: latestGoal.goal,
           category: latestGoal.category,
           type: latestGoal.type,
+          isPinned: latestGoal.isPinned,
           scope: latestGoal.scope,
           name: "guest"
         })
         .then(function () {
-          console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
+      //     console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
         })
         .catch(function () {
             alert("Could not create goal. Please try again");
@@ -196,17 +191,15 @@ function App() {
       const url = "updateGoals/" + (isAuthenticated ? user.email : "guest"); 
       const { isPinned } = kwmlGoal
 
+  //     console.log(kwmlGoal)
+
       if (!isPinned){
         unpinGoal(kwmlGoal)
       }  
-      console.log(kwmlGoal.key)
-      console.log(kwmlGoal._id)
-      console.log(kwmlGoal)
+
       //map out old list. Find array item matching number, send back updated version. 
 
       let updatedList = kwmlGoals.map(goal => {
-        console.log(goal._id)
-        console.log(kwmlGoal._id)
         if (goal._id === kwmlGoal._id) {
           return kwmlGoal; //gets everything that was already in item, and updates "done"
         } else {
@@ -234,7 +227,7 @@ function App() {
     function deleteGoal(goalId){
       if (isAuthenticated) {
         const url = "deleteGoals/" + user.email
-        console.log(goalId)
+    //     console.log(goalId)
         fetch(url , {
           headers: {'Content-Type': 'application/json' },
           method: "POST",
@@ -247,7 +240,7 @@ function App() {
     // .then(data => this.setState({ postId: data.id }));
     } else {
       const url = "deleteGoals/guest"
-      console.log(goalId)
+  //     console.log(goalId)
       fetch(url , {
         headers: {'Content-Type': 'application/json' },
         method: "POST",
@@ -264,7 +257,7 @@ function App() {
   
   function findDailyGoals(){
     if (goalsLoaded === true) {
-      console.log(kwmlGoals)
+  //     console.log(kwmlGoals)
 
       function getRandomNumber(arrayLength){ return Math.floor(Math.random() * arrayLength); }
       function filterLists(list, archetype){ let filteredArray = list.filter(item => item.category === archetype); return filteredArray }
@@ -273,7 +266,7 @@ function App() {
         if (filteredList.length > 0) { 
           arrayList.push(filteredList[ getRandomNumber(filteredList.length) ]); 
         } else {
-          console.log(filteredList + " is empty")
+      //     console.log(filteredList + " is empty")
         }
       }
 
@@ -284,10 +277,10 @@ function App() {
       let filteredReminders = kwmlGoals.filter(goal => goal.type === "Reminder");
 
       if (filteredMindsets.length === 0) {
-        console.log("No daily mindsets")
+    //     console.log("No daily mindsets")
       } else if (filteredMindsets.length < 5 && filteredMindsets.length > 0) {
         setMindsets(filteredMindsets)
-        console.log(filteredMindsets)
+    //     console.log(filteredMindsets)
       } else if (filteredMindsets.length > 4){
     
         let filteredConscientiousnessMindsets = filterLists(filteredMindsets, "Conscientiousness"); 
@@ -298,11 +291,11 @@ function App() {
 
         processDaily(filteredConscientiousnessMindsets, dailyMindsets); processDaily(filteredExtraversionMindsets, dailyMindsets); processDaily(filteredOpennessMindsets, dailyMindsets); processDaily(filteredAgreeablenessMindsets, dailyMindsets);
         setMindsets(dailyMindsets);
-        console.log(dailyMindsets)
+    //     console.log(dailyMindsets)
       }
 
       if (filteredReminders.length === 0) {
-        console.log("No daily reminders")
+    //     console.log("No daily reminders")
       } else if (filteredReminders.length < 5) {
         setReminders(filteredReminders)
       } else if (filteredReminders.length > 4){
@@ -318,13 +311,13 @@ function App() {
       }
 
       if (filteredPinnedDaily.length === 0) {
-        console.log("No pinned daily goals received")
+    //     console.log("No pinned daily goals received")
       } else {
         setDailyGoals(filteredPinnedDaily)
       }
 
       if (filteredPinnedLongTerm.length === 0) {
-        console.log("No pinned long term goals received")
+    //     console.log("No pinned long term goals received")
       } else {
         setLongTermGoals(filteredPinnedLongTerm)
       }

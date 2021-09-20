@@ -27,7 +27,6 @@ function KWMLGoal(props) {
     isPinned: isPinned
     });
 
-
   const [renderPin, setRenderPin] = useState(false)
   const [goalType, setGoalType] = useState("Goal") 
   const [goalHasBeenChanged, setGoalHasBeenChanged] = useState(false)
@@ -82,7 +81,6 @@ function KWMLGoal(props) {
   function formSubmit(event){
     console.log(event)
     if (currentGoal.goal === "") {
-      alert("Please enter a goal")
       event.preventDefault();
     } else {
       setCurrentGoal({_id: goalId, goal:currentGoal.goal, category:category, type:type, scope:scope})
@@ -125,13 +123,13 @@ function KWMLGoal(props) {
             </textarea>
         </form>
 
-      <div className="footer">
 
         { !goalHasBeenChanged ? 
 
-        <div>   
-          <div className="kwmlGoalDiv" onClick={() => (props.filterClick(category))}>
-            <p className={"category"}>
+          <div className="footer">
+   
+          <div className="kwmlGoalDiv" onClick={section === "All goals" ? () => (props.filterClick(category)) : null }>
+            <p className={section === "All goals" ? "categoryFilter" : "category"}>
               {category}
             </p>
           </div>
@@ -143,12 +141,16 @@ function KWMLGoal(props) {
               onClick={() => (props.deleteClick(props.id, currentGoal, props.array, props.setArray))}>Completed
             </button>
           </form> : null }
+
+          {(goalType === "Reminder" || goalType === "Mindset") && section !== "All goals" ? 
+          <div className="blank"></div> : null }
+
           {section === "All goals" ? 
           <form onSubmit={formSubmit}>
             <button name="delete"
               onClick={() => (props.deleteClick(props.id, currentGoal, props.array, props.setArray))}>Delete
             </button>
-          </form> : null}
+          </form> : null }
          </div>
         :
         <div className="alterFooter">
@@ -162,7 +164,6 @@ function KWMLGoal(props) {
         }
 
        </div>
-    </div>
   
   );
 }

@@ -6,7 +6,7 @@ function CreateArea(props) {
     category: "Conscientiousness",
     type: "Goal",
     scope: "Daily",
-    testing: null
+    isPinned:false
     });
 
     const [type, setType] = useState("Goal")
@@ -110,7 +110,7 @@ function CreateArea(props) {
             {/* <option value="Very-long-term">Very long term goal</option> */}
           </select> : null
             }
-            <button onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
+            <button className={kwmlGoal.category + "Button"}onClick={() => (props.onAdd(kwmlGoal))}>Add</button>
           </form>
           </div>
       </div>

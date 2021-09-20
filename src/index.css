@@ -47,7 +47,7 @@ h3 {
 }
 
 h1 {
-  color: rgba(0,0,0, 0.15);
+  color: rgba(0,0,0, 0.1);
   font-size: 4em;
   letter-spacing:-3px;
   margin-top: 50px;
@@ -261,7 +261,7 @@ select {
   align-content: center;
   background-color: transparent;
   border: none;
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   color: rgba(0,0,0, .1);
   display: flex;
   font-family: 'Poppins', sans-serif;
@@ -343,7 +343,6 @@ button:hover {
 
 .daily-wrapper button {
   color:white;
-  background: rgb(233,30,99);
   border-radius:10px;
   cursor:pointer;
   font-weight:800;
@@ -351,9 +350,13 @@ button:hover {
 }
 
 .daily-wrapper button:hover {
-  background: rgb(103,58,183);
   transition:.3s;
-  font-weight:800;
+  transform:translate(0px -2px);
+}
+
+.daily-wrapper button:active {
+  transition:.3s;
+  transform:translate(0px -5px);
 }
 
 .daily-wrapper select {
@@ -374,13 +377,18 @@ button:hover {
 .footer {
   position: absolute;
   width: calc(100% - 40px);
-  bottom: 17px;
+  margin-top: 7px;
   display:flex;
   align-items: baseline;
 }
 
+.blank {
+  width:100%;
+}
+
 .alterFooter {
   display:flex;
+  position:absolute;
 }
 
 .alterFooter:nth-child(2){
@@ -470,6 +478,8 @@ button:hover {
   color: rgba(0,0,0,0.35);
   width:107px;
   cursor:pointer;
+  text-align:left;
+  display:block;
 }
 
 .poem button{
@@ -490,15 +500,14 @@ button:hover {
   padding:0px;
   min-height:0px;
   display:block;
-  text-align:left;
+  text-align:right;
 }
 
 .kwmlGoal button:hover {
   color:rgba(0,0,0,0.5);
   background-color:transparent;
 }
-
-
+/* 
 .scope {
   border:none !important;
   color:rgba(0,0,0,.15);
@@ -510,10 +519,26 @@ button:hover {
   bottom: -4px;
   right: 0px;
   cursor:default;
+} */
+
+.scope {
+  border:none !important;
+  color:rgba(0,0,0,.15);
+  font-size:8px !important;
+  margin-left:10px;
+  padding:0px  !important;
+  text-align:right;
+  cursor:default;
 }
 
-
 .category {
+  border:none !important;
+  color:rgba(0,0,0,.15);
+  font-size:8px !important;
+  cursor:default;
+}
+
+.categoryFilter {
   cursor: pointer;
   margin: 0px;
   /* border-color:white; */
@@ -521,7 +546,7 @@ button:hover {
   color: rgba(0,0,0,0.35);
 }
 
-.category:hover {
+.categoryFilter:hover {
   color: rgba(0,0,0,0.5);
 }
 
@@ -546,6 +571,26 @@ button:hover {
 .Openness {
   border-color: #e91e63;
   box-shadow: 0px 10px 13px -12px rgb(233, 30, 99);
+  /* color: #03A9F4; */
+}
+
+.ConscientiousnessButton {
+  background-color: #673ab7;
+  /* color: #673ab7 */
+}
+
+.ExtraversionButton {
+  background-color: #03A9F4;
+  /* color: #e91e63; */
+}
+
+.AgreeablenessButton {
+  background-color: #FF5722;
+  /* color: #FF5722; */
+}
+
+.OpennessButton {
+  background-color: #e91e63;
   /* color: #03A9F4; */
 }
 

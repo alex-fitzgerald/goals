@@ -479,7 +479,7 @@ button:hover {
   padding:0px;
   min-height:0px;
   display:block;
-  text-align:left;
+  text-align:right
 }
 
 .kwmlGoal button:hover {

@@ -24,6 +24,7 @@ function DailyItems(props){
                     category={item.category} 
                     scope={item.scope} 
                     type={item.type}
+                    isPinned={item.isPinned}
                     onChange={updateGoal}
                     deleteClick={deleteKwmlGoal}
                     filterClick={filterGoals}
