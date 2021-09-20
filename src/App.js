@@ -76,10 +76,17 @@ function App() {
         setGoalsLoaded(true)
         })
       } else {
-        console.log("No user is logged in, cannot fetch lists.")
+        const url = 'goals/guest';
+        fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
+        .then((res) => res.json())
+        .then(function(data){
+          setKwmlGoals(JSON.parse(data.kwmlgoals))
+          setAllGoals(JSON.parse(data.kwmlgoals))
+          setGoalsLoaded(true)
+          })
       }
     }, [isAuthenticated]);
-  
+
   useEffect(() => {  
       const url = '/api'
       fetch(url, {headers : {"Content-Type": "applications/json","Accept": "application/json"}})
@@ -118,6 +125,7 @@ function App() {
   }
   
   function unpinGoal(goal){
+    if (isAuthenticated) {
     const url = "updateGoals/" + user.email
     console.log(goal)
     fetch(url , {
@@ -131,28 +139,61 @@ function App() {
     })
     .then(response => response.json())
     // .then(data => this.setState({ postId: data.id }));
+  } else {
+    const url = "updateGoals/guest" 
+    console.log(goal)
+    fetch(url , {
+      headers: {'Content-Type': 'application/json' },
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        goal: goal,
+        user:"guest"
+      })
+    })
+    .then(response => response.json())
+    // .then(data => this.setState({ postId: data.id }));
+  }
   }
 
   function postGoal(latestGoal){
-    const url = 'postGoals/' + user.email;
-    axios
-    .post(url, {
-      goal: latestGoal.goal,
-      category: latestGoal.category,
-      type: latestGoal.type,
-      scope: latestGoal.scope,
-      name: user.email
-    })
-    .then(function () {
-      console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
-    })
-    .catch(function () {
-				alert("Could not create goal. Please try again");
-			});
+    if (isAuthenticated) {
+      const url = 'postGoals/' + user.email;
+      axios
+      .post(url, {
+        goal: latestGoal.goal,
+        category: latestGoal.category,
+        type: latestGoal.type,
+        scope: latestGoal.scope,
+        name: user.email
+      })
+      .then(function () {
+        console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
+      })
+      .catch(function () {
+          alert("Could not create goal. Please try again");
+        });
+      } else {
+        const url = 'postGoals/guest';
+        axios
+        .post(url, {
+          goal: latestGoal.goal,
+          category: latestGoal.category,
+          type: latestGoal.type,
+          scope: latestGoal.scope,
+          name: "guest"
+        })
+        .then(function () {
+          console.log(latestGoal.goal + " a " + latestGoal.category + " " + latestGoal.type + " added to the database.");
+        })
+        .catch(function () {
+            alert("Could not create goal. Please try again");
+          });
+      }
     }
   
     function updateGoal(kwmlGoal){
-      const url = "updateGoals/" + user.email 
+      const url = "updateGoals/" + (isAuthenticated ? user.email : "guest"); 
       const { isPinned } = kwmlGoal
 
       if (!isPinned){
@@ -191,19 +232,35 @@ function App() {
     }
 
     function deleteGoal(goalId){
-    const url = "deleteGoals/" + user.email
-    console.log(goalId)
-    fetch(url , {
-      headers: {'Content-Type': 'application/json' },
-      method: "POST",
-      mode: 'cors',
-      body: JSON.stringify({
-        goalId:goalId
-      })
-    })
-    .then(response => response.json())
+      if (isAuthenticated) {
+        const url = "deleteGoals/" + user.email
+        console.log(goalId)
+        fetch(url , {
+          headers: {'Content-Type': 'application/json' },
+          method: "POST",
+          mode: 'cors',
+          body: JSON.stringify({
+            goalId:goalId
+          })
+        })
+        .then(response => response.json())
     // .then(data => this.setState({ postId: data.id }));
+    } else {
+      const url = "deleteGoals/guest"
+      console.log(goalId)
+      fetch(url , {
+        headers: {'Content-Type': 'application/json' },
+        method: "POST",
+        mode: 'cors',
+        body: JSON.stringify({
+          goalId:goalId
+        })
+      })
+      .then(response => response.json())
+  // .then(data => this.setState({ postId: data.id }));
   }
+    }
+  
   
   function findDailyGoals(){
     if (goalsLoaded === true) {
@@ -313,7 +370,7 @@ function App() {
             <Philosophy philosophyInput = {dailyPhilosophy} /> 
             <Poem poemInput = {dailyPoem} /> 
             </div> : null }
-          {isAuthenticated && <div>
+          
           
           {/* Render daily mindsets - perspectives to keep in mind */}
             { navigation === "Mindsets" ? 
@@ -361,11 +418,9 @@ function App() {
               array={longTermGoals} 
               setArray={setLongTermGoals}                        
               section={"Long term goals"} /> : null }  
-          </div> }
         </div>
 
         { navigation === "Create" ? <CreateArea onAdd={addGoal} /> : null }
-        {isAuthenticated && <div>
           { navigation === "AllGoals" ?
           <div className="component">
             <h1>All Goals</h1>
@@ -391,7 +446,6 @@ function App() {
                 }
             </div>
           </div> : null }
-          </div>}
       <div className="authParent">
         <Profile />
         {!isAuthenticated ? <LoginButton /> : <LogoutButton /> }

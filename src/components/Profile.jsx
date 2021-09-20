@@ -5,11 +5,9 @@ const Profile = () => {
     const { user, isAuthenticated } = useAuth0(); 
 
     return(
-        isAuthenticated && (
-            <div className="profile">
-                <h3>{isAuthenticated ? "Hi, " + user.given_name : "Guest"}</h3>
-            </div> 
-        )
+        <div className="profile">
+            <h3>{isAuthenticated ? "Hi, " + user.given_name : "Guest"}</h3>
+        </div>
     )
 }
 
