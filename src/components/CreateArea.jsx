@@ -45,7 +45,7 @@ function CreateArea(props) {
 
     function formSubmit(event){
       if (kwmlGoal.goal === "") {
-        alert("Please enter a goal")
+        // alert("Please enter a goal")
         event.preventDefault();
       } else {
         setKwmlGoal({goal:"", category:"Conscientiousness", type: "Goal", scope:"Daily"})

@@ -262,7 +262,6 @@ select {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: rgba(0,0,0, .1);
   display: flex;
   font-family: 'Poppins', sans-serif;
   font-size: 1.2em;
@@ -276,6 +275,14 @@ select {
   max-height: 50px;
   /* width: 100%; */
   text-align: left;
+}
+
+input[type=text]{
+  color:black;
+}
+
+select {
+  color: rgba(0,0,0, .1);
 }
 
 input[type=text]:hover,
