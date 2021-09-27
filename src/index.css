@@ -283,6 +283,7 @@ input[type=text]{
 
 select {
   color: rgba(0,0,0, .1);
+
 }
 
 input[type=text]:hover,

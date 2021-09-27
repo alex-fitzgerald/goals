@@ -439,7 +439,8 @@ app.post('/postGoals/:user', (req, res) => {
 
 app.post("/updateGoals/:user", (req, res) => {
     const name = req.params.user
-    const { _id, goal, category, type, scope, isPinned } = req.body.goal
+    const { _id, goal, category, type, scope } = req.body.goal
+    const pinnedStatus = req.body.pinnedStatus
     console.log(req.body.goal)
 
     User.findOne( { name: name }, function(err, foundUser){
@@ -450,7 +451,7 @@ app.post("/updateGoals/:user", (req, res) => {
             goalToUpdate.category = category;
             goalToUpdate.type = type;
             goalToUpdate.scope = scope;
-            goalToUpdate.isPinned = isPinned;
+            goalToUpdate.isPinned = pinnedStatus;
             foundUser.save(function(err){
                 if (err){
                     console.log(err)

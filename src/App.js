@@ -109,6 +109,7 @@ function App() {
   }
 
   function completeGoal(id, currentGoal, array, setArray) {
+    console.log("completeGoal engaged")
     
     unpinGoal(currentGoal)
 
@@ -127,6 +128,7 @@ function App() {
       mode: 'cors',
       body: JSON.stringify({
         goal: goal,
+        pinnedStatus:false,
         user:user.email
       })
     })
@@ -141,6 +143,41 @@ function App() {
       mode: 'cors',
       body: JSON.stringify({
         goal: goal,
+        pinnedStatus:true,
+        user:"guest"
+      })
+    })
+    .then(response => response.json())
+    // .then(data => this.setState({ postId: data.id }));
+  }
+  }
+
+  function pinGoal(goal){
+    if (isAuthenticated) {
+    const url = "updateGoals/" + user.email
+//     console.log(goal)
+    fetch(url , {
+      headers: {'Content-Type': 'application/json' },
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        goal: goal,
+        pinnedStatus:true,
+        user:user.email
+      })
+    })
+    .then(response => response.json())
+    // .then(data => this.setState({ postId: data.id }));
+  } else {
+    const url = "updateGoals/guest" 
+//     console.log(goal)
+    fetch(url , {
+      headers: {'Content-Type': 'application/json' },
+      method: "POST",
+      mode: 'cors',
+      body: JSON.stringify({
+        goal: goal,
+        pinnedStatus:true,
         user:"guest"
       })
     })
@@ -190,12 +227,7 @@ function App() {
     function updateGoal(kwmlGoal){
       const url = "updateGoals/" + (isAuthenticated ? user.email : "guest"); 
       const { isPinned } = kwmlGoal
-
-  //     console.log(kwmlGoal)
-
-      if (!isPinned){
-        unpinGoal(kwmlGoal)
-      }  
+      console.log(isPinned)
 
       //map out old list. Find array item matching number, send back updated version. 
 
@@ -217,7 +249,8 @@ function App() {
         method: "POST",
         mode: 'cors',
         body: JSON.stringify({
-          goal: kwmlGoal
+          goal: kwmlGoal,
+          pinnedStatus: kwmlGoal.isPinned
         })
       })
       .then(response => response.json())
@@ -406,7 +439,7 @@ function App() {
               itemSet={longTermGoals} 
               componentName="Long Term" 
               updateGoal={updateGoal}
-              deleteKwmlGoal={deleteKwmlGoal} 
+              deleteKwmlGoal={completeGoal} 
               filterGoals={filterGoals} 
               array={longTermGoals} 
               setArray={setLongTermGoals}                        
@@ -430,7 +463,7 @@ function App() {
                   type={kwmlGoal.type}
                   canBePinned={true}
                   isPinned={kwmlGoal.isPinned}
-                  onPin={updateGoal}
+                  onPin={pinGoal}
                   onChange={updateGoal}
                   deleteClick={deleteKwmlGoal}
                   filterClick={filterGoals}
