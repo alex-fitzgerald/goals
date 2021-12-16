@@ -1,22 +1,15 @@
 import React from 'react';
-import KWMLGoal from './KWMLGoal.jsx';
+import Card from '../../components/Card/Card.component';
 
 function DailyItems(props){
-    // const dailyGoalsSet = props.dailyGoalsSet
-    const renderedName = props.componentName
-    const itemSet = props.itemSet
-    const updateGoal = props.updateGoal
-    const deleteKwmlGoal = props.deleteKwmlGoal
-    const filterGoals = props.filterGoals
-    const array = props.array
-    const setArray = props.setArray
+    const { renderedName, itemSet, updateGoal, deleteGoal, filterGoals, array, setArray } = props.componentName
 
     return(
          <div className="component">
             <h1>{renderedName}</h1>
             <div className="componentContent">
             {itemSet.map((item, index) => ( 
-                <KWMLGoal 
+                <Card 
                     key={index}
                     id={index} 
                     goalId={item._id}
@@ -26,7 +19,7 @@ function DailyItems(props){
                     type={item.type}
                     isPinned={item.isPinned}
                     onChange={updateGoal}
-                    deleteClick={deleteKwmlGoal}
+                    deleteClick={deleteGoal}
                     filterClick={filterGoals}
                     array={array}
                     setArray={setArray}
