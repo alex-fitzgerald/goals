@@ -1,11 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, setDoc, getDocs } from "firebase/firestore";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import { getFirestore, collection, addDoc, setDoc, doc, getDocs } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const config = {
   apiKey: "AIzaSyAT3aAvlRFULmOzCXMLZEmJyEGfxela4rg",
   authDomain: "goals-and-reminders.firebaseapp.com",
@@ -15,18 +12,78 @@ const config = {
   appId: "1:964230229535:web:e381991adc0a438d12ef2a"
 };
 
+// init app
 const firebaseApp = initializeApp(config);
+
+const provider = new GoogleAuthProvider();
+
+// init db
 const db = getFirestore();
 
-export const writeItems = async (user, itemToAdd) => {
+// collection reference
+const colRef = collection(db, `items`);
+
+// get collection data
+getDocs(colRef)
+  .then((snapshot) => {
+    let items = [];
+    snapshot.docs.map((doc) => {
+      items.push({ ...doc.data(), id: doc })
+    })
+    console.log(items)
+  })
+
+export const additem = (item) => {
+  addDoc(colRef, {
+    ...item
+  });
+}
+
+
+
+export const createUser = async () => {
   try {
-      const docRef = await addDoc(collection(db, `users/${user}/items`), itemToAdd);
-      return docRef.id;
+      const docRef = await addDoc(collection(db, `users`), {
+        email: 'lxfitz@gmail.com'
+      });
       console.log("Document written with ID: ", docRef.id);
   } catch (error) {
       return(error)
   }
 };
+
+export const signInWithGoogle = async () => {
+  const auth = getAuth();
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    const credential = GoogleAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+    const user = result.user;
+    console.log(user);
+    return user;
+    //go through Firebase. See if user.email exists, if not, create new user
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    const email = error.email;
+    const credential = GoogleAuthProvider.credentialFromError(error);
+    console.log(errorMessage)
+  });
+}
+
+
+export const updateUser = async () => {
+  const userRef = doc(db, 'users', 'lxfitz@gmail.com');
+  setDoc(userRef, {name: "Alex"});
+}
+
+export const fetchUser = async () => {
+  const querySnapshot = await getDocs(collection(db, "users"));
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} ${doc.data().email}`);
+  });
+}
 
 export const fetchItems = async user => {
   try {

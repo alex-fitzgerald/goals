@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CustomButton } from "../../components/CustomButton/CustomButton.component";
 import { addItemStart } from "../../redux/items/items.actions";
+import { additem } from "../../firebase/firebase.utils";
 import { useDispatch } from "react-redux";
 
 export const CreateArea = (props) => {
@@ -20,16 +21,12 @@ export const CreateArea = (props) => {
 
     function handleChange(event){
       const { name, value } = event.target;
-
-      setInputEngaged(true)
-      
       setGoal(prevGoal => {
         return {
           ...prevGoal,
           [name]: value
         }
       });
-
     }
 
     function formSubmit(event){
@@ -37,8 +34,9 @@ export const CreateArea = (props) => {
         event.preventDefault();
         alert('Please enter a goal');
       } else {
+        additem(goal)
         event.preventDefault();
-        setGoal({goal:"", category:"King", type: "Goal", scope:"Daily"});
+        setGoal({goal:"", category:"King", type: "Goal", scope:"Daily", isPinned:false});
         setInputEngaged(false);
       }
     }

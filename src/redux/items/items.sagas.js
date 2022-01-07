@@ -9,7 +9,7 @@ import {
     addItemFailure 
 } from "./items.actions";
 import { 
-    writeItems,
+    createUser,
     fetchItems
 } from "../../firebase/firebase.utils";
 
@@ -35,7 +35,7 @@ export function* deleteItemAsync(itemId){
 
 export function* addItemAsync({payload:{item, user}}){
     try {
-        const docRefId = yield writeItems(user, item);
+        const docRefId = yield createUser();
         yield put(addItemSuccess(docRefId, item));
     } catch (error) {
         yield put(addItemFailure(error));
