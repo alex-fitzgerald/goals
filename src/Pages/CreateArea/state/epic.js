@@ -1,36 +1,15 @@
-import { CreateGoalActionTypes } from "./types";
+import { filter, map, mapTo, mergeMap } from 'rxjs/operators';
+import { ofType, of } from 'redux-observable';
+import { CreateGoalActionTypes } from './types';
+import { addItem } from '../../../firebase/firebase.utils';
+import { createItemSuccess } from './actions';
 
-const INITIAL_STATE = {
-    goal: "",
-    category: "",
-    scope: "",
-    isPinned: "",
-    submittingGoal:false,
-    errorMessage: null
-}
+const createGoalEpic = action$ => action$.pipe(
+    ofType(CreateGoalActionTypes.CREATE_ITEM_START),
+    map((action) => {
+        const response = addItem(action.payload)
+        return createItemSuccess(response)
+    })
+)
 
-const createGoalReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type) {
-        case CreateGoalActionTypes.CREATE_ITEM_START: 
-            return {
-                ...state,
-                submittingGoal: true
-            }
-        case CreateGoalActionTypes.CREATE_ITEM_SUCCESS:
-            return {
-                ...state,
-                submittingGoal: false,
-                errorMessage: false
-            }
-        case CreateGoalActionTypes.CREATE_ITEM_ERROR:
-            return {
-                ...state,
-                submittingGoal: false,
-                errorMessage: action.payload.error
-            }
-        default:
-            return state;
-    }
-}
-
-export default createGoalReducer
+export default createGoalEpic

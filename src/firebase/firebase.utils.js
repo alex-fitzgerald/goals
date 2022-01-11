@@ -33,10 +33,15 @@ getDocs(colRef)
     console.log(items)
   })
 
-export const additem = (item) => {
-  addDoc(colRef, {
+export const addItem = async (item) => {
+  const docRef = await addDoc(colRef, {
     ...item
   });
+  console.log('hey')
+  return {
+    response: 'hey',
+    type:'hey'
+  }
 }
 
 

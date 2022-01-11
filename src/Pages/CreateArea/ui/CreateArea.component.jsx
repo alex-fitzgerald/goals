@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CustomButton } from "../../../components/CustomButton/CustomButton.component";
-import { additem } from "../../../firebase/firebase.utils";
+// import { additem } from "../../../firebase/firebase.utils";
+import { createItemStart } from "../state/actions";
 import { useDispatch } from "react-redux";
 
 export const CreateArea = (props) => {
@@ -11,8 +12,6 @@ export const CreateArea = (props) => {
     scope: "Daily",
     isPinned:false
     });
-
-    const user = "fitzgerald.s.alexander@gmail.com";
 
     const dispatch = useDispatch();
 
@@ -31,9 +30,9 @@ export const CreateArea = (props) => {
     function formSubmit(event){
       if (goal.goal === "") {
         event.preventDefault();
-        alert('Please enter a goal');
+        // alert('Please enter a goal');
       } else {
-        additem(goal)
+        // additem(goal)
         event.preventDefault();
         setGoal({goal:"", category:"King", type: "Goal", scope:"Daily", isPinned:false});
         setInputEngaged(false);
@@ -91,6 +90,7 @@ export const CreateArea = (props) => {
           </select> : null
             }
           {/* <CustomButton clickAction={() => dispatch(addItemStart(goal, user))} buttonName={"Add"} /> */}
+          <CustomButton clickAction={() => dispatch(createItemStart(goal))} buttonName={"Add"} />
           </form>
           </div>
       </div>

@@ -5,9 +5,8 @@ export const createItemStart = item => ({
     payload: item
 })
 
-export const createItemSuccess = item => ({
-    type: CreateGoalActionTypes.CREATE_ITEM_SUCCESS,
-    payload: item
+export const createItemSuccess = () => ({
+    type: CreateGoalActionTypes.CREATE_ITEM_SUCCESS
 })
 
 export const createItemError = error => ({
