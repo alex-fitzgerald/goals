@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Checkbox from "../Checkbox/Checkbox.component";
 import { CardContainer } from "./Card.styles";
 import { TextArea } from "../TextArea/TextArea.component";
 import { EditFooterOptions } from "../EditFooterOptions/EditFooterOptions.component";
 import { CardFooter } from "../CardFooter/CardFooter.component";
 import { useDispatch } from "react-redux";
-import { deleteItemStart } from "../../redux/items/items.actions";
 
 const Card = ( { content: { id, goal, category, scope, isPinned }} ) => {
   const [ cardState, setCardState ] = useState({});

@@ -1,29 +1,20 @@
 import React, { useEffect, useState } from "react";
 import Philosophy from "./Pages/Philosophy/Philosophy.component";
 import Reminders from "./Pages/Reminders/Reminders.component";
-import { fetchStoicismStart } from './redux/apis/apis.actions';
-import { fetchItemsStart } from "./redux/items/items.actions";
 import { useDispatch, useSelector } from 'react-redux';
-import { CreateArea } from "./Pages/CreateArea/CreateArea.component";
+import { CreateArea } from "./Pages/CreateArea/ui/CreateArea.component";
 
 
 function App() {
-  const stoicism = useSelector(state => state.apis.stoicism);
-  const items = useSelector(state => state.items.items);
-  const dispatch = useDispatch();
+  // const stoicism = useSelector(state => state.apis.stoicism);
+  // const items = useSelector(state => state.items.items);
 
-  const [ username, setUsername ] = useState();
-  
-  const haveFetchedReminders = useSelector(state => state.items.haveFetchedReminders);
-  
-  useEffect(() => {
-    dispatch(fetchStoicismStart());
-  } , []);
+  // const haveFetchedReminders = useSelector(state => state.items.haveFetchedReminders);
   
     return (
     <div className="app">
-      <Philosophy content={stoicism} />  
-      { haveFetchedReminders ? <Reminders reminders={items} /> : null }  
+      {/* <Philosophy content={stoicism} />   */}
+      {/* { haveFetchedReminders ? <Reminders reminders={items} /> : null }   */}
       <CreateArea />
     </div>
   );

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { CustomButton } from "../../components/CustomButton/CustomButton.component";
-import { addItemStart } from "../../redux/items/items.actions";
-import { additem } from "../../firebase/firebase.utils";
+import { CustomButton } from "../../../components/CustomButton/CustomButton.component";
+import { additem } from "../../../firebase/firebase.utils";
 import { useDispatch } from "react-redux";
 
 export const CreateArea = (props) => {
@@ -91,7 +90,7 @@ export const CreateArea = (props) => {
             <option value="Long-term">Long term goal</option>
           </select> : null
             }
-          <CustomButton clickAction={() => dispatch(addItemStart(goal, user))} buttonName={"Add"} />
+          {/* <CustomButton clickAction={() => dispatch(addItemStart(goal, user))} buttonName={"Add"} /> */}
           </form>
           </div>
       </div>
