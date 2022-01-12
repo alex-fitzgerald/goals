@@ -24,14 +24,17 @@ const db = getFirestore();
 const colRef = collection(db, `items`);
 
 // get collection data
-getDocs(colRef)
+export const fetchGoals = async () => {
+  await getDocs(colRef)
   .then((snapshot) => {
     let items = [];
     snapshot.docs.map((doc) => {
       items.push({ ...doc.data(), id: doc })
     })
-    console.log(items)
+    console.log('Items in firebase.utils', items)
+    return items
   })
+}
 
 export const addItem = async (item) => {
   const docRef = await addDoc(colRef, {

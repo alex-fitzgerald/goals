@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Card from '../../components/Card/Card.component';
 
 function DailyItems(props){
     const { renderedName, itemSet, updateGoal, deleteGoal, filterGoals, array, setArray } = props.componentName
+
+    useEffect(() => {
+        
+    }, []);
 
     return(
          <div className="component">
