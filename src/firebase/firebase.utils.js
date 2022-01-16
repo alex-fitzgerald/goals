@@ -31,8 +31,7 @@ export const fetchGoals = async () => {
     snapshot.docs.map((doc) => {
       items.push({ ...doc.data(), id: doc })
     })
-    console.log('Items in firebase.utils', items)
-    return items
+    return items;
   })
 }
 
@@ -93,13 +92,11 @@ export const fetchUser = async () => {
   });
 }
 
-export const fetchItems = async user => {
+export const fetchItems = async () => {
   try {
     const querySnapshot = await getDocs(collection(db, `users/`));
     const docData = querySnapshot.data();
-    console.log(docData)
-
-    return querySnapshot
+    return docData
   } catch(error){
     return(error)
   }

@@ -43,7 +43,7 @@ export const CreateArea = (props) => {
     <div className="createGoal">
       <h1>Set a goal</h1>
       <div className="daily">
-        <div class="daily-wrapper">
+        <div className="daily-wrapper">
           <form onSubmit={formSubmit}>
             <input 
               className={"" + (inputEngaged ? "input-engaged" : null)}

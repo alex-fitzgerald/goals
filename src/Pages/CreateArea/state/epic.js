@@ -10,6 +10,6 @@ const createGoalEpic = action$ => action$.pipe(
         const response = addItem(action.payload)
         return createItemSuccess(response)
     })
-)
+);
 
 export default createGoalEpic

@@ -7,17 +7,14 @@ import { CreateArea } from "./Pages/CreateArea/ui/CreateArea.component";
 
 function App() {
   const dispatch = useDispatch();
-  // const stoicism = useSelector(state => state.apis.stoicism);
-  // const items = useSelector(state => state.items.items);
 
-  // const haveFetchedReminders = useSelector(state => state.items.haveFetchedReminders);
+  useEffect(() => {
+    dispatch(fetchGoalsStart());
+  },[]);
   
     return (
     <div className="app">
-      {/* <Philosophy content={stoicism} />   */}
-      {/* { haveFetchedReminders ? <Reminders reminders={items} /> : null }   */}
       <CreateArea />
-      <button onClick={() => dispatch(fetchGoalsStart())}>Click me to load goals</button>
     </div>
   );
 }
