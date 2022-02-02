@@ -11,23 +11,23 @@ export const goalReducer = ( state = INITIAL_STATE, action ) => {
     switch (action.type) {
         case GoalActionTypes.FETCH_GOALS_START:
             return {
-                goalsFetching: true,
-                ...state
+                ...state,
+                goalsFetching: true
             }
         case GoalActionTypes.FETCH_GOALS_SUCCESS:
             return {
+                ...state,
                 goalsFetching: false,
                 goalsFetched: true,
                 goals: action.payload,
-                error: null,
-                ...state
+                error: null
             }
         case GoalActionTypes.FETCH_GOALS_ERROR:
             return {
+                ...state,
                 goalsFetching: false,
                 goalsFetched: false,
-                error: action.payload,
-                ...state
+                error: action.payload
             }
         default:
             return state

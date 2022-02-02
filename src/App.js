@@ -10,7 +10,7 @@ function App() {
   const state = useSelector(state => state)
 
   useEffect(() => {
-    // dispatch(fetchGoalsStart());
+    dispatch(fetchGoalsStart());
   },[]);
   
     return (

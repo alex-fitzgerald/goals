@@ -25,14 +25,15 @@ const colRef = collection(db, `items`);
 
 // get collection data
 export const fetchGoals = async () => {
+  let items = [];
   await getDocs(colRef)
   .then((snapshot) => {
-    let items = [];
     snapshot.docs.map((doc) => {
       items.push({ ...doc.data(), id: doc })
     })
-    return items;
+    console.log(items);
   })
+  return items;
 }
 
 export const addItem = async (item) => {
