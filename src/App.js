@@ -7,9 +7,10 @@ import { CreateArea } from "./Pages/CreateArea/ui/CreateArea.component";
 
 function App() {
   const dispatch = useDispatch();
+  const state = useSelector(state => state)
 
   useEffect(() => {
-    dispatch(fetchGoalsStart());
+    // dispatch(fetchGoalsStart());
   },[]);
   
     return (

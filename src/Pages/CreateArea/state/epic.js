@@ -1,15 +1,15 @@
-import { map } from 'rxjs/operators';
+import { map, filter, tap, mapTo, mergeMap, catchError } from 'rxjs/operators';
+import { from, of } from 'rxjs'
 import { ofType } from 'redux-observable';
 import { CreateGoalActionTypes } from './types';
 import { addItem } from '../../../firebase/firebase.utils';
 import { createItemSuccess } from './actions';
+import axios from 'axios';
 
 const createGoalEpic = action$ => action$.pipe(
-    ofType(CreateGoalActionTypes.CREATE_ITEM_START),
-    map((action) => {
-        const response = addItem(action.payload)
-        return createItemSuccess(response)
-    })
-);
+        filter(action => action.type === CreateGoalActionTypes.CREATE_ITEM_START),
+        mapTo({ type: CreateGoalActionTypes.CREATE_ITEM_SUCCESS }) 
+);  
+
 
 export default createGoalEpic
